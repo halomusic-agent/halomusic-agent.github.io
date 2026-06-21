@@ -604,18 +604,18 @@ var keyboardChords={
  */
 function buildGuitarDiagramSVG(frets, color){
   color=color||'#F59E0B';
-  var SW=6, FR=4;
-  var pL=14, pT=22, pR=20, pB=16;
+  var SW=6;
+  var pL=14, pT=22, pR=8, pB=16;
   var sS=15, fS=17; // string spacing, fret spacing
+
+  // Always start from fret 1 (nut visible). Show enough frets for all dots.
+  var posF=frets.filter(function(f){return f>0;});
+  var maxF=posF.length?Math.max.apply(null,posF):4;
+  var FR=Math.max(4,maxF); // at least 4 frets, expand if chord goes higher
+
   var W=pL+(SW-1)*sS+pR;
   var H=pT+FR*fS+pB;
   var dotR=6.5;
-
-  // Find start fret (window start)
-  var posF=frets.filter(function(f){return f>0;});
-  var minF=posF.length?Math.min.apply(null,posF):1;
-  var startFret=minF>=2?minF:1;
-  var showNut=(startFret===1);
 
   // Auto-assign finger numbers: 1=lowest fret, 2=next, etc.
   var uniqueFrets=[];
@@ -624,15 +624,9 @@ function buildGuitarDiagramSVG(frets, color){
 
   var svg='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" xmlns="http://www.w3.org/2000/svg">';
 
-  // Nut (thick bar) or top fret line
+  // Always show nut (thick bar)
   var nutY=pT;
-  if(showNut){
-    svg+='<rect x="'+pL+'" y="'+(nutY-3.5)+'" width="'+((SW-1)*sS)+'" height="4" rx="1.5" fill="#2D2D2D"/>';
-  } else {
-    svg+='<line x1="'+pL+'" y1="'+nutY+'" x2="'+(pL+(SW-1)*sS)+'" y2="'+nutY+'" stroke="#9CA3AF" stroke-width="0.8"/>';
-    // fret position label
-    svg+='<text x="'+(pL+(SW-1)*sS+3)+'" y="'+(nutY+fS*0.6)+'" font-size="8" fill="#6B7280" font-weight="700">'+startFret+'fr</text>';
-  }
+  svg+='<rect x="'+pL+'" y="'+(nutY-3.5)+'" width="'+((SW-1)*sS)+'" height="4" rx="1.5" fill="#2D2D2D"/>';
 
   // Fret lines (horizontal)
   for(var f=1;f<=FR;f++){
@@ -660,20 +654,15 @@ function buildGuitarDiagramSVG(frets, color){
     }
   }
 
-  // Finger dots
+  // Finger dots (fret 1 = row 1 always)
   for(var s=0;s<SW;s++){
     var f=frets[s];
-    if(f>0){
-      var row=f-startFret+1; // 1-based within the window
-      if(row>=1&&row<=FR){
-        var cx=pL+s*sS;
-        var cy=pT+(row-0.5)*fS;
-        // Dot (filled circle with border shadow)
-        svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+dotR+'" fill="'+color+'"/>';
-        // Finger number (auto-assigned)
-        var fn=uniqueFrets.indexOf(f)+1;
-        svg+='<text x="'+cx+'" y="'+(cy+3.5)+'" text-anchor="middle" font-size="8" fill="#fff" font-weight="900">'+fn+'</text>';
-      }
+    if(f>0&&f<=FR){
+      var cx=pL+s*sS;
+      var cy=pT+(f-0.5)*fS;
+      svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+dotR+'" fill="'+color+'"/>';
+      var fn=uniqueFrets.indexOf(f)+1;
+      svg+='<text x="'+cx+'" y="'+(cy+3.5)+'" text-anchor="middle" font-size="8" fill="#fff" font-weight="900">'+fn+'</text>';
     }
   }
 
@@ -693,17 +682,18 @@ function buildGuitarDiagramSVG(frets, color){
  */
 function buildBassDiagramSVG(frets, color){
   color=color||'#F59E0B';
-  var SW=4, FR=4;
-  var pL=14, pT=22, pR=20, pB=16;
+  var SW=4;
+  var pL=14, pT=22, pR=8, pB=16;
   var sS=18, fS=17;
+
+  // Always start from fret 1 (nut visible). Expand for higher chords.
+  var posF=frets.filter(function(f){return f>0;});
+  var maxF=posF.length?Math.max.apply(null,posF):4;
+  var FR=Math.max(4,maxF);
+
   var W=pL+(SW-1)*sS+pR;
   var H=pT+FR*fS+pB;
   var dotR=7;
-
-  var posF=frets.filter(function(f){return f>0;});
-  var minF=posF.length?Math.min.apply(null,posF):1;
-  var startFret=minF>=2?minF:1;
-  var showNut=(startFret===1);
 
   var uniqueFrets=[];
   posF.forEach(function(f){if(uniqueFrets.indexOf(f)<0)uniqueFrets.push(f);});
@@ -711,13 +701,9 @@ function buildBassDiagramSVG(frets, color){
 
   var svg='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" xmlns="http://www.w3.org/2000/svg">';
 
+  // Always show nut
   var nutY=pT;
-  if(showNut){
-    svg+='<rect x="'+pL+'" y="'+(nutY-3.5)+'" width="'+((SW-1)*sS)+'" height="4" rx="1.5" fill="#2D2D2D"/>';
-  } else {
-    svg+='<line x1="'+pL+'" y1="'+nutY+'" x2="'+(pL+(SW-1)*sS)+'" y2="'+nutY+'" stroke="#9CA3AF" stroke-width="0.8"/>';
-    svg+='<text x="'+(pL+(SW-1)*sS+3)+'" y="'+(nutY+fS*0.6)+'" font-size="8" fill="#6B7280" font-weight="700">'+startFret+'fr</text>';
-  }
+  svg+='<rect x="'+pL+'" y="'+(nutY-3.5)+'" width="'+((SW-1)*sS)+'" height="4" rx="1.5" fill="#2D2D2D"/>';
 
   for(var f=1;f<=FR;f++){
     var fy=pT+f*fS;
@@ -742,15 +728,12 @@ function buildBassDiagramSVG(frets, color){
 
   for(var s=0;s<SW;s++){
     var f=frets[s];
-    if(f>0){
-      var row=f-startFret+1;
-      if(row>=1&&row<=FR){
-        var cx=pL+s*sS;
-        var cy=pT+(row-0.5)*fS;
-        svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+dotR+'" fill="'+color+'"/>';
-        var fn=uniqueFrets.indexOf(f)+1;
-        svg+='<text x="'+cx+'" y="'+(cy+3.5)+'" text-anchor="middle" font-size="9" fill="#fff" font-weight="900">'+fn+'</text>';
-      }
+    if(f>0&&f<=FR){
+      var cx=pL+s*sS;
+      var cy=pT+(f-0.5)*fS;
+      svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+dotR+'" fill="'+color+'"/>';
+      var fn=uniqueFrets.indexOf(f)+1;
+      svg+='<text x="'+cx+'" y="'+(cy+3.5)+'" text-anchor="middle" font-size="9" fill="#fff" font-weight="900">'+fn+'</text>';
     }
   }
 
