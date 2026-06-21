@@ -36,23 +36,17 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 /* CARDS */
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;border:1px solid var(--border);}
 .card-title{font-size:15px;font-weight:800;margin-bottom:12px;color:var(--text);}
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
 
 /* SECTION HEADERS */
 .section-header{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;color:var(--muted);}
 
 /* NOTES DISPLAY */
 .staff-wrap{position:relative;margin:16px 0;background:#FAFAFA;border:1px solid #E5E7EB;border-radius:10px;padding:24px 16px;}
-.staff{position:relative;height:80px;}
-.staff-line{position:absolute;left:0;right:0;height:1.5px;background:#9CA3AF;}
-.note-ball{position:absolute;width:22px;height:16px;background:var(--c1);border-radius:50%;cursor:pointer;transition:transform 0.15s;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700;}
-.note-ball:hover{transform:scale(1.2);}
-.note-label{position:absolute;font-size:9px;font-weight:700;color:var(--muted);top:50%;transform:translateY(-50%);right:4px;}
 
-/* SCALE BUTTONS */
-.scale-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;margin-bottom:12px;}
+/* NOTE BUTTONS */
 .note-btn{padding:10px 6px;border-radius:10px;border:none;font-size:13px;font-weight:800;cursor:pointer;transition:all 0.15s;color:#fff;}
 .note-btn:active{transform:scale(0.92);}
+.scale-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;margin-bottom:12px;}
 
 /* TEMPO */
 .tempo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
@@ -61,31 +55,34 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 .tempo-card:hover{transform:translateY(-2px);}
 .tempo-card.playing{border-color:var(--c1);box-shadow:0 0 12px rgba(124,58,237,0.3);}
 
-/* CHORD DIAGRAM */
+/* ─── CHORD INLINE DISPLAY ─── */
+.chord-section-title{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;border-radius:8px;margin:0 0 10px;display:flex;align-items:center;gap:6px;}
+.chord-inline-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:4px;}
+@media(min-width:540px){.chord-inline-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:720px){.chord-inline-grid{grid-template-columns:repeat(4,1fr);}}
+.chord-inline-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center;transition:all 0.2s;}
+.chord-inline-card:hover{border-color:var(--c1);box-shadow:0 0 0 3px rgba(124,58,237,0.08);}
+.chord-inline-name{font-size:16px;font-weight:900;margin-bottom:5px;}
+.chord-inline-desc{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.4;}
+
+/* GUITAR CHORD DIAGRAM */
 .chord-diagram{display:inline-block;text-align:center;}
 .fretboard{border-collapse:collapse;margin:0 auto;}
-.fretboard td{width:22px;height:20px;border:1px solid #9CA3AF;position:relative;}
-.fret-dot{width:14px;height:14px;border-radius:50%;background:var(--c1);margin:auto;display:block;}
-.fret-open{font-size:12px;font-weight:700;color:var(--c4);text-align:center;}
-.fret-mute{font-size:12px;font-weight:700;color:#EF4444;text-align:center;}
-.string-label{font-size:10px;color:var(--muted);font-weight:600;}
-.chord-name{font-size:16px;font-weight:900;margin:8px 0 4px;color:var(--text);}
-.chord-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-@media(min-width:500px){.chord-grid{grid-template-columns:repeat(3,1fr);}}
-@media(min-width:700px){.chord-grid{grid-template-columns:repeat(4,1fr);}}
-.chord-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;}
-.chord-card:hover,.chord-card.active{border-color:var(--c1);box-shadow:0 0 0 3px rgba(124,58,237,0.12);}
+.fretboard td{width:18px;height:16px;border:1px solid #9CA3AF;position:relative;}
+.fret-dot{width:12px;height:12px;border-radius:50%;background:var(--c1);margin:auto;display:block;}
+.fret-open{font-size:10px;font-weight:700;color:var(--c4);text-align:center;}
+.fret-mute{font-size:10px;font-weight:700;color:#EF4444;text-align:center;}
+.string-label{font-size:8px;color:var(--muted);font-weight:600;text-align:center;}
 
 /* PLAYGROUND */
 .playground-stage{background:#fff;border:2px solid var(--border);border-radius:14px;min-height:220px;position:relative;overflow:hidden;}
 .play-staff{position:relative;height:160px;margin:30px 16px 10px;}
 .play-staff-line{position:absolute;left:0;right:0;height:1.5px;background:#D1D5DB;}
-.palette{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--border);background:#F9FAFB;}
-.palette-note{width:40px;height:40px;border-radius:8px;border:none;cursor:grab;font-size:22px;background:transparent;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;}
-.palette-note:hover{transform:scale(1.15);}
-.placed-note{position:absolute;font-size:24px;cursor:grab;user-select:none;transition:transform 0.1s;}
-.placed-note:active{transform:scale(1.2);}
-.play-controls{display:flex;gap:8px;padding:8px 16px;align-items:center;}
+.palette{display:flex;gap:10px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--border);background:#F9FAFB;}
+.palette-note{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:grab;padding:4px 6px;border-radius:8px;border:1.5px solid transparent;transition:all 0.15s;background:#fff;user-select:none;}
+.palette-note:hover{border-color:var(--c1);background:#F5F3FF;}
+.placed-note{position:absolute;cursor:pointer;user-select:none;text-align:center;width:30px;}
+.play-controls{display:flex;gap:8px;padding:8px 16px;align-items:center;flex-wrap:wrap;}
 .play-btn{padding:8px 18px;border-radius:8px;border:none;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.15s;}
 
 /* AI TAB */
@@ -94,15 +91,11 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 .result-box{background:#F9FAFB;border:1px solid var(--border);border-radius:10px;padding:16px;font-size:14px;line-height:1.8;margin-top:12px;}
 .result-section{margin-bottom:12px;}
 .result-label{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-
-/* STAFF NOTATION */
 .notation-staff{position:relative;height:100px;background:#fff;border-radius:8px;border:1px solid var(--border);margin:12px 0;overflow:hidden;}
-.n-line{position:absolute;left:0;right:0;height:1.5px;background:#9CA3AF;}
-.n-note{position:absolute;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;}
 
 /* TOGGLE GROUP */
-.toggle-group{display:flex;background:#F3F4F6;border-radius:10px;padding:3px;margin-bottom:16px;gap:2px;}
-.toggle-btn{flex:1;padding:8px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;color:var(--muted);background:transparent;transition:all 0.2s;}
+.toggle-group{display:flex;background:#F3F4F6;border-radius:10px;padding:3px;margin-bottom:16px;gap:2px;flex-wrap:wrap;}
+.toggle-btn{flex:1;min-width:60px;padding:8px 6px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;color:var(--muted);background:transparent;transition:all 0.2s;white-space:nowrap;}
 .toggle-btn.active{background:#fff;color:var(--c1);box-shadow:0 1px 6px rgba(0,0,0,0.1);}
 
 /* INPUT */
@@ -116,31 +109,16 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 .spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* OFFLINE DATA BADGE */
-.offline-note{background:#ECFDF5;border:1px solid #A7F3D0;border-radius:8px;padding:8px 12px;font-size:12px;color:#065F46;font-weight:600;display:flex;align-items:center;gap:6px;}
-
-/* GENERAL */
-.flex{display:flex;gap:8px;align-items:center;}
+/* MISC */
+.offline-note{background:#ECFDF5;border:1px solid #A7F3D0;border-radius:8px;padding:8px 12px;font-size:12px;color:#065F46;font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:12px;}
 .flex-wrap{display:flex;flex-wrap:wrap;gap:8px;}
-.mt-8{margin-top:8px;}
-.mt-12{margin-top:12px;}
-.text-sm{font-size:13px;}
-.text-muted{color:var(--muted);}
 .pill{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all 0.15s;}
-
-/* PLAYBACK PULSE */
 @keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(124,58,237,0.4)}100%{box-shadow:0 0 0 10px rgba(124,58,237,0)}}
-.pulsing{animation:pulse-ring 0.7s ease-out infinite;}
 
-/* CLEF */
-.clef{font-size:64px;line-height:1;position:absolute;left:4px;top:50%;transform:translateY(-45%);color:#374151;opacity:0.7;}
-
-/* RESPONSIVE */
 @media(max-width:480px){
   .header{padding:10px 14px;}
   .panel{padding:14px;}
   .card{padding:14px;}
-  .chord-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
@@ -159,48 +137,45 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 </div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- TAB 1: DASAR MUSIK / MUSIC BASICS      -->
+<!-- TAB 1: DASAR MUSIK                     -->
 <!-- ═══════════════════════════════════════ -->
 <div class="panel active" id="panel0">
 
-  <!-- NOT BALOK -->
   <div class="card">
     <div class="section-header" data-id="s1h">Pengenalan Not Balok</div>
     <div class="card-title" data-id="s1t">Nilai Not & Simbol</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;">
       <div style="background:#F5F3FF;border-radius:10px;padding:12px;text-align:center;">
-        <div style="font-size:36px;margin-bottom:4px;">𝅝</div>
+        <div style="font-size:34px;margin-bottom:4px;">𝅝</div>
         <div style="font-size:13px;font-weight:800;color:var(--c1)" data-id="noteWhole">Not Penuh</div>
         <div style="font-size:11px;color:var(--muted)">4 ketuk · Whole</div>
       </div>
       <div style="background:#FDF2F8;border-radius:10px;padding:12px;text-align:center;">
-        <div style="font-size:36px;margin-bottom:4px;">𝅗𝅥</div>
+        <div style="font-size:34px;margin-bottom:4px;">𝅗𝅥</div>
         <div style="font-size:13px;font-weight:800;color:var(--c2)" data-id="noteHalf">Not Setengah</div>
         <div style="font-size:11px;color:var(--muted)">2 ketuk · Half</div>
       </div>
       <div style="background:#FFF7ED;border-radius:10px;padding:12px;text-align:center;">
-        <div style="font-size:36px;margin-bottom:4px;">♩</div>
+        <div style="font-size:34px;margin-bottom:4px;">♩</div>
         <div style="font-size:13px;font-weight:800;color:var(--c3)" data-id="noteQuarter">Not Seperempat</div>
         <div style="font-size:11px;color:var(--muted)">1 ketuk · Quarter</div>
       </div>
       <div style="background:#ECFDF5;border-radius:10px;padding:12px;text-align:center;">
-        <div style="font-size:36px;margin-bottom:4px;">♪</div>
-        <div style="font-size:13px;font-weight:800;color:var(--c4)" data-id="noteEighth">Not Seperdelapan</div>
+        <div style="font-size:34px;margin-bottom:4px;">♪</div>
+        <div style="font-size:13px;font-weight:800;color:var(--c4)" data-id="noteEighth">Not 1/8</div>
         <div style="font-size:11px;color:var(--muted)">½ ketuk · Eighth</div>
       </div>
       <div style="background:#EFF6FF;border-radius:10px;padding:12px;text-align:center;">
-        <div style="font-size:36px;margin-bottom:4px;">♬</div>
+        <div style="font-size:34px;margin-bottom:4px;">♬</div>
         <div style="font-size:13px;font-weight:800;color:var(--c5)" data-id="noteSixteenth">Not 1/16</div>
         <div style="font-size:11px;color:var(--muted)">¼ ketuk · Sixteenth</div>
       </div>
       <div style="background:#F0FDF4;border-radius:10px;padding:12px;text-align:center;">
-        <div style="font-size:28px;margin-bottom:8px;">𝄽</div>
+        <div style="font-size:26px;margin-bottom:8px;">𝄽</div>
         <div style="font-size:13px;font-weight:800;color:#16A34A" data-id="notePause">Tanda Istirahat</div>
         <div style="font-size:11px;color:var(--muted)">Rest · Diam</div>
       </div>
     </div>
-
-    <!-- VISUAL STAFF -->
     <div style="margin-top:16px;">
       <div class="section-header" data-id="staffLabel">Garis Paranada (Staff)</div>
       <div class="staff-wrap">
@@ -210,7 +185,6 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
     </div>
   </div>
 
-  <!-- TANGGA NADA -->
   <div class="card">
     <div class="section-header" data-id="s2h">Tangga Nada / Scales</div>
     <div class="toggle-group">
@@ -223,11 +197,10 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
     <div id="scaleInfo" style="background:#F5F3FF;border-radius:10px;padding:12px;margin-bottom:12px;font-size:13px;line-height:1.7;"></div>
     <div class="scale-grid" id="scaleButtons"></div>
     <div style="text-align:center;margin-top:8px;">
-      <button class="pill" style="background:var(--grad);color:#fff;" onclick="playScale()" id="playScaleBtn">▶ <span data-id="btnPlayScale">Mainkan Tangga Nada</span></button>
+      <button class="pill" style="background:var(--grad);color:#fff;" onclick="playScale()">▶ <span data-id="btnPlayScale">Mainkan Tangga Nada</span></button>
     </div>
   </div>
 
-  <!-- TEMPO -->
   <div class="card">
     <div class="section-header" data-id="s3h">Jenis Tempo</div>
     <div class="card-title" data-id="s3t">Dari Sangat Lambat hingga Sangat Cepat</div>
@@ -237,44 +210,22 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 </div><!-- /panel0 -->
 
 <!-- ═══════════════════════════════════════ -->
-<!-- TAB 2: CHORD                           -->
+<!-- TAB 2: CHORD — scrollable all-in-one   -->
 <!-- ═══════════════════════════════════════ -->
 <div class="panel" id="panel1">
 
-  <div class="card">
+  <!-- Sticky instrument picker -->
+  <div class="card" style="position:sticky;top:95px;z-index:98;padding:14px;margin-bottom:12px;">
     <div class="section-header" data-id="chordInstrLabel">Instrumen</div>
-    <div class="toggle-group">
-      <button class="toggle-btn active" onclick="setInstrument('guitar')" data-id="btnGuitar">🎸 Gitar</button>
-      <button class="toggle-btn" onclick="setInstrument('bass')" data-id="btnBass">🎵 Bass</button>
-    </div>
-    <div class="toggle-group" id="chordTypeToggle">
-      <button class="toggle-btn active" onclick="setChordType('major')" data-id="btnChordMaj">Major</button>
-      <button class="toggle-btn" onclick="setChordType('minor')" data-id="btnChordMin">Minor</button>
-      <button class="toggle-btn" onclick="setChordType('seventh')" data-id="btnChord7">7th</button>
+    <div class="toggle-group" style="margin-bottom:0;">
+      <button class="toggle-btn active" onclick="setInstrument('guitar')" id="instrGuitar" data-id="btnGuitar">🎸 Gitar</button>
+      <button class="toggle-btn" onclick="setInstrument('bass')" id="instrBass" data-id="btnBass">🎵 Bass</button>
+      <button class="toggle-btn" onclick="setInstrument('keyboard')" id="instrKeyboard" data-id="btnKeyboard">🎹 Keyboard</button>
     </div>
   </div>
 
-  <div class="card" id="chordDisplayCard">
-    <div class="section-header" id="chordSectionLabel">Chord Gitar — Major</div>
-    <div class="chord-grid" id="chordGrid"></div>
-  </div>
-
-  <div class="card" id="chordDetailCard" style="display:none;">
-    <div class="flex" style="margin-bottom:12px;">
-      <button class="pill" style="background:#F3F4F6;color:var(--text);" onclick="closeChordDetail()">← <span data-id="btnBack">Kembali</span></button>
-      <div style="font-size:18px;font-weight:900;" id="chordDetailName"></div>
-    </div>
-    <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;">
-      <div id="chordDetailDiagram"></div>
-      <div>
-        <div class="result-label" data-id="chordFingers">Posisi Jari</div>
-        <div id="chordDetailInfo" style="font-size:13px;line-height:1.9;"></div>
-        <div style="margin-top:12px;">
-          <button class="pill" style="background:var(--grad);color:#fff;" onclick="playChordSound(currentChord)">🔊 <span data-id="btnPlayChord">Mainkan</span></button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Chord list rendered here -->
+  <div id="chordScrollArea"></div>
 
 </div><!-- /panel1 -->
 
@@ -284,12 +235,10 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 <div class="panel" id="panel2">
   <div class="card">
     <div class="section-header" data-id="playLabel">Susun Not di Paranada</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;" data-id="playDesc">Seret not dari palet ke paranada. Klik not yang sudah diletakkan untuk mendengar bunyinya.</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;" data-id="playDesc">Seret not dari palet ke paranada. Not otomatis menempel di posisi yang benar.</div>
 
     <div class="playground-stage" id="playStage">
-      <div class="play-staff" id="playStaffEl">
-        <!-- lines added by JS -->
-      </div>
+      <div class="play-staff" id="playStaffEl"></div>
     </div>
 
     <div class="palette" id="notePalette"></div>
@@ -316,71 +265,54 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 <!-- TAB 4: AI ANALYZER                     -->
 <!-- ═══════════════════════════════════════ -->
 <div class="panel" id="panel3">
-
-  <!-- MODE TOGGLE -->
   <div class="toggle-group">
     <button class="toggle-btn active" onclick="setAIMode('offline')" data-id="btnOffline">📚 Offline</button>
     <button class="toggle-btn" onclick="setAIMode('ai')" data-id="btnAI">🤖 AI Mode</button>
   </div>
-
-  <!-- OFFLINE NOTICE -->
   <div class="offline-note" id="offlineNotice">
     ✅ <span data-id="offlineText">Mode Offline — hasil berdasarkan database lokal. Aktifkan AI Mode untuk analisis lebih akurat.</span>
   </div>
-
-  <!-- AI KEY INPUT -->
   <div class="api-key-wrap" id="apiKeySection" style="display:none;">
     <div style="font-size:13px;font-weight:700;color:var(--c1);">🔑 <span data-id="apiKeyLabel">Masukkan Anthropic API Key</span></div>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-..." />
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-..."/>
     <div style="font-size:11px;color:var(--muted);margin-top:6px;" data-id="apiKeyNote">Key disimpan di memori sesi ini saja, tidak dikirim ke server lain.</div>
   </div>
-
-  <!-- SONG INPUT -->
   <div class="card">
     <div class="card-title" data-id="aiInputLabel">🎵 Masukkan Judul Lagu</div>
-    <input type="text" class="music-input" id="songInput" placeholder="e.g. Bohemian Rhapsody, Bengawan Solo, Riptide..." />
+    <input type="text" class="music-input" id="songInput" placeholder="e.g. Bohemian Rhapsody, Bengawan Solo, Riptide..."/>
     <button class="submit-btn" onclick="analyzeSong()" id="analyzeBtn">
       <span data-id="btnAnalyze">🔍 Analisis Lagu</span>
     </button>
   </div>
-
-  <!-- RESULT -->
   <div id="aiResult" style="display:none;">
     <div class="card">
       <div class="card-title" id="resultSongTitle"></div>
-
       <div class="result-section">
         <div class="result-label" data-id="resTempoLabel">Tempo</div>
         <div id="resTempo" style="font-size:22px;font-weight:900;color:var(--c1);"></div>
       </div>
-
       <div class="result-section">
         <div class="result-label" data-id="resKeyLabel">Kunci / Key</div>
         <div id="resKey" style="font-size:18px;font-weight:800;color:var(--c2);"></div>
       </div>
-
       <div class="result-section">
         <div class="result-label" data-id="resChordsLabel">Chord Utama</div>
         <div id="resChords" class="flex-wrap"></div>
       </div>
-
       <div class="result-section" id="resChordDiagramSection">
         <div class="result-label" data-id="resChordDiagLabel">Diagram Chord</div>
         <div id="resChordDiagrams" style="display:flex;flex-wrap:wrap;gap:14px;"></div>
       </div>
-
       <div class="result-section">
-        <div class="result-label" data-id="resNotesLabel">Not Balok (Intro/Melodi)</div>
+        <div class="result-label" data-id="resNotesLabel">Not Balok (Melodi)</div>
         <div id="resNotes" class="notation-staff"></div>
       </div>
-
-      <div class="result-section" id="resDescSection">
+      <div class="result-section">
         <div class="result-label" data-id="resDescLabel">Keterangan</div>
-        <div id="resDesc" class="result-box text-sm"></div>
+        <div id="resDesc" class="result-box" style="font-size:13px;"></div>
       </div>
     </div>
   </div>
-
 </div><!-- /panel3 -->
 
 <script>
@@ -389,175 +321,122 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 // ═══════════════════════════════════════════
 var lang='id';
 var TR={
-  tabBasics:   {id:'Dasar Musik',    en:'Music Basics'},
-  tabChords:   {id:'Chord',          en:'Chords'},
-  tabPlay:     {id:'Playground',     en:'Playground'},
-  tabAI:       {id:'AI Analyzer',    en:'AI Analyzer'},
-  s1h:         {id:'Pengenalan Not Balok', en:'Music Notation'},
-  s1t:         {id:'Nilai Not & Simbol',   en:'Note Values & Symbols'},
-  noteWhole:   {id:'Not Penuh',      en:'Whole Note'},
-  noteHalf:    {id:'Not Setengah',   en:'Half Note'},
-  noteQuarter: {id:'Not Seperempat', en:'Quarter Note'},
-  noteEighth:  {id:'Not 1/8',        en:'Eighth Note'},
-  noteSixteenth:{id:'Not 1/16',      en:'Sixteenth Note'},
-  notePause:   {id:'Tanda Istirahat',en:'Rest'},
-  staffLabel:  {id:'Garis Paranada (Staff)', en:'Staff Lines'},
-  staffDesc:   {id:'5 garis paranada — not diletakkan di garis atau di antara garis', en:'5 staff lines — notes placed on or between lines'},
-  s2h:         {id:'Tangga Nada',    en:'Scales'},
-  btnMajor:    {id:'Mayor',          en:'Major'},
-  btnMinor:    {id:'Minor',          en:'Minor'},
-  btnPentaMaj: {id:'Pentatonis Mayor',en:'Major Pentatonic'},
-  btnPentaMin: {id:'Pentatonis Minor',en:'Minor Pentatonic'},
-  btnDia:      {id:'Diatonis',       en:'Diatonic'},
-  btnPlayScale:{id:'Mainkan Tangga Nada',en:'Play Scale'},
-  s3h:         {id:'Jenis Tempo',    en:'Tempo Types'},
-  s3t:         {id:'Dari Sangat Lambat hingga Sangat Cepat', en:'From Very Slow to Very Fast'},
-  chordInstrLabel:{id:'Instrumen',   en:'Instrument'},
-  btnGuitar:   {id:'🎸 Gitar',       en:'🎸 Guitar'},
-  btnBass:     {id:'🎵 Bass',        en:'🎵 Bass'},
-  btnChordMaj: {id:'Major',          en:'Major'},
-  btnChordMin: {id:'Minor',          en:'Minor'},
-  btnChord7:   {id:'7th',            en:'7th'},
-  chordFingers:{id:'Posisi Jari',    en:'Finger Positions'},
-  btnPlayChord:{id:'Mainkan',        en:'Play'},
-  btnBack:     {id:'Kembali',        en:'Back'},
-  playLabel:   {id:'Susun Not di Paranada', en:'Arrange Notes on Staff'},
-  playDesc:    {id:'Seret not dari palet ke paranada. Klik not yang sudah diletakkan untuk mendengar bunyinya.', en:'Drag notes from palette to staff. Click placed notes to hear them.'},
-  btnPlayAll:  {id:'▶ Mainkan Semua',en:'▶ Play All'},
-  btnClear:    {id:'🗑 Hapus Semua',  en:'🗑 Clear All'},
-  scaleLegLabel:{id:'Referensi C Mayor', en:'C Major Reference'},
-  btnOffline:  {id:'📚 Offline',     en:'📚 Offline'},
-  btnAI:       {id:'🤖 AI Mode',     en:'🤖 AI Mode'},
-  offlineText: {id:'Mode Offline — hasil berdasarkan database lokal.', en:'Offline Mode — results from local database. Enable AI Mode for smarter analysis.'},
-  apiKeyLabel: {id:'Masukkan Anthropic API Key', en:'Enter Anthropic API Key'},
-  apiKeyNote:  {id:'Key disimpan di memori sesi ini saja, tidak dikirim ke server lain.', en:'Key is stored in session memory only, not sent to any other server.'},
-  aiInputLabel:{id:'🎵 Masukkan Judul Lagu', en:'🎵 Enter Song Title'},
-  btnAnalyze:  {id:'🔍 Analisis Lagu', en:'🔍 Analyze Song'},
-  resTempoLabel:{id:'Tempo',         en:'Tempo'},
-  resKeyLabel: {id:'Kunci / Key',    en:'Key / Tonality'},
-  resChordsLabel:{id:'Chord Utama',  en:'Main Chords'},
-  resChordDiagLabel:{id:'Diagram Chord', en:'Chord Diagrams'},
-  resNotesLabel:{id:'Not Balok (Melodi)', en:'Sheet Notes (Melody)'},
-  resDescLabel:{id:'Keterangan',     en:'Description'},
+  tabBasics:{id:'Dasar Musik',en:'Music Basics'},
+  tabChords:{id:'Chord',en:'Chords'},
+  tabPlay:{id:'Playground',en:'Playground'},
+  tabAI:{id:'AI Analyzer',en:'AI Analyzer'},
+  s1h:{id:'Pengenalan Not Balok',en:'Music Notation'},
+  s1t:{id:'Nilai Not & Simbol',en:'Note Values & Symbols'},
+  noteWhole:{id:'Not Penuh',en:'Whole Note'},noteHalf:{id:'Not Setengah',en:'Half Note'},
+  noteQuarter:{id:'Not Seperempat',en:'Quarter Note'},noteEighth:{id:'Not 1/8',en:'Eighth Note'},
+  noteSixteenth:{id:'Not 1/16',en:'Sixteenth Note'},notePause:{id:'Tanda Istirahat',en:'Rest'},
+  staffLabel:{id:'Garis Paranada (Staff)',en:'Staff Lines'},
+  staffDesc:{id:'5 garis paranada — not diletakkan di garis atau di antara garis',en:'5 staff lines — notes placed on or between lines'},
+  s2h:{id:'Tangga Nada / Scales',en:'Scales'},
+  btnMajor:{id:'Mayor',en:'Major'},btnMinor:{id:'Minor',en:'Minor'},
+  btnPentaMaj:{id:'Pentatonis Mayor',en:'Major Pentatonic'},btnPentaMin:{id:'Pentatonis Minor',en:'Minor Pentatonic'},
+  btnDia:{id:'Diatonis',en:'Diatonic'},btnPlayScale:{id:'Mainkan Tangga Nada',en:'Play Scale'},
+  s3h:{id:'Jenis Tempo',en:'Tempo Types'},s3t:{id:'Dari Sangat Lambat hingga Sangat Cepat',en:'From Very Slow to Very Fast'},
+  chordInstrLabel:{id:'Instrumen',en:'Instrument'},
+  btnGuitar:{id:'🎸 Gitar',en:'🎸 Guitar'},btnBass:{id:'🎵 Bass',en:'🎵 Bass'},btnKeyboard:{id:'🎹 Keyboard',en:'🎹 Keyboard'},
+  chordMajorSection:{id:'Major',en:'Major'},chordMinorSection:{id:'Minor',en:'Minor'},chordSeventhSection:{id:'Seventh (7th)',en:'Seventh (7th)'},
+  playLabel:{id:'Susun Not di Paranada',en:'Arrange Notes on Staff'},
+  playDesc:{id:'Seret not dari palet ke paranada. Not otomatis menempel di posisi yang benar.',en:'Drag notes from palette to staff. Notes snap to their correct position.'},
+  btnPlayAll:{id:'▶ Mainkan Semua',en:'▶ Play All'},btnClear:{id:'🗑 Hapus Semua',en:'🗑 Clear All'},
+  scaleLegLabel:{id:'Referensi C Mayor',en:'C Major Reference'},
+  btnOffline:{id:'📚 Offline',en:'📚 Offline'},btnAI:{id:'🤖 AI Mode',en:'🤖 AI Mode'},
+  offlineText:{id:'Mode Offline — hasil berdasarkan database lokal. Aktifkan AI Mode untuk analisis lebih akurat.',en:'Offline Mode — results from local database. Enable AI Mode for smarter analysis.'},
+  apiKeyLabel:{id:'Masukkan Anthropic API Key',en:'Enter Anthropic API Key'},
+  apiKeyNote:{id:'Key disimpan di memori sesi ini saja, tidak dikirim ke server lain.',en:'Key is stored in session memory only, not sent to any other server.'},
+  aiInputLabel:{id:'🎵 Masukkan Judul Lagu',en:'🎵 Enter Song Title'},
+  btnAnalyze:{id:'🔍 Analisis Lagu',en:'🔍 Analyze Song'},
+  resTempoLabel:{id:'Tempo',en:'Tempo'},resKeyLabel:{id:'Kunci / Key',en:'Key / Tonality'},
+  resChordsLabel:{id:'Chord Utama',en:'Main Chords'},resChordDiagLabel:{id:'Diagram Chord',en:'Chord Diagrams'},
+  resNotesLabel:{id:'Not Balok (Melodi)',en:'Sheet Notes (Melody)'},resDescLabel:{id:'Keterangan',en:'Description'},
 };
 function t(id){return TR[id]?TR[id][lang]:id;}
 function toggleLang(){
   lang=lang==='id'?'en':'id';
   document.getElementById('langBtn').textContent=lang==='id'?'EN':'ID';
   document.querySelectorAll('[data-id]').forEach(function(el){
-    var k=el.getAttribute('data-id');
-    if(TR[k])el.textContent=TR[k][lang];
+    var k=el.getAttribute('data-id');if(TR[k])el.textContent=TR[k][lang];
   });
-  renderScaleInfo();
-  renderTempoGrid();
-  renderChordGrid();
+  renderScaleInfo();renderTempoGrid();renderChordDisplay();
 }
 
 // ═══════════════════════════════════════════
 // AUDIO ENGINE
 // ═══════════════════════════════════════════
 var audioCtx=null;
-function getAudioCtx(){
-  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  return audioCtx;
-}
+function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
 function playTone(freq,dur,delay,type){
   var ctx=getAudioCtx();
-  var osc=ctx.createOscillator();
-  var gain=ctx.createGain();
+  var osc=ctx.createOscillator();var gain=ctx.createGain();
   osc.connect(gain);gain.connect(ctx.destination);
-  osc.type=type||'sine';
-  osc.frequency.value=freq;
+  osc.type=type||'sine';osc.frequency.value=freq;
   var s=ctx.currentTime+(delay||0);
   gain.gain.setValueAtTime(0,s);
   gain.gain.linearRampToValueAtTime(0.3,s+0.01);
   gain.gain.exponentialRampToValueAtTime(0.001,s+(dur||0.5));
   osc.start(s);osc.stop(s+(dur||0.5)+0.05);
 }
-function noteFreq(name){
-  var notes={C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.00,A4:440.00,B4:493.88,
-             C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99,A5:880.00,B5:987.77,
-             'C#4':277.18,'Eb4':311.13,'F#4':369.99,'Ab4':415.30,'Bb4':466.16,
-             'C#5':554.37,'Eb5':622.25,'F#5':739.99,'Ab5':830.61,'Bb5':932.33,
-             C3:130.81,D3:146.83,E3:164.81,F3:174.61,G3:196.00,A3:220.00,B3:246.94};
-  return notes[name]||261.63;
-}
+var NOTE_FREQ={
+  C3:130.81,D3:146.83,E3:164.81,F3:174.61,G3:196.00,A3:220.00,B3:246.94,
+  C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.00,A4:440.00,B4:493.88,
+  'C#4':277.18,'Eb4':311.13,'F#4':369.99,'Ab4':415.30,'Bb4':466.16,
+  C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99,A5:880.00,B5:987.77,
+  'C#5':554.37,'Eb5':622.25,'F#5':739.99,'Ab5':830.61,'Bb5':932.33
+};
+function noteFreq(name){return NOTE_FREQ[name]||261.63;}
 
 // ═══════════════════════════════════════════
-// SCALES DATA
+// SCALES (Tab 1)
 // ═══════════════════════════════════════════
 var scaleData={
-  major:{
-    notes:['C4','D4','E4','F4','G4','A4','B4','C5'],
-    labels:['Do','Re','Mi','Fa','Sol','La','Si','Do'],
+  major:{notes:['C4','D4','E4','F4','G4','A4','B4','C5'],labels:['Do','Re','Mi','Fa','Sol','La','Si','Do'],
     colors:['#7C3AED','#EC4899','#F59E0B','#10B981','#3B82F6','#8B5CF6','#EF4444','#7C3AED'],
     info:{id:'Tangga nada Mayor (Ionik): Do-Re-Mi-Fa-Sol-La-Si-Do. Interval: T-T-ST-T-T-T-ST. Terdengar cerah dan bahagia. Contoh: "Happy Birthday", "Let It Be".',
-          en:'Major Scale (Ionian): Do-Re-Mi-Fa-Sol-La-Ti-Do. Intervals: W-W-H-W-W-W-H. Sounds bright and happy. Examples: "Happy Birthday", "Let It Be".'}
-  },
-  minor:{
-    notes:['C4','D4','Eb4','F4','G4','Ab4','Bb4','C5'],
-    labels:['La','Si','Do','Re','Mi','Fa','Sol','La'],
+          en:'Major Scale (Ionian): Do-Re-Mi-Fa-Sol-La-Ti-Do. Intervals: W-W-H-W-W-W-H. Sounds bright and happy. Examples: "Happy Birthday", "Let It Be".'}},
+  minor:{notes:['C4','D4','Eb4','F4','G4','Ab4','Bb4','C5'],labels:['La','Si','Do','Re','Mi','Fa','Sol','La'],
     colors:['#5B21B6','#7C3AED','#A78BFA','#C4B5FD','#6D28D9','#8B5CF6','#4C1D95','#5B21B6'],
-    info:{id:'Tangga nada Minor Alami: La-Si-Do-Re-Mi-Fa-Sol-La. Interval: T-ST-T-T-ST-T-T. Terdengar sedih dan misterius. Contoh: "Nothing Else Matters", "Stairway to Heaven".',
-          en:'Natural Minor Scale: A-B-C-D-E-F-G-A. Intervals: W-H-W-W-H-W-W. Sounds sad and mysterious. Examples: "Nothing Else Matters", "Stairway to Heaven".'}
-  },
-  penta_major:{
-    notes:['C4','D4','E4','G4','A4','C5'],
-    labels:['Do','Re','Mi','Sol','La','Do'],
+    info:{id:'Tangga nada Minor Alami: La-Si-Do-Re-Mi-Fa-Sol-La. Terdengar sedih & misterius. Contoh: "Nothing Else Matters", "Stairway to Heaven".',
+          en:'Natural Minor Scale: A-B-C-D-E-F-G-A. Sounds sad and mysterious. Examples: "Nothing Else Matters", "Stairway to Heaven".'}},
+  penta_major:{notes:['C4','D4','E4','G4','A4','C5'],labels:['Do','Re','Mi','Sol','La','Do'],
     colors:['#F59E0B','#FBBF24','#FCD34D','#F59E0B','#D97706','#F59E0B'],
-    info:{id:'Pentatonis Mayor: 5 nada — Do-Re-Mi-Sol-La. Banyak dipakai di musik folk, blues, dan rock. Contoh: "My Girl" (Temptations), "Amazing Grace".',
-          en:'Major Pentatonic: 5 notes — Do-Re-Mi-Sol-La. Common in folk, blues, and rock. Examples: "My Girl" (Temptations), "Amazing Grace".'}
-  },
-  penta_minor:{
-    notes:['C4','Eb4','F4','G4','Bb4','C5'],
-    labels:['La','Do','Re','Mi','Sol','La'],
+    info:{id:'Pentatonis Mayor: 5 nada — Do-Re-Mi-Sol-La. Banyak dipakai di musik folk, blues, dan rock. Contoh: "My Girl", "Amazing Grace".',
+          en:'Major Pentatonic: 5 notes — Do-Re-Mi-Sol-La. Common in folk, blues, and rock. Examples: "My Girl", "Amazing Grace".'}},
+  penta_minor:{notes:['C4','Eb4','F4','G4','Bb4','C5'],labels:['La','Do','Re','Mi','Sol','La'],
     colors:['#EC4899','#DB2777','#BE185D','#9D174D','#EC4899','#DB2777'],
     info:{id:'Pentatonis Minor: 5 nada — La-Do-Re-Mi-Sol. Fondasi musik blues, rock, dan R&B. Contoh: "Smoke on the Water", "Sweet Home Chicago".',
-          en:'Minor Pentatonic: 5 notes — A-C-D-E-G. Foundation of blues, rock, R&B. Examples: "Smoke on the Water", "Sweet Home Chicago".'}
-  },
-  diatonic:{
-    notes:['C4','D4','E4','F4','G4','A4','B4','C5'],
-    labels:['I','II','III','IV','V','VI','VII','I'],
+          en:'Minor Pentatonic: 5 notes — A-C-D-E-G. Foundation of blues, rock, R&B. Examples: "Smoke on the Water", "Sweet Home Chicago".'}},
+  diatonic:{notes:['C4','D4','E4','F4','G4','A4','B4','C5'],labels:['I','II','III','IV','V','VI','VII','I'],
     colors:['#10B981','#059669','#047857','#065F46','#10B981','#34D399','#6EE7B7','#10B981'],
-    info:{id:'Tangga Nada Diatonis: 7 nada dalam satu oktaf. Terdiri dari kombinasi Ton (T) dan Semitone (ST). Mayor dan Minor sama-sama diatonis. Dasar teori musik Barat.',
-          en:'Diatonic Scale: 7 notes per octave. Made of Whole (W) and Half (H) steps. Both Major and Minor are diatonic. Foundation of Western music theory.'}
-  }
+    info:{id:'Tangga Nada Diatonis: 7 nada dalam satu oktaf. Terdiri dari Ton (T) dan Semitone (ST). Mayor dan Minor sama-sama diatonis. Dasar teori musik Barat.',
+          en:'Diatonic Scale: 7 notes per octave. Made of Whole (W) and Half (H) steps. Both Major and Minor are diatonic. Foundation of Western music theory.'}}
 };
-
 var currentScale='major';
 function setScaleType(type){
   currentScale=type;
-  document.querySelectorAll('.toggle-group .toggle-btn').forEach(function(b,i){
-    if(b.onclick&&b.onclick.toString().includes(type))b.classList.add('active');
-    else if(b.onclick&&b.onclick.toString().includes('setScaleType'))b.classList.remove('active');
-  });
-  // Re-render active
   document.querySelectorAll('#panel0 .toggle-btn').forEach(function(b){
-    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+type+"'"))b.classList.add('active');
-    else if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes('setScaleType'))b.classList.remove('active');
+    b.classList.toggle('active',b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+type+"'"));
   });
   renderScaleInfo();
 }
-
 function renderScaleInfo(){
   var d=scaleData[currentScale];
-  document.getElementById('scaleInfo').innerHTML='<strong>'+(lang==='id'?'Info':'Info')+':</strong> '+d.info[lang];
-  var grid=document.getElementById('scaleButtons');
-  grid.innerHTML='';
+  document.getElementById('scaleInfo').innerHTML='<strong>Info:</strong> '+d.info[lang];
+  var grid=document.getElementById('scaleButtons');grid.innerHTML='';
   d.notes.forEach(function(note,i){
-    var btn=document.createElement('button');
-    btn.className='note-btn';
+    var btn=document.createElement('button');btn.className='note-btn';
     btn.style.background=d.colors[i];
-    btn.innerHTML='<div style="font-size:16px;margin-bottom:2px;">'+d.labels[i]+'</div><div style="font-size:10px;opacity:0.85;">'+note.replace('4','').replace('5','')+'</div>';
+    btn.innerHTML='<div style="font-size:15px;margin-bottom:2px;">'+d.labels[i]+'</div><div style="font-size:10px;opacity:0.85;">'+note.replace(/[45]/g,'')+'</div>';
     btn.onclick=function(){playTone(noteFreq(note),0.5,0);btn.style.transform='scale(0.9)';setTimeout(function(){btn.style.transform='';},150);};
     grid.appendChild(btn);
   });
 }
-
 var scalePlaying=false;
 function playScale(){
-  if(scalePlaying)return;
-  scalePlaying=true;
+  if(scalePlaying)return;scalePlaying=true;
   var d=scaleData[currentScale];
   d.notes.forEach(function(note,i){playTone(noteFreq(note),0.4,i*0.35);});
   setTimeout(function(){scalePlaying=false;},d.notes.length*350+300);
@@ -567,251 +446,238 @@ function playScale(){
 // STAFF VISUALIZATION (Tab 1)
 // ═══════════════════════════════════════════
 function buildStaff(){
-  var el=document.getElementById('staffViz');
-  el.innerHTML='';
-  var linePos=[10,26,42,58,74];
-  linePos.forEach(function(y){
+  var el=document.getElementById('staffViz');el.innerHTML='';
+  [10,26,42,58,74].forEach(function(y){
     var l=document.createElement('div');
     l.style.cssText='position:absolute;left:40px;right:8px;top:'+y+'px;height:1.5px;background:#9CA3AF;';
     el.appendChild(l);
   });
-  // Clef symbol
   var clef=document.createElement('div');
   clef.style.cssText='position:absolute;left:4px;top:-8px;font-size:56px;line-height:1;color:#374151;';
-  clef.textContent='𝄞';
-  el.appendChild(clef);
-  // Notes on staff C major
-  var notePositions=[
-    {note:'C',y:82,x:80,col:'#7C3AED'},
-    {note:'D',y:74,x:120,col:'#EC4899'},
-    {note:'E',y:66,x:160,col:'#F59E0B'},
-    {note:'F',y:58,x:200,col:'#10B981'},
-    {note:'G',y:50,x:240,col:'#3B82F6'},
-    {note:'A',y:42,x:280,col:'#8B5CF6'},
-    {note:'B',y:34,x:320,col:'#EF4444'},
-  ];
-  // ledger line for C
+  clef.textContent='𝄞';el.appendChild(clef);
+  // Ledger line for C
   var ledger=document.createElement('div');
   ledger.style.cssText='position:absolute;left:72px;width:36px;top:82px;height:1.5px;background:#9CA3AF;';
   el.appendChild(ledger);
-  notePositions.forEach(function(np){
+  var nps=[
+    {note:'C',y:82,x:80,col:'#7C3AED'},{note:'D',y:74,x:120,col:'#EC4899'},
+    {note:'E',y:66,x:160,col:'#F59E0B'},{note:'F',y:58,x:200,col:'#10B981'},
+    {note:'G',y:50,x:240,col:'#3B82F6'},{note:'A',y:42,x:280,col:'#8B5CF6'},
+    {note:'B',y:34,x:320,col:'#EF4444'}
+  ];
+  nps.forEach(function(np){
     var ball=document.createElement('div');
-    ball.className='note-ball';
-    ball.style.cssText='left:'+np.x+'px;top:'+np.y+'px;background:'+np.col+';';
-    ball.textContent=np.note;
-    ball.title=np.note+' — klik untuk dengar';
-    var freq=noteFreq(np.note+'4');
-    ball.onclick=function(){playTone(freq,0.4,0);};
+    ball.style.cssText='position:absolute;left:'+np.x+'px;top:'+np.y+'px;width:22px;height:16px;background:'+np.col+';border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700;';
+    ball.textContent=np.note;ball.title=np.note;
+    ball.onclick=function(){playTone(noteFreq(np.note+'4'),0.4,0);};
     el.appendChild(ball);
   });
 }
 
 // ═══════════════════════════════════════════
-// TEMPO DATA
+// TEMPO (Tab 1)
 // ═══════════════════════════════════════════
 var tempos=[
-  {name:'Grave',bpm:'< 40',color:'#1E40AF',bg:'#EFF6FF',
-   desc:{id:'Sangat lambat & agung',en:'Very slow & solemn'},
-   example:'Symphony No.3 (Beethoven), Sarabande (Handel)',bpmVal:30},
-  {name:'Largo',bpm:'40–60',color:'#1D4ED8',bg:'#EFF6FF',
-   desc:{id:'Lebar & lambat',en:'Broad & slow'},
-   example:'New World Symphony Mvt.2 (Dvořák)',bpmVal:50},
-  {name:'Adagio',bpm:'66–76',color:'#7C3AED',bg:'#F5F3FF',
-   desc:{id:'Lambat & ekspresif',en:'Slow & expressive'},
-   example:'Moonlight Sonata (Beethoven), Adagio Albinoni',bpmVal:70},
-  {name:'Andante',bpm:'76–108',color:'#EC4899',bg:'#FDF2F8',
-   desc:{id:'Kecepatan berjalan kaki',en:'Walking pace'},
-   example:'Canon in D (Pachelbel), Yesterday (Beatles)',bpmVal:90},
-  {name:'Moderato',bpm:'108–120',color:'#F59E0B',bg:'#FFFBEB',
-   desc:{id:'Sedang / wajar',en:'Moderate pace'},
-   example:'Bohemian Rhapsody (Queen), Shape of You (Ed Sheeran)',bpmVal:114},
-  {name:'Allegro',bpm:'120–156',color:'#10B981',bg:'#ECFDF5',
-   desc:{id:'Cepat & ceria',en:'Fast & lively'},
-   example:'Eye of the Tiger (Survivor), Sweet Child O Mine (GNR)',bpmVal:138},
-  {name:'Vivace',bpm:'156–176',color:'#EF4444',bg:'#FEF2F2',
-   desc:{id:'Sangat hidup & cepat',en:'Very lively & fast'},
-   example:'Flight of the Bumblebee (Rimsky-Korsakov)',bpmVal:166},
-  {name:'Presto',bpm:'168–200',color:'#DC2626',bg:'#FEF2F2',
-   desc:{id:'Sangat cepat',en:'Very fast'},
-   example:'Hungarian Dance No.5 (Brahms)',bpmVal:185},
-  {name:'Prestissimo',bpm:'> 200',color:'#7F1D1D',bg:'#FEF2F2',
-   desc:{id:'Secepat mungkin',en:'As fast as possible'},
-   example:'4\'33\" (Cage) — ketukan teoritis',bpmVal:220},
+  {name:'Grave',bpm:'< 40',color:'#1E40AF',bg:'#EFF6FF',desc:{id:'Sangat lambat & agung',en:'Very slow & solemn'},example:'Symphony No.3 (Beethoven)',bpmVal:30},
+  {name:'Largo',bpm:'40–60',color:'#1D4ED8',bg:'#EFF6FF',desc:{id:'Lebar & lambat',en:'Broad & slow'},example:'New World Symphony Mvt.2 (Dvořák)',bpmVal:50},
+  {name:'Adagio',bpm:'66–76',color:'#7C3AED',bg:'#F5F3FF',desc:{id:'Lambat & ekspresif',en:'Slow & expressive'},example:'Moonlight Sonata (Beethoven)',bpmVal:70},
+  {name:'Andante',bpm:'76–108',color:'#EC4899',bg:'#FDF2F8',desc:{id:'Kecepatan berjalan kaki',en:'Walking pace'},example:'Canon in D (Pachelbel), Yesterday (Beatles)',bpmVal:90},
+  {name:'Moderato',bpm:'108–120',color:'#F59E0B',bg:'#FFFBEB',desc:{id:'Sedang / wajar',en:'Moderate pace'},example:'Bohemian Rhapsody, Shape of You',bpmVal:114},
+  {name:'Allegro',bpm:'120–156',color:'#10B981',bg:'#ECFDF5',desc:{id:'Cepat & ceria',en:'Fast & lively'},example:'Eye of the Tiger, Sweet Child O Mine',bpmVal:138},
+  {name:'Vivace',bpm:'156–176',color:'#EF4444',bg:'#FEF2F2',desc:{id:'Sangat hidup & cepat',en:'Very lively & fast'},example:'Flight of the Bumblebee',bpmVal:166},
+  {name:'Presto',bpm:'168–200',color:'#DC2626',bg:'#FEF2F2',desc:{id:'Sangat cepat',en:'Very fast'},example:'Hungarian Dance No.5 (Brahms)',bpmVal:185},
+  {name:'Prestissimo',bpm:'> 200',color:'#7F1D1D',bg:'#FEF2F2',desc:{id:'Secepat mungkin',en:'As fast as possible'},example:'Teoritis / Theoretical',bpmVal:220},
 ];
-var tempoInterval=null;
-var activeTempo=null;
-
+var tempoInterval=null,activeTempo=null;
 function renderTempoGrid(){
-  var grid=document.getElementById('tempoGrid');
-  grid.innerHTML='';
+  var grid=document.getElementById('tempoGrid');grid.innerHTML='';
   tempos.forEach(function(tp,idx){
-    var div=document.createElement('div');
-    div.className='tempo-card';
-    div.style.background=tp.bg;
-    div.style.borderColor=activeTempo===idx?tp.color:'transparent';
-    div.id='tc'+idx;
+    var div=document.createElement('div');div.className='tempo-card';
+    div.style.background=tp.bg;div.id='tc'+idx;
     div.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">'
       +'<span style="font-size:15px;font-weight:900;color:'+tp.color+'">'+tp.name+'</span>'
       +'<span style="font-size:11px;background:'+tp.color+'20;color:'+tp.color+';padding:2px 8px;border-radius:20px;font-weight:700;">♩='+tp.bpm+'</span>'
       +'</div>'
       +'<div style="font-size:12px;color:#374151;font-weight:600;margin-bottom:4px;">'+tp.desc[lang]+'</div>'
-      +'<div style="font-size:10px;color:#6B7280;line-height:1.5;">'+tp.example+'</div>'
-      +'<div style="margin-top:8px;text-align:right;">'
-      +'<button onclick="toggleTempoPulse('+idx+')" style="padding:4px 12px;border-radius:6px;border:none;background:'+tp.color+';color:#fff;font-size:11px;font-weight:700;cursor:pointer;" data-id="btnFeel'+(lang==='id'?'id':'en')+'">'+
-      (lang==='id'?'▶ Rasakan':'▶ Feel It')
-      +'</button></div>';
-    div.onclick=function(e){if(e.target.tagName!=='BUTTON')toggleTempoPulse(idx);};
+      +'<div style="font-size:10px;color:#6B7280;line-height:1.5;margin-bottom:8px;">'+tp.example+'</div>'
+      +'<button style="padding:4px 12px;border-radius:6px;border:none;background:'+tp.color+';color:#fff;font-size:11px;font-weight:700;cursor:pointer;">'
+      +(lang==='id'?'▶ Rasakan':'▶ Feel It')+'</button>';
+    div.querySelector('button').onclick=function(e){e.stopPropagation();toggleTempoPulse(idx);};
     grid.appendChild(div);
   });
 }
-
 function toggleTempoPulse(idx){
-  if(activeTempo===idx){
-    clearInterval(tempoInterval);tempoInterval=null;activeTempo=null;
-    document.getElementById('tc'+idx).classList.remove('playing');
-    return;
-  }
-  if(activeTempo!==null){
-    clearInterval(tempoInterval);
-    document.getElementById('tc'+activeTempo).classList.remove('playing');
-  }
-  activeTempo=idx;
-  document.getElementById('tc'+idx).classList.add('playing');
-  var bpm=tempos[idx].bpmVal;
-  var interval=60000/bpm;
-  var beat=0;
-  var freqs=[261.63,329.63,392.00,329.63];
-  function tick(){
-    playTone(freqs[beat%4],0.08,0,'square');
-    beat++;
-  }
-  tick();
-  tempoInterval=setInterval(tick,interval);
+  if(activeTempo===idx){clearInterval(tempoInterval);tempoInterval=null;activeTempo=null;document.getElementById('tc'+idx).classList.remove('playing');return;}
+  if(activeTempo!==null){clearInterval(tempoInterval);document.getElementById('tc'+activeTempo).classList.remove('playing');}
+  activeTempo=idx;document.getElementById('tc'+idx).classList.add('playing');
+  var bpm=tempos[idx].bpmVal,interval=60000/bpm,beat=0,freqs=[261.63,329.63,392.00,329.63];
+  function tick(){playTone(freqs[beat%4],0.08,0,'square');beat++;}
+  tick();tempoInterval=setInterval(tick,interval);
 }
 
 // ═══════════════════════════════════════════
-// CHORDS DATA
+// CHORD DATA
 // ═══════════════════════════════════════════
-// Guitar frets: [E A D G B e] string, number=fret, -1=mute, 0=open
+// Guitar: frets=[E,A,D,G,B,e], -1=mute, 0=open
 var guitarChords={
   major:{
-    'C':{frets:[-1,3,2,0,1,0],fingers:'x-3-2-0-1-0',desc:{id:'Akord C Mayor — dasar untuk pemula',en:'C Major — beginner friendly chord'},freqs:[261.63,329.63,392.00,523.25]},
-    'D':{frets:[-1,-1,0,2,3,2],fingers:'x-x-0-2-3-2',desc:{id:'Akord D Mayor — suara cerah',en:'D Major — bright sound'},freqs:[293.66,369.99,440.00,587.33]},
-    'E':{frets:[0,2,2,1,0,0],fingers:'0-2-2-1-0-0',desc:{id:'Akord E Mayor — salah satu termudah',en:'E Major — one of the easiest open chords'},freqs:[329.63,415.30,493.88,659.25]},
-    'G':{frets:[3,2,0,0,0,3],fingers:'3-2-0-0-0-3',desc:{id:'Akord G Mayor — serbaguna',en:'G Major — versatile open chord'},freqs:[392.00,493.88,587.33,783.99]},
-    'A':{frets:[-1,0,2,2,2,0],fingers:'x-0-2-2-2-0',desc:{id:'Akord A Mayor — mudah untuk pemula',en:'A Major — easy for beginners'},freqs:[440.00,554.37,659.25,880.00]},
-    'F':{frets:[1,3,3,2,1,1],fingers:'Barre fret 1',desc:{id:'Akord F Mayor — barre chord pertama',en:'F Major — first barre chord'},freqs:[349.23,440.00,523.25,698.46]},
+    'C': {frets:[-1,3,2,0,1,0],fingers:'x-3-2-0-1-0',desc:{id:'C Mayor — dasar untuk pemula',en:'C Major — beginner friendly'},freqs:[261.63,329.63,392.00,523.25]},
+    'D': {frets:[-1,-1,0,2,3,2],fingers:'x-x-0-2-3-2',desc:{id:'D Mayor — suara cerah',en:'D Major — bright sound'},freqs:[293.66,369.99,440.00,587.33]},
+    'E': {frets:[0,2,2,1,0,0],fingers:'0-2-2-1-0-0',desc:{id:'E Mayor — salah satu termudah',en:'E Major — one of the easiest'},freqs:[329.63,415.30,493.88,659.25]},
+    'F': {frets:[1,3,3,2,1,1],fingers:'Barre fret 1',desc:{id:'F Mayor — barre chord pertama',en:'F Major — first barre chord'},freqs:[349.23,440.00,523.25,698.46]},
+    'G': {frets:[3,2,0,0,0,3],fingers:'3-2-0-0-0-3',desc:{id:'G Mayor — serbaguna',en:'G Major — versatile open chord'},freqs:[392.00,493.88,587.33,783.99]},
+    'A': {frets:[-1,0,2,2,2,0],fingers:'x-0-2-2-2-0',desc:{id:'A Mayor — mudah untuk pemula',en:'A Major — easy for beginners'},freqs:[440.00,554.37,659.25,880.00]},
+    'B': {frets:[-1,2,4,4,4,2],fingers:'x-2-4-4-4-2 (Barre fret 2)',desc:{id:'B Mayor — barre di fret 2',en:'B Major — barre at 2nd fret'},freqs:[493.88,587.33,739.99,987.77]},
   },
   minor:{
     'Am':{frets:[-1,0,2,2,1,0],fingers:'x-0-2-2-1-0',desc:{id:'A Minor — melankolis',en:'A Minor — melancholic sound'},freqs:[440.00,523.25,659.25,880.00]},
-    'Em':{frets:[0,2,2,0,0,0],fingers:'0-2-2-0-0-0',desc:{id:'E Minor — gelap & kuat',en:'E Minor — dark & powerful'},freqs:[329.63,392.00,493.88,659.25]},
-    'Dm':{frets:[-1,-1,0,2,3,1],fingers:'x-x-0-2-3-1',desc:{id:'D Minor — dramatis',en:'D Minor — dramatic tone'},freqs:[293.66,349.23,440.00,587.33]},
-    'Cm':{frets:[-1,3,5,5,4,3],fingers:'Barre fret 3',desc:{id:'C Minor — dalam & serius',en:'C Minor — deep & serious'},freqs:[261.63,311.13,392.00,523.25]},
-    'Gm':{frets:[3,5,5,3,3,3],fingers:'Barre fret 3',desc:{id:'G Minor — melodi indah',en:'G Minor — beautiful melody'},freqs:[392.00,466.16,587.33,783.99]},
     'Bm':{frets:[-1,2,4,4,3,2],fingers:'Barre fret 2',desc:{id:'B Minor — sering di pop & rock',en:'B Minor — common in pop & rock'},freqs:[493.88,587.33,739.99,987.77]},
+    'Cm':{frets:[-1,3,5,5,4,3],fingers:'Barre fret 3',desc:{id:'C Minor — dalam & serius',en:'C Minor — deep & serious'},freqs:[261.63,311.13,392.00,523.25]},
+    'Dm':{frets:[-1,-1,0,2,3,1],fingers:'x-x-0-2-3-1',desc:{id:'D Minor — dramatis',en:'D Minor — dramatic tone'},freqs:[293.66,349.23,440.00,587.33]},
+    'Em':{frets:[0,2,2,0,0,0],fingers:'0-2-2-0-0-0',desc:{id:'E Minor — gelap & kuat',en:'E Minor — dark & powerful'},freqs:[329.63,392.00,493.88,659.25]},
+    'Fm':{frets:[1,3,3,1,1,1],fingers:'Barre fret 1',desc:{id:'F Minor — barre fret 1, kelam',en:'F Minor — barre at fret 1, dark tone'},freqs:[349.23,415.30,523.25,698.46]},
+    'Gm':{frets:[3,5,5,3,3,3],fingers:'Barre fret 3',desc:{id:'G Minor — melodi indah',en:'G Minor — beautiful melody'},freqs:[392.00,466.16,587.33,783.99]},
   },
   seventh:{
-    'G7':{frets:[3,2,0,0,0,1],fingers:'3-2-0-0-0-1',desc:{id:'G7 — dominan, tegang',en:'G7 — dominant, tense'},freqs:[392.00,493.88,587.33,698.46]},
     'C7':{frets:[-1,3,2,3,1,0],fingers:'x-3-2-3-1-0',desc:{id:'C7 — blues feeling',en:'C7 — bluesy feeling'},freqs:[261.63,329.63,392.00,466.16]},
     'D7':{frets:[-1,-1,0,2,1,2],fingers:'x-x-0-2-1-2',desc:{id:'D7 — funky & jazzy',en:'D7 — funky & jazzy'},freqs:[293.66,369.99,440.00,523.25]},
-    'A7':{frets:[-1,0,2,0,2,0],fingers:'x-0-2-0-2-0',desc:{id:'A7 — blues klasik',en:'A7 — classic blues'},freqs:[440.00,554.37,659.25,784.00]},
     'E7':{frets:[0,2,0,1,0,0],fingers:'0-2-0-1-0-0',desc:{id:'E7 — kaya harmoni',en:'E7 — rich harmony'},freqs:[329.63,415.30,493.88,622.25]},
+    'G7':{frets:[3,2,0,0,0,1],fingers:'3-2-0-0-0-1',desc:{id:'G7 — dominan, tegang',en:'G7 — dominant, tense'},freqs:[392.00,493.88,587.33,698.46]},
+    'A7':{frets:[-1,0,2,0,2,0],fingers:'x-0-2-0-2-0',desc:{id:'A7 — blues klasik',en:'A7 — classic blues'},freqs:[440.00,554.37,659.25,784.00]},
     'B7':{frets:[-1,2,1,2,0,2],fingers:'x-2-1-2-0-2',desc:{id:'B7 — jazzy dominan',en:'B7 — jazzy dominant'},freqs:[493.88,587.33,739.99,880.00]},
   }
 };
 
+// Bass: 4 strings [G,D,A,E], strings indexed 1-4 (E=4,A=3,D=2,G=1)
 var bassChords={
   major:{
-    'C':{strings:[{s:3,f:3}],open:[],desc:{id:'Bass C: fret 3, senar A',en:'Bass C: 3rd fret, A string'},freqs:[130.81,196.00,261.63]},
-    'D':{strings:[{s:3,f:5}],open:[],desc:{id:'Bass D: fret 5, senar A',en:'Bass D: 5th fret, A string'},freqs:[146.83,220.00,293.66]},
-    'E':{strings:[{s:4,f:0}],open:[4],desc:{id:'Bass E: senar E open',en:'Bass E: open E string'},freqs:[164.81,246.94,329.63]},
-    'G':{strings:[{s:4,f:3}],open:[],desc:{id:'Bass G: fret 3, senar E',en:'Bass G: 3rd fret, E string'},freqs:[196.00,293.66,392.00]},
-    'A':{strings:[{s:3,f:0}],open:[3],desc:{id:'Bass A: senar A open',en:'Bass A: open A string'},freqs:[220.00,329.63,440.00]},
-    'F':{strings:[{s:4,f:1}],open:[],desc:{id:'Bass F: fret 1, senar E',en:'Bass F: 1st fret, E string'},freqs:[174.61,261.63,349.23]},
+    'C': {strings:[{s:3,f:3}],open:[],desc:{id:'Bass C: fret 3, senar A',en:'Bass C: 3rd fret, A string'},freqs:[130.81,196.00,261.63]},
+    'D': {strings:[{s:3,f:5}],open:[],desc:{id:'Bass D: fret 5, senar A',en:'Bass D: 5th fret, A string'},freqs:[146.83,220.00,293.66]},
+    'E': {strings:[],open:[4],desc:{id:'Bass E: senar E open',en:'Bass E: open E string'},freqs:[164.81,246.94,329.63]},
+    'F': {strings:[{s:4,f:1}],open:[],desc:{id:'Bass F: fret 1, senar E',en:'Bass F: 1st fret, E string'},freqs:[174.61,261.63,349.23]},
+    'G': {strings:[{s:4,f:3}],open:[],desc:{id:'Bass G: fret 3, senar E',en:'Bass G: 3rd fret, E string'},freqs:[196.00,293.66,392.00]},
+    'A': {strings:[],open:[3],desc:{id:'Bass A: senar A open',en:'Bass A: open A string'},freqs:[220.00,329.63,440.00]},
+    'B': {strings:[{s:3,f:2}],open:[],desc:{id:'Bass B: fret 2, senar A',en:'Bass B: 2nd fret, A string'},freqs:[246.94,369.99,493.88]},
   },
   minor:{
-    'Am':{strings:[{s:3,f:0}],open:[3],desc:{id:'Bass Am: root A, senar A open',en:'Bass Am: root A, open A string'},freqs:[220.00,329.63,440.00]},
-    'Em':{strings:[{s:4,f:0}],open:[4],desc:{id:'Bass Em: root E, senar E open',en:'Bass Em: root E, open E string'},freqs:[164.81,246.94,329.63]},
-    'Dm':{strings:[{s:3,f:5}],open:[],desc:{id:'Bass Dm: fret 5, senar A',en:'Bass Dm: 5th fret, A string'},freqs:[146.83,220.00,293.66]},
-    'Cm':{strings:[{s:4,f:3}],open:[],desc:{id:'Bass Cm: fret 3, senar A',en:'Bass Cm: 3rd fret, A string'},freqs:[130.81,196.00,261.63]},
-    'Gm':{strings:[{s:4,f:3}],open:[],desc:{id:'Bass Gm: fret 3, senar E',en:'Bass Gm: 3rd fret, E string'},freqs:[196.00,293.66,392.00]},
+    'Am':{strings:[],open:[3],desc:{id:'Bass Am: root A, senar A open',en:'Bass Am: open A string'},freqs:[220.00,329.63,440.00]},
     'Bm':{strings:[{s:3,f:2}],open:[],desc:{id:'Bass Bm: fret 2, senar A',en:'Bass Bm: 2nd fret, A string'},freqs:[246.94,369.99,493.88]},
+    'Cm':{strings:[{s:4,f:3}],open:[],desc:{id:'Bass Cm: fret 3, senar A (root C)',en:'Bass Cm: 3rd fret, A string'},freqs:[130.81,196.00,261.63]},
+    'Dm':{strings:[{s:3,f:5}],open:[],desc:{id:'Bass Dm: fret 5, senar A',en:'Bass Dm: 5th fret, A string'},freqs:[146.83,220.00,293.66]},
+    'Em':{strings:[],open:[4],desc:{id:'Bass Em: root E, senar E open',en:'Bass Em: open E string'},freqs:[164.81,246.94,329.63]},
+    'Fm':{strings:[{s:4,f:1}],open:[],desc:{id:'Bass Fm: fret 1, senar E',en:'Bass Fm: 1st fret, E string'},freqs:[174.61,261.63,349.23]},
+    'Gm':{strings:[{s:4,f:3}],open:[],desc:{id:'Bass Gm: fret 3, senar E',en:'Bass Gm: 3rd fret, E string'},freqs:[196.00,293.66,392.00]},
   },
   seventh:{
-    'G7':{strings:[{s:4,f:3}],open:[],desc:{id:'Bass G7: fret 3, senar E',en:'Bass G7: 3rd fret, E string'},freqs:[196.00,293.66,349.23]},
     'C7':{strings:[{s:3,f:3}],open:[],desc:{id:'Bass C7: fret 3, senar A',en:'Bass C7: 3rd fret, A string'},freqs:[130.81,196.00,233.08]},
     'D7':{strings:[{s:3,f:5}],open:[],desc:{id:'Bass D7: fret 5, senar A',en:'Bass D7: 5th fret, A string'},freqs:[146.83,220.00,261.63]},
-    'A7':{strings:[{s:3,f:0}],open:[3],desc:{id:'Bass A7: root A, senar A open',en:'Bass A7: open A string'},freqs:[220.00,329.63,392.00]},
-    'E7':{strings:[{s:4,f:0}],open:[4],desc:{id:'Bass E7: root E, senar E open',en:'Bass E7: open E string'},freqs:[164.81,246.94,311.13]},
+    'E7':{strings:[],open:[4],desc:{id:'Bass E7: root E, senar E open',en:'Bass E7: open E string'},freqs:[164.81,246.94,311.13]},
+    'G7':{strings:[{s:4,f:3}],open:[],desc:{id:'Bass G7: fret 3, senar E',en:'Bass G7: 3rd fret, E string'},freqs:[196.00,293.66,349.23]},
+    'A7':{strings:[],open:[3],desc:{id:'Bass A7: root A, senar A open',en:'Bass A7: open A string'},freqs:[220.00,329.63,392.00]},
     'B7':{strings:[{s:3,f:2}],open:[],desc:{id:'Bass B7: fret 2, senar A',en:'Bass B7: 2nd fret, A string'},freqs:[246.94,369.99,440.00]},
   }
 };
 
-var currentInstrument='guitar';
-var currentChordType='major';
-var currentChord=null;
+// Keyboard: notes are note names (ignoring octave), shown on piano key SVG
+var keyboardChords={
+  major:{
+    'C': {notes:['C','E','G'],      desc:{id:'C Mayor — C E G, sangat umum',en:'C Major — C E G, very common'},freqs:[261.63,329.63,392.00,523.25]},
+    'D': {notes:['D','F#','A'],     desc:{id:'D Mayor — D F# A',en:'D Major — D F# A'},freqs:[293.66,369.99,440.00,587.33]},
+    'E': {notes:['E','G#','B'],     desc:{id:'E Mayor — E G# B',en:'E Major — E G# B'},freqs:[329.63,415.30,493.88,659.25]},
+    'F': {notes:['F','A','C'],      desc:{id:'F Mayor — F A C',en:'F Major — F A C'},freqs:[349.23,440.00,523.25,698.46]},
+    'G': {notes:['G','B','D'],      desc:{id:'G Mayor — G B D',en:'G Major — G B D'},freqs:[392.00,493.88,587.33,783.99]},
+    'A': {notes:['A','C#','E'],     desc:{id:'A Mayor — A C# E',en:'A Major — A C# E'},freqs:[440.00,554.37,659.25,880.00]},
+    'B': {notes:['B','D#','F#'],    desc:{id:'B Mayor — B D# F#',en:'B Major — B D# F#'},freqs:[493.88,587.33,739.99,987.77]},
+  },
+  minor:{
+    'Am':{notes:['A','C','E'],      desc:{id:'A Minor — A C E, melankolis',en:'A Minor — A C E, melancholic'},freqs:[440.00,523.25,659.25,880.00]},
+    'Bm':{notes:['B','D','F#'],     desc:{id:'B Minor — B D F#',en:'B Minor — B D F#'},freqs:[493.88,587.33,739.99,987.77]},
+    'Cm':{notes:['C','Eb','G'],     desc:{id:'C Minor — C Eb G',en:'C Minor — C Eb G'},freqs:[261.63,311.13,392.00,523.25]},
+    'Dm':{notes:['D','F','A'],      desc:{id:'D Minor — D F A, dramatis',en:'D Minor — D F A, dramatic'},freqs:[293.66,349.23,440.00,587.33]},
+    'Em':{notes:['E','G','B'],      desc:{id:'E Minor — E G B, gelap',en:'E Minor — E G B, dark'},freqs:[329.63,392.00,493.88,659.25]},
+    'Fm':{notes:['F','Ab','C'],     desc:{id:'F Minor — F Ab C, kelam',en:'F Minor — F Ab C, dark'},freqs:[349.23,415.30,523.25,698.46]},
+    'Gm':{notes:['G','Bb','D'],     desc:{id:'G Minor — G Bb D',en:'G Minor — G Bb D'},freqs:[392.00,466.16,587.33,783.99]},
+  },
+  seventh:{
+    'C7': {notes:['C','E','G','Bb'],  desc:{id:'C7 — C E G Bb, blues',en:'C7 — C E G Bb, bluesy'},freqs:[261.63,329.63,392.00,466.16]},
+    'D7': {notes:['D','F#','A','C'],  desc:{id:'D7 — D F# A C',en:'D7 — D F# A C'},freqs:[293.66,369.99,440.00,523.25]},
+    'E7': {notes:['E','G#','B','D'],  desc:{id:'E7 — E G# B D',en:'E7 — E G# B D'},freqs:[329.63,415.30,493.88,622.25]},
+    'G7': {notes:['G','B','D','F'],   desc:{id:'G7 — G B D F, dominan',en:'G7 — G B D F, dominant'},freqs:[392.00,493.88,587.33,698.46]},
+    'A7': {notes:['A','C#','E','G'],  desc:{id:'A7 — A C# E G',en:'A7 — A C# E G'},freqs:[440.00,554.37,659.25,784.00]},
+    'B7': {notes:['B','D#','F#','A'], desc:{id:'B7 — B D# F# A, jazzy',en:'B7 — B D# F# A, jazzy'},freqs:[493.88,587.33,739.99,880.00]},
+  }
+};
 
-function setInstrument(inst){
-  currentInstrument=inst;
-  document.querySelectorAll('#panel1 .toggle-group:first-child .toggle-btn').forEach(function(b){
-    b.classList.toggle('active',b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+inst+"'"));
-  });
-  closeChordDetail();
-  renderChordGrid();
-}
-
-function setChordType(type){
-  currentChordType=type;
-  document.querySelectorAll('#chordTypeToggle .toggle-btn').forEach(function(b){
-    b.classList.toggle('active',b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+type+"'"));
-  });
-  closeChordDetail();
-  renderChordGrid();
-}
-
-function renderChordGrid(){
-  var data=currentInstrument==='guitar'?guitarChords:bassChords;
-  var chords=data[currentChordType];
-  var grid=document.getElementById('chordGrid');
-  grid.innerHTML='';
-  Object.keys(chords).forEach(function(name){
-    var div=document.createElement('div');
-    div.className='chord-card';
-    div.innerHTML='<div class="chord-name">'+name+'</div>'
-      +'<div style="font-size:11px;color:var(--muted);">'+chords[name].desc[lang]+'</div>';
-    div.onclick=function(){showChordDetail(name,chords[name]);};
-    grid.appendChild(div);
-  });
-  var lbl=document.getElementById('chordSectionLabel');
-  if(lbl)lbl.textContent=(currentInstrument==='guitar'?'Chord Gitar':'Chord Bass')+' — '+(currentChordType==='major'?'Major':currentChordType==='minor'?'Minor':'7th');
-}
-
-function buildGuitarDiagram(frets,name){
+// ═══════════════════════════════════════════
+// CHORD DIAGRAM BUILDERS
+// ═══════════════════════════════════════════
+function buildGuitarDiagram(frets, color){
+  color=color||'#7C3AED';
   var strings=['e','B','G','D','A','E'];
-  var startFret=Math.min.apply(null,frets.filter(function(f){return f>0;}));
-  if(startFret>4)startFret=startFret;else startFret=1;
+  var positiveFrets=frets.filter(function(f){return f>0;});
+  var startFret=positiveFrets.length?Math.min.apply(null,positiveFrets):1;
+  if(startFret<=1)startFret=1;
   var numFrets=4;
   var html='<div class="chord-diagram">';
-  html+='<div style="font-size:10px;color:var(--muted);margin-bottom:4px;">';
-  frets.forEach(function(f,i){
+  // Open/mute row above nut
+  html+='<div style="display:flex;margin-bottom:2px;">';
+  frets.forEach(function(f){
+    html+='<div style="width:18px;text-align:center;">';
     if(f===-1)html+='<span class="fret-mute">✕</span>';
     else if(f===0)html+='<span class="fret-open">○</span>';
-    else html+='<span style="font-size:10px;color:transparent;">‧</span>';
+    else html+='<span style="font-size:10px;color:transparent;">·</span>';
+    html+='</div>';
   });
   html+='</div>';
-  html+='<table class="fretboard" style="border-collapse:collapse;">';
-  // nut line if starts from fret 1
+  // Nut / fret number
   if(startFret===1){
-    html+='<tr><td colspan="6" style="height:4px;background:#374151;border:none;"></td></tr>';
+    html+='<div style="height:4px;background:#374151;border-radius:2px 2px 0 0;margin-bottom:0;"></div>';
   } else {
-    html+='<tr><td colspan="5" style="border:none;font-size:9px;color:var(--muted);text-align:right;padding-right:3px;">'+startFret+'fr</td></tr>';
+    html+='<div style="font-size:9px;color:var(--muted);text-align:right;padding-right:2px;">'+startFret+'fr</div>';
   }
+  // Fretboard
+  html+='<table class="fretboard">';
   for(var row=0;row<numFrets;row++){
     html+='<tr>';
     for(var col=0;col<6;col++){
-      var f=frets[5-col]; // strings reversed (E to e left to right)
-      html+='<td style="width:20px;height:18px;border:1px solid #9CA3AF;">';
-      if(f>0&&f===startFret+row)html+='<div class="fret-dot"></div>';
+      var f=frets[5-col];
+      html+='<td>';
+      if(f>0&&f===startFret+row)html+='<div class="fret-dot" style="background:'+color+';"></div>';
+      html+='</td>';
+    }
+    html+='</tr>';
+  }
+  // String labels
+  html+='<tr>';
+  strings.forEach(function(s){html+='<td class="string-label">'+s+'</td>';});
+  html+='</tr>';
+  html+='</table></div>';
+  return html;
+}
+
+function buildBassDiagram(chord, color){
+  color=color||'#7C3AED';
+  // 4 strings: G(1) D(2) A(3) E(4), show 4 frets
+  var strings=['G','D','A','E'];
+  var html='<div class="chord-diagram">';
+  // Open strings above nut
+  html+='<div style="display:flex;margin-bottom:2px;">';
+  for(var s=1;s<=4;s++){
+    html+='<div style="width:18px;text-align:center;">';
+    if(chord.open.indexOf(s)>=0)html+='<span class="fret-open">○</span>';
+    else html+='<span style="font-size:10px;color:transparent;">·</span>';
+    html+='</div>';
+  }
+  html+='</div>';
+  html+='<div style="height:4px;background:#374151;border-radius:2px 2px 0 0;"></div>';
+  html+='<table class="fretboard">';
+  for(var row=0;row<4;row++){
+    html+='<tr>';
+    for(var s=1;s<=4;s++){
+      html+='<td>';
+      var hasDot=false;
+      chord.strings.forEach(function(pos){if(pos.s===s&&pos.f===row+1)hasDot=true;});
+      if(hasDot)html+='<div class="fret-dot" style="background:'+color+';"></div>';
       html+='</td>';
     }
     html+='</tr>';
@@ -823,73 +689,133 @@ function buildGuitarDiagram(frets,name){
   return html;
 }
 
-function buildBassDiagram(chord){
-  var html='<div class="chord-diagram">';
-  html+='<table class="fretboard" style="border-collapse:collapse;">';
-  var strings=['G','D','A','E']; // bass 4 string
-  // Simple 4-fret, 4-string diagram
-  html+='<tr><td colspan="4" style="height:4px;background:#374151;border:none;border-radius:2px 2px 0 0;"></td></tr>';
-  for(var row=0;row<4;row++){
-    html+='<tr>';
-    for(var col=0;col<4;col++){
-      var sIdx=col; // E=3, A=2, D=1, G=0
-      var strNum=4-col; // E string=4, A=3, D=2, G=1
-      var hasDot=false;
-      chord.strings.forEach(function(pos){if(pos.s===strNum&&pos.f===row+1)hasDot=true;});
-      html+='<td style="width:22px;height:18px;border:1px solid #9CA3AF;">';
-      if(hasDot)html+='<div class="fret-dot"></div>';
-      html+='</td>';
+function buildKeyboardDiagram(notes, color){
+  color=color||'#7C3AED';
+  // One octave C to B = 7 white keys
+  var WW=13,WH=48,BW=8,BH=30;
+  var whiteNames=['C','D','E','F','G','A','B'];
+  var noteSet={};
+  notes.forEach(function(n){noteSet[n]=true;});
+  // flatten enharmonics
+  var enharmonic={'Db':'C#','Eb':'D#','Gb':'F#','Ab':'G#','Bb':'A#'};
+  var normSet={};
+  Object.keys(noteSet).forEach(function(n){
+    normSet[n]=true;
+    if(enharmonic[n])normSet[enharmonic[n]]=true;
+    // reverse: if C# given, also set Db
+    Object.keys(enharmonic).forEach(function(k){if(enharmonic[k]===n)normSet[k]=true;});
+  });
+  var totalW=7*WW;
+  var svg='<svg viewBox="0 0 '+(totalW+1)+' '+(WH+8)+'" width="'+(totalW+1)+'" xmlns="http://www.w3.org/2000/svg">';
+  // White keys
+  for(var i=0;i<7;i++){
+    var nm=whiteNames[i];
+    var x=i*WW;
+    var hi=normSet[nm];
+    svg+='<rect x="'+x+'" y="1" width="'+(WW-1)+'" height="'+WH+'" rx="2" fill="'+(hi?color:'#ffffff')+'" stroke="#9CA3AF" stroke-width="0.7"/>';
+    if(hi){
+      svg+='<circle cx="'+(x+WW/2)+'" cy="'+(WH-8)+'" r="4" fill="rgba(255,255,255,0.85)"/>';
     }
-    html+='</tr>';
+    svg+='<text x="'+(x+WW/2)+'" y="'+(WH+7)+'" text-anchor="middle" font-size="7" fill="'+(hi?color:'#9CA3AF')+'" font-weight="'+(hi?'800':'500')+'">'+nm+'</text>';
   }
-  html+='<tr>';
-  strings.forEach(function(s){html+='<td class="string-label">'+s+'</td>';});
-  html+='</tr>';
-  html+='</table>';
-  // open strings
-  if(chord.open.length){
-    html+='<div style="font-size:10px;color:var(--c4);font-weight:700;margin-top:2px;">';
-    chord.open.forEach(function(s){html+=(s===4?'E':s===3?'A':s===2?'D':'G')+': ○ ';});
-    html+='</div>';
-  }
-  html+='</div>';
-  return html;
+  // Black keys: positions as fractional key index
+  var bkeys=[
+    {note:'C#',xf:0.62},{note:'D#',xf:1.62},{note:'F#',xf:3.62},{note:'G#',xf:4.62},{note:'A#',xf:5.62}
+  ];
+  bkeys.forEach(function(bk){
+    var x=bk.xf*WW;
+    var hi=normSet[bk.note]||normSet[enharmonic[bk.note]||'']
+       ||normSet[Object.keys(enharmonic).find(function(k){return enharmonic[k]===bk.note;})||''];
+    svg+='<rect x="'+x+'" y="1" width="'+BW+'" height="'+BH+'" rx="1" fill="'+(hi?color:'#1F2937')+'" stroke="none"/>';
+    if(hi){
+      var label=bk.note.replace('#','♯');
+      svg+='<circle cx="'+(x+BW/2)+'" cy="'+(BH-6)+'" r="3" fill="rgba(255,255,255,0.75)"/>';
+    }
+  });
+  svg+='</svg>';
+  return svg;
 }
 
-function showChordDetail(name,chord){
-  currentChord=chord;
-  document.getElementById('chordDisplayCard').style.display='none';
-  var detailCard=document.getElementById('chordDetailCard');
-  detailCard.style.display='block';
-  document.getElementById('chordDetailName').textContent=name;
-  var diagEl=document.getElementById('chordDetailDiagram');
-  if(currentInstrument==='guitar')diagEl.innerHTML=buildGuitarDiagram(chord.frets,name);
-  else diagEl.innerHTML=buildBassDiagram(chord);
-  var info=document.getElementById('chordDetailInfo');
-  info.innerHTML='<div style="margin-bottom:6px;"><strong>'+(lang==='id'?'Posisi:':'Position:')+'</strong> '+chord.fingers+'</div>'
-    +'<div>'+chord.desc[lang]+'</div>';
+// ═══════════════════════════════════════════
+// CHORD DISPLAY — SCROLLABLE ALL-IN-ONE
+// ═══════════════════════════════════════════
+var currentInstrument='guitar';
+function setInstrument(inst){
+  currentInstrument=inst;
+  ['guitar','bass','keyboard'].forEach(function(i){
+    document.getElementById('instr'+i.charAt(0).toUpperCase()+i.slice(1)).classList.toggle('active',i===inst);
+  });
+  renderChordDisplay();
 }
 
-function closeChordDetail(){
-  document.getElementById('chordDetailCard').style.display='none';
-  document.getElementById('chordDisplayCard').style.display='block';
+function renderChordDisplay(){
+  var area=document.getElementById('chordScrollArea');
+  area.innerHTML='';
+  var data=currentInstrument==='guitar'?guitarChords:currentInstrument==='bass'?bassChords:keyboardChords;
+  var sections=[
+    {key:'major',  color:'#7C3AED', emoji:'🎵'},
+    {key:'minor',  color:'#EC4899', emoji:'🎶'},
+    {key:'seventh',color:'#F59E0B', emoji:'🎸'},
+  ];
+  sections.forEach(function(sec){
+    var chords=data[sec.key];
+    if(!chords||!Object.keys(chords).length)return;
+    var card=document.createElement('div');card.className='card';card.style.marginBottom='12px';
+    // Section header
+    var hdr=document.createElement('div');hdr.className='chord-section-title';
+    hdr.style.color=sec.color;hdr.style.background=sec.color+'18';
+    hdr.textContent=sec.emoji+' '+(lang==='id'?t('chord'+sec.key.charAt(0).toUpperCase()+sec.key.slice(1)+'Section'):t('chord'+sec.key.charAt(0).toUpperCase()+sec.key.slice(1)+'Section'));
+    card.appendChild(hdr);
+    // Grid
+    var grid=document.createElement('div');grid.className='chord-inline-grid';
+    Object.keys(chords).forEach(function(name){
+      var chord=chords[name];
+      var cc=document.createElement('div');cc.className='chord-inline-card';
+      // Name
+      var nm=document.createElement('div');nm.className='chord-inline-name';nm.style.color=sec.color;nm.textContent=name;
+      cc.appendChild(nm);
+      // Diagram
+      var dw=document.createElement('div');dw.style.cssText='display:flex;justify-content:center;margin:6px 0;';
+      if(currentInstrument==='guitar')dw.innerHTML=buildGuitarDiagram(chord.frets,sec.color);
+      else if(currentInstrument==='bass')dw.innerHTML=buildBassDiagram(chord,sec.color);
+      else dw.innerHTML=buildKeyboardDiagram(chord.notes,sec.color);
+      cc.appendChild(dw);
+      // Desc
+      var de=document.createElement('div');de.className='chord-inline-desc';de.textContent=chord.desc[lang];
+      cc.appendChild(de);
+      // Play button
+      var pb=document.createElement('button');
+      pb.style.cssText='margin-top:7px;padding:4px 12px;border-radius:6px;border:none;background:'+sec.color+';color:#fff;font-size:10px;font-weight:700;cursor:pointer;';
+      pb.textContent='🔊 Play';
+      pb.onclick=(function(c){return function(e){e.stopPropagation();playChordSound(c);};})(chord);
+      cc.appendChild(pb);
+      grid.appendChild(cc);
+    });
+    card.appendChild(grid);
+    area.appendChild(card);
+  });
 }
 
 function playChordSound(chord){
   if(!chord||!chord.freqs)return;
-  chord.freqs.forEach(function(f,i){playTone(f,0.8,i*0.05);});
+  var type=currentInstrument==='keyboard'?'sine':'triangle';
+  chord.freqs.forEach(function(f,i){playTone(f,0.7,i*0.04,type);});
 }
 
-// ═══════════════════════════════════════════
-// PLAYGROUND
-// ═══════════════════════════════════════════
-var playNotes=[]; // {note, x, y, el}
-var dragNote=null;
-var dragOffX=0,dragOffY=0;
+function t(id){return TR[id]?TR[id][lang]:id;}
 
+// ═══════════════════════════════════════════
+// PLAYGROUND — with Y-SNAP
+// ═══════════════════════════════════════════
+// Staff lines in playStaffEl at y=20,34,48,62,76 (within playStaffEl, margin-top=30px in playStage)
+// Treble clef: bottom line(y=76)=E4, up by 7px per step
+// In playStage coords = 30 + staffY. Note ball top = 30 + noteStaffY - 8
+var noteYSnapInStage={
+  'C4':112,'D4':105,'E4':98,'F4':91,'G4':84,'A4':77,'B4':70,'C5':63
+};
 var paletteNotes=[
-  {symbol:'𝅝',label:'C4',note:'C4',color:'#7C3AED'},
-  {symbol:'𝅝',label:'D4',note:'D4',color:'#EC4899'},
+  {symbol:'♩',label:'C4',note:'C4',color:'#7C3AED'},
+  {symbol:'♩',label:'D4',note:'D4',color:'#EC4899'},
   {symbol:'♩',label:'E4',note:'E4',color:'#F59E0B'},
   {symbol:'♩',label:'F4',note:'F4',color:'#10B981'},
   {symbol:'♩',label:'G4',note:'G4',color:'#3B82F6'},
@@ -897,122 +823,124 @@ var paletteNotes=[
   {symbol:'♩',label:'B4',note:'B4',color:'#EF4444'},
   {symbol:'♩',label:'C5',note:'C5',color:'#06B6D4'},
 ];
+var playNotes=[];
+var dragNote=null;
 
 function buildPlayground(){
-  var stage=document.getElementById('playStageEl');
-  var staffEl=document.getElementById('playStaffEl');
-  staffEl.innerHTML='';
-  // 5 staff lines
-  var lineY=[20,34,48,62,76];
-  lineY.forEach(function(y){
-    var l=document.createElement('div');
-    l.className='play-staff-line';
-    l.style.top=y+'px';
-    staffEl.appendChild(l);
+  var staffEl=document.getElementById('playStaffEl');staffEl.innerHTML='';
+  // Staff lines
+  [20,34,48,62,76].forEach(function(y){
+    var l=document.createElement('div');l.className='play-staff-line';l.style.top=y+'px';staffEl.appendChild(l);
   });
   // Clef
   var clef=document.createElement('div');
-  clef.style.cssText='position:absolute;left:2px;top:-12px;font-size:56px;line-height:1;color:#9CA3AF;';
-  clef.textContent='𝄞';
-  staffEl.appendChild(clef);
+  clef.style.cssText='position:absolute;left:2px;top:-12px;font-size:56px;line-height:1;color:#9CA3AF;pointer-events:none;';
+  clef.textContent='𝄞';staffEl.appendChild(clef);
+  // Note labels on left
+  var labels={C4:'C4',E4:'E4',G4:'G4',B4:'B4',C5:'C5'};
+  Object.keys(labels).forEach(function(note){
+    var y=noteYSnapInStage[note]-30+8; // back to staffEl coords
+    var lbl=document.createElement('div');
+    lbl.style.cssText='position:absolute;right:4px;top:'+y+'px;font-size:8px;color:#D1D5DB;font-weight:700;pointer-events:none;';
+    lbl.textContent=labels[note];
+    staffEl.appendChild(lbl);
+  });
 
   // Palette
-  var pal=document.getElementById('notePalette');
-  pal.innerHTML='';
+  var pal=document.getElementById('notePalette');pal.innerHTML='';
   paletteNotes.forEach(function(pn){
-    var btn=document.createElement('div');
-    btn.className='palette-note';
-    btn.title=pn.label;
-    btn.innerHTML='<div style="font-size:22px;color:'+pn.color+'">'+pn.symbol+'</div><div style="font-size:9px;font-weight:700;color:'+pn.color+'">'+pn.label+'</div>';
+    var btn=document.createElement('div');btn.className='palette-note';
+    btn.innerHTML='<div style="font-size:20px;color:'+pn.color+'">'+pn.symbol+'</div><div style="font-size:9px;font-weight:800;color:'+pn.color+'">'+pn.label+'</div>';
     btn.draggable=true;
-    btn.addEventListener('dragstart',function(e){
-      e.dataTransfer.setData('note',JSON.stringify(pn));
-    });
+    btn.addEventListener('dragstart',function(e){e.dataTransfer.setData('note',JSON.stringify(pn));});
     btn.addEventListener('touchstart',function(e){
       e.preventDefault();
       var touch=e.touches[0];
-      startDragNote(pn,touch.clientX,touch.clientY);
+      startTouchNote(pn,touch.clientX,touch.clientY);
     },{passive:false});
     pal.appendChild(btn);
   });
 
-  // Drop zone on stage
-  var stageEl=document.getElementById('playStage');
-  stageEl.addEventListener('dragover',function(e){e.preventDefault();});
-  stageEl.addEventListener('drop',function(e){
+  // Stage drop
+  var stage=document.getElementById('playStage');
+  stage.addEventListener('dragover',function(e){e.preventDefault();});
+  stage.addEventListener('drop',function(e){
     e.preventDefault();
     var pn=JSON.parse(e.dataTransfer.getData('note'));
-    var rect=stageEl.getBoundingClientRect();
+    var rect=stage.getBoundingClientRect();
     var x=e.clientX-rect.left-12;
-    var y=e.clientY-rect.top-12;
-    placeNote(pn,x,y,stageEl);
+    placeNote(pn,x,stage);
   });
-  stageEl.addEventListener('touchmove',function(e){
-    if(!dragNote)return;
-    e.preventDefault();
+  stage.addEventListener('touchmove',function(e){
+    if(!dragNote)return;e.preventDefault();
     var touch=e.touches[0];
-    var rect=stageEl.getBoundingClientRect();
-    dragNote.el.style.left=(touch.clientX-rect.left-dragOffX)+'px';
-    dragNote.el.style.top=(touch.clientY-rect.top-dragOffY)+'px';
+    var rect=stage.getBoundingClientRect();
+    dragNote.ghost.style.left=(touch.clientX-rect.left-15)+'px';
+    dragNote.ghost.style.top=(touch.clientY-rect.top-20)+'px';
   },{passive:false});
-  stageEl.addEventListener('touchend',function(e){
+  stage.addEventListener('touchend',function(e){
     if(!dragNote)return;
     var touch=e.changedTouches[0];
-    var rect=stageEl.getBoundingClientRect();
-    var x=touch.clientX-rect.left-dragOffX;
-    var y=touch.clientY-rect.top-dragOffY;
-    dragNote.el.style.left=x+'px';
-    dragNote.el.style.top=y+'px';
+    var rect=stage.getBoundingClientRect();
+    var x=touch.clientX-rect.left-12;
+    if(dragNote.ghost.parentNode)dragNote.ghost.parentNode.removeChild(dragNote.ghost);
+    placeNote(dragNote.pn,x,stage);
     dragNote=null;
   });
 
   // Scale legend
-  var leg=document.getElementById('scaleLegend');
-  leg.innerHTML='';
+  var leg=document.getElementById('scaleLegend');leg.innerHTML='';
   paletteNotes.forEach(function(pn){
     var chip=document.createElement('div');
-    chip.style.cssText='background:'+pn.color+'20;border:1.5px solid '+pn.color+';border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;color:'+pn.color+';cursor:pointer;';
+    chip.style.cssText='background:'+pn.color+'18;border:1.5px solid '+pn.color+';border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;color:'+pn.color+';cursor:pointer;';
     chip.textContent=pn.label;
     chip.onclick=function(){playTone(noteFreq(pn.note),0.4,0);};
     leg.appendChild(chip);
   });
 }
 
-function startDragNote(pn,clientX,clientY){
-  var stageEl=document.getElementById('playStage');
-  var rect=stageEl.getBoundingClientRect();
-  var el=document.createElement('div');
-  el.className='placed-note';
-  el.style.cssText='left:'+(clientX-rect.left-12)+'px;top:'+(clientY-rect.top-12)+'px;';
-  el.innerHTML='<div style="font-size:24px;color:'+pn.color+'">'+pn.symbol+'</div><div style="font-size:8px;font-weight:700;color:'+pn.color+';text-align:center;">'+pn.label+'</div>';
-  stageEl.appendChild(el);
-  dragNote={pn:pn,el:el};
-  dragOffX=12;dragOffY=12;
-  el.onclick=function(){playTone(noteFreq(pn.note),0.4,0);};
-  playNotes.push({note:pn.note,x:clientX-rect.left,y:clientY-rect.top,el:el});
+function startTouchNote(pn,clientX,clientY){
+  var stage=document.getElementById('playStage');
+  var rect=stage.getBoundingClientRect();
+  var ghost=document.createElement('div');
+  ghost.style.cssText='position:absolute;left:'+(clientX-rect.left-15)+'px;top:'+(clientY-rect.top-20)+'px;pointer-events:none;opacity:0.7;z-index:10;text-align:center;width:30px;';
+  ghost.innerHTML='<div style="font-size:20px;color:'+pn.color+'">'+pn.symbol+'</div>';
+  stage.appendChild(ghost);
+  dragNote={pn:pn,ghost:ghost};
 }
 
-function placeNote(pn,x,y,container){
+function placeNote(pn,rawX,container){
+  var x=Math.max(50,Math.round(rawX/10)*10); // snap X to 10px grid, min 50 (after clef)
+  var snapY=noteYSnapInStage[pn.note]||84;
   var el=document.createElement('div');
   el.className='placed-note';
-  el.style.left=x+'px';
-  el.style.top=y+'px';
-  el.innerHTML='<div style="font-size:24px;color:'+pn.color+'">'+pn.symbol+'</div><div style="font-size:8px;font-weight:700;color:'+pn.color+';text-align:center;">'+pn.label+'</div>';
-  el.onclick=function(){playTone(noteFreq(pn.note),0.4,0);};
+  el.style.cssText='left:'+x+'px;top:'+snapY+'px;position:absolute;text-align:center;width:30px;cursor:pointer;user-select:none;';
+  var inner='';
+  // Ledger line for C4 (middle C — sits below staff)
+  if(pn.note==='C4'){
+    inner+='<div style="position:absolute;left:-5px;right:-5px;top:9px;height:1.5px;background:#9CA3AF;z-index:0;"></div>';
+  }
+  inner+='<div style="position:relative;z-index:1;font-size:20px;color:'+pn.color+';line-height:0.85;">'+pn.symbol+'</div>';
+  inner+='<div style="font-size:7px;font-weight:800;color:'+pn.color+';margin-top:1px;">'+pn.label+'</div>';
+  el.innerHTML=inner;
+  el.onclick=function(){
+    playTone(noteFreq(pn.note),0.4,0);
+    el.style.transform='scale(1.3)';setTimeout(function(){el.style.transform='';},150);
+  };
   container.appendChild(el);
   playNotes.push({note:pn.note,x:x,el:el});
 }
 
 function playAllNotes(){
   var bpm=parseInt(document.getElementById('tempoSelect').value)||120;
-  var noteInterval=60/bpm;
+  var interval=60/bpm;
   var sorted=playNotes.slice().sort(function(a,b){return a.x-b.x;});
   sorted.forEach(function(n,i){
     setTimeout(function(){
-      playTone(noteFreq(n.note),noteInterval*0.9,0);
-      n.el.style.transform='scale(1.3)';
+      playTone(noteFreq(n.note),interval*0.9,0);
+      n.el.style.transform='scale(1.35)';
       setTimeout(function(){n.el.style.transform='';},200);
-    },i*noteInterval*1000);
+    },i*interval*1000);
   });
 }
 
@@ -1022,43 +950,31 @@ function clearStaff(){
 }
 
 // ═══════════════════════════════════════════
-// AI ANALYZER — OFFLINE DATA
+// AI ANALYZER
 // ═══════════════════════════════════════════
 var songDB={
-  // Indonesian Songs
-  'bengawan solo':       {title:'Bengawan Solo',tempo:'Andante',bpm:'~90',key:'C Mayor',chords:['C','G','Am','F'],notes:['E4','D4','C4','E4','G4','A4'],genre:'Keroncong',desc:{id:'Lagu keroncong klasik karya Gesang (1940). Tempo andante, kunci C Mayor, melodi sederhana namun indah.',en:'Classic keroncong song by Gesang (1940). Andante tempo, C Major key, simple yet beautiful melody.'}},
-  'ampar ampar pisang': {title:'Ampar-Ampar Pisang',tempo:'Allegro',bpm:'~130',key:'C Mayor',chords:['C','F','G','C'],notes:['C4','D4','E4','F4','G4'],genre:'Folk/Daerah',desc:{id:'Lagu daerah Kalimantan Selatan. Tempo cepat dan riang.',en:'Traditional song from South Kalimantan. Fast and cheerful tempo.'}},
-  'bungong jeumpa':     {title:'Bungong Jeumpa',tempo:'Andante',bpm:'~85',key:'D Minor',chords:['Dm','Am','Gm','A'],notes:['D4','E4','F4','G4','A4'],genre:'Folk/Daerah',desc:{id:'Lagu daerah Aceh tentang bunga cempaka. Melankolis dan indah.',en:'Acehnese folk song about the champak flower. Melancholic and beautiful.'}},
-  'indonesia raya':     {title:'Indonesia Raya',tempo:'Moderato',bpm:'~112',key:'C Mayor',chords:['C','G7','F','Am'],notes:['G4','C4','E4','G4','C5'],genre:'National Anthem',desc:{id:'Lagu kebangsaan Indonesia karya W.R. Supratman (1928). Tempo moderato, megah dan penuh semangat.',en:'Indonesian national anthem by W.R. Supratman (1928). Moderato tempo, grand and spirited.'}},
-  'tanah airku':        {title:'Tanah Airku',tempo:'Andante',bpm:'~80',key:'F Mayor',chords:['F','C7','Bb','F'],notes:['F4','G4','A4','Bb4','C5'],genre:'Patriotic',desc:{id:'Lagu patriotik karya Ibu Sud. Tempo andante, penuh rasa cinta tanah air.',en:'Patriotic song by Ibu Sud. Andante tempo, full of love for the homeland.'}},
-  // International Songs
-  'bohemian rhapsody':  {title:'Bohemian Rhapsody',tempo:'Moderato→Presto',bpm:'72→180',key:'Bb Mayor',chords:['Bb','Gm','Cm','F7','Eb'],notes:['Bb4','A4','G4','F4','Eb4'],genre:'Rock',desc:{id:'Masterpiece Queen (1975). Multi-tempo dari ballad ke operatik ke hard rock. Salah satu lagu terkompleks dalam sejarah musik pop.',en:'Queen\'s masterpiece (1975). Multi-tempo from ballad to operatic to hard rock. One of the most complex pop songs in history.'}},
-  'yesterday':          {title:'Yesterday',tempo:'Andante',bpm:'~96',key:'F Mayor',chords:['F','Em','A7','Dm','Bb','C7'],notes:['F4','E4','D4','C4','Bb3'],genre:'Pop/Beatles',desc:{id:'The Beatles (1965). Salah satu lagu paling sering di-cover sepanjang masa. Tempo andante, melankolis.',en:'The Beatles (1965). One of the most covered songs of all time. Andante tempo, melancholic.'}},
-  'let it be':          {title:'Let It Be',tempo:'Andante',bpm:'~76',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','E4','G4','A4','G4'],genre:'Pop/Beatles',desc:{id:'The Beatles (1970). Lagu perpisahan yang ikonik. Progresi I-V-vi-IV yang umum dalam pop modern.',en:'The Beatles (1970). Iconic farewell song. The common I-V-vi-IV progression found in modern pop.'}},
-  'shape of you':       {title:'Shape of You',tempo:'Moderato',bpm:'~96',key:'C# Minor',chords:['C#m','F#m','A','B'],notes:['C4','D4','E4','F4','G4'],genre:'Pop',desc:{id:'Ed Sheeran (2017). Tempo moderato 96 bpm. Groove yang catchy dengan pentatonik minor.',en:'Ed Sheeran (2017). Moderato 96 bpm. Catchy groove with minor pentatonic scale.'}},
-  'eye of the tiger':   {title:'Eye of the Tiger',tempo:'Allegro',bpm:'~108',key:'C Minor',chords:['Cm','Ab','Bb','Cm'],notes:['C4','C4','C4','Eb4','C4','Bb3'],genre:'Rock',desc:{id:'Survivor (1982). Riff ikonik C minor. Tempo allegro, energik dan membakar semangat.',en:'Survivor (1982). Iconic C minor riff. Allegro tempo, energetic and motivating.'}},
-  'sweet home chicago': {title:'Sweet Home Chicago',tempo:'Allegro',bpm:'~120',key:'E Mayor',chords:['E','A','B7'],notes:['E4','G4','A4','B4','D4'],genre:'Blues',desc:{id:'Robert Johnson (1936). 12-bar blues klasik. Tonalitas E Mayor dengan blue notes.',en:'Robert Johnson (1936). Classic 12-bar blues. E Major tonality with blue notes.'}},
-  'smoke on the water': {title:'Smoke on the Water',tempo:'Moderato',bpm:'~112',key:'G Minor',chords:['Gm','Bb','C','Gm'],notes:['G4','Bb4','C5','G4','Bb4','Db5'],genre:'Rock',desc:{id:'Deep Purple (1972). Riff gitar paling terkenal di dunia. Progresi pentatonis minor G.',en:'Deep Purple (1972). World\'s most famous guitar riff. G minor pentatonic progression.'}},
-  'nothing else matters':{title:'Nothing Else Matters',tempo:'Andante',bpm:'~69',key:'E Minor',chords:['Em','Am','C','D'],notes:['E4','B3','G3','B3','E4'],genre:'Metal/Ballad',desc:{id:'Metallica (1991). Ballad lambat yang emosional. Kunci E minor, teknik fingerpicking.',en:'Metallica (1991). Emotional slow ballad. E minor key, fingerpicking technique.'}},
-  'stairway to heaven':  {title:'Stairway to Heaven',tempo:'Andante→Allegro',bpm:'72→116',key:'A Minor',chords:['Am','C','D','F','Am','G'],notes:['A3','C4','E4','G4','A4'],genre:'Rock',desc:{id:'Led Zeppelin (1971). Mulai lambat dengan intro fingerpicked, memuncak jadi hard rock. Kunci A minor.',en:'Led Zeppelin (1971). Starts slow with fingerpicked intro, builds to hard rock. A minor key.'}},
-  'happy birthday':      {title:'Happy Birthday',tempo:'Andante',bpm:'~90',key:'C Mayor',chords:['C','G','F'],notes:['C4','C4','D4','C4','F4','E4'],genre:'Traditional',desc:{id:'Lagu tradisional yang paling dikenal di dunia. Tangga nada C Mayor, ritme 3/4 waltz.',en:'World\'s most recognized song. C Major scale, 3/4 waltz rhythm.'}},
-  'riptide':             {title:'Riptide',tempo:'Moderato',bpm:'~100',key:'C Mayor',chords:['Am','G','C'],notes:['A4','G4','E4','C4','D4'],genre:'Indie Pop',desc:{id:'Vance Joy (2013). Progresi sederhana Am-G-C yang berulang. Tempo moderato yang santai.',en:'Vance Joy (2013). Simple repeating Am-G-C progression. Relaxed moderato tempo.'}},
-  'amazing grace':       {title:'Amazing Grace',tempo:'Andante',bpm:'~80',key:'G Mayor',chords:['G','C','G','D','G'],notes:['G4','C5','E5','C5','E5'],genre:'Hymn',desc:{id:'Himne tradisional (1779). Tangga nada Mayor pentatonik G. Tempo andante yang tenang dan damai.',en:'Traditional hymn (1779). G major pentatonic scale. Calm and peaceful andante tempo.'}},
+  'bengawan solo':{title:'Bengawan Solo',tempo:'Andante',bpm:'~90',key:'C Mayor',chords:['C','G','Am','F'],notes:['E4','D4','C4','E4','G4'],genre:'Keroncong',desc:{id:'Lagu keroncong klasik karya Gesang (1940). Kunci C Mayor.',en:'Classic keroncong by Gesang (1940). C Major key.'}},
+  'indonesia raya':{title:'Indonesia Raya',tempo:'Moderato',bpm:'~112',key:'C Mayor',chords:['C','G7','F','Am'],notes:['G4','C4','E4','G4','C5'],genre:'National Anthem',desc:{id:'Lagu kebangsaan Indonesia karya W.R. Supratman (1928).',en:'Indonesian national anthem by W.R. Supratman (1928).'}},
+  'tanah airku':{title:'Tanah Airku',tempo:'Andante',bpm:'~80',key:'F Mayor',chords:['F','C7','Bb','F'],notes:['F4','G4','A4','B4','C5'],genre:'Patriotic',desc:{id:'Lagu patriotik karya Ibu Sud.',en:'Patriotic song by Ibu Sud.'}},
+  'ampar ampar pisang':{title:'Ampar-Ampar Pisang',tempo:'Allegro',bpm:'~130',key:'C Mayor',chords:['C','F','G','C'],notes:['C4','D4','E4','F4','G4'],genre:'Folk',desc:{id:'Lagu daerah Kalimantan Selatan.',en:'Traditional song from South Kalimantan.'}},
+  'bohemian rhapsody':{title:'Bohemian Rhapsody',tempo:'Moderato→Presto',bpm:'72→180',key:'Bb Mayor',chords:['Bb','Gm','Eb','F7'],notes:['B4','A4','G4','F4','Eb4'],genre:'Rock',desc:{id:'Masterpiece Queen (1975). Multi-tempo dari ballad ke hard rock.',en:'Queen masterpiece (1975). Multi-tempo from ballad to hard rock.'}},
+  'yesterday':{title:'Yesterday',tempo:'Andante',bpm:'~96',key:'F Mayor',chords:['F','Em','A7','Dm'],notes:['F4','E4','D4','C4','B3'],genre:'Pop',desc:{id:'The Beatles (1965). Salah satu lagu paling sering di-cover sepanjang masa.',en:'The Beatles (1965). One of the most covered songs of all time.'}},
+  'let it be':{title:'Let It Be',tempo:'Andante',bpm:'~76',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','E4','G4','A4','G4'],genre:'Pop',desc:{id:'The Beatles (1970). Progresi I-V-vi-IV ikonik.',en:'The Beatles (1970). Iconic I-V-vi-IV progression.'}},
+  'shape of you':{title:'Shape of You',tempo:'Moderato',bpm:'~96',key:'C# Minor',chords:['C#m','F#m','A','B'],notes:['C4','D4','E4','F4','G4'],genre:'Pop',desc:{id:'Ed Sheeran (2017). Groove dengan pentatonik minor.',en:'Ed Sheeran (2017). Groove with minor pentatonic.'}},
+  'eye of the tiger':{title:'Eye of the Tiger',tempo:'Allegro',bpm:'~108',key:'C Minor',chords:['Cm','Ab','Bb','Cm'],notes:['C4','C4','C4','Eb4','C4'],genre:'Rock',desc:{id:'Survivor (1982). Riff ikonik C minor.',en:'Survivor (1982). Iconic C minor riff.'}},
+  'nothing else matters':{title:'Nothing Else Matters',tempo:'Andante',bpm:'~69',key:'E Minor',chords:['Em','Am','C','D'],notes:['E4','B3','G3','B3','E4'],genre:'Metal/Ballad',desc:{id:'Metallica (1991). Ballad emosional dengan teknik fingerpicking.',en:'Metallica (1991). Emotional ballad with fingerpicking technique.'}},
+  'stairway to heaven':{title:'Stairway to Heaven',tempo:'Andante→Allegro',bpm:'72→116',key:'A Minor',chords:['Am','C','D','F','G'],notes:['A3','C4','E4','G4','A4'],genre:'Rock',desc:{id:'Led Zeppelin (1971). Mulai lambat, memuncak jadi hard rock. Kunci A minor.',en:'Led Zeppelin (1971). Starts slow, builds to hard rock. A minor key.'}},
+  'smoke on the water':{title:'Smoke on the Water',tempo:'Moderato',bpm:'~112',key:'G Minor',chords:['Gm','Bb','C','Gm'],notes:['G4','Bb4','C5','G4','Bb4'],genre:'Rock',desc:{id:'Deep Purple (1972). Riff gitar paling terkenal di dunia.',en:'Deep Purple (1972). World\'s most famous guitar riff.'}},
+  'happy birthday':{title:'Happy Birthday',tempo:'Andante',bpm:'~90',key:'C Mayor',chords:['C','G','F'],notes:['C4','C4','D4','C4','F4'],genre:'Traditional',desc:{id:'Lagu tradisional paling dikenal di dunia. Birama 3/4.',en:'World\'s most recognized song. 3/4 waltz rhythm.'}},
+  'riptide':{title:'Riptide',tempo:'Moderato',bpm:'~100',key:'C Mayor',chords:['Am','G','C'],notes:['A4','G4','E4','C4','D4'],genre:'Indie Pop',desc:{id:'Vance Joy (2013). Progresi sederhana Am-G-C yang berulang.',en:'Vance Joy (2013). Simple repeating Am-G-C progression.'}},
+  'amazing grace':{title:'Amazing Grace',tempo:'Andante',bpm:'~80',key:'G Mayor',chords:['G','C','G','D'],notes:['G4','C5','E5','C5','E5'],genre:'Hymn',desc:{id:'Himne tradisional (1779). Tangga nada Mayor pentatonik G.',en:'Traditional hymn (1779). G major pentatonic scale.'}},
 };
-
 function findSong(query){
   var q=query.toLowerCase().trim();
-  // exact match
   if(songDB[q])return songDB[q];
-  // partial match
   var keys=Object.keys(songDB);
-  for(var i=0;i<keys.length;i++){
-    if(keys[i].includes(q)||q.includes(keys[i]))return songDB[keys[i]];
-  }
-  // title match
-  for(var i=0;i<keys.length;i++){
-    if(songDB[keys[i]].title.toLowerCase().includes(q))return songDB[keys[i]];
-  }
+  for(var i=0;i<keys.length;i++){if(keys[i].includes(q)||q.includes(keys[i]))return songDB[keys[i]];}
+  for(var i=0;i<keys.length;i++){if(songDB[keys[i]].title.toLowerCase().includes(q))return songDB[keys[i]];}
   return null;
 }
 
@@ -1073,81 +989,53 @@ function setAIMode(mode){
 }
 
 async function analyzeSong(){
-  var query=document.getElementById('songInput').value.trim();
-  if(!query)return;
+  var query=document.getElementById('songInput').value.trim();if(!query)return;
   var btn=document.getElementById('analyzeBtn');
-  btn.disabled=true;
-  btn.innerHTML='<span class="spinner"></span>'+(lang==='id'?'Menganalisis...':'Analyzing...');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>'+(lang==='id'?'Menganalisis...':'Analyzing...');
   document.getElementById('aiResult').style.display='none';
-
   var result=null;
   if(aiMode==='ai'){
     var key=document.getElementById('apiKeyInput').value.trim();
-    if(!key){
-      btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
-      alert(lang==='id'?'Masukkan API key dulu!':'Please enter your API key first!');
-      return;
-    }
+    if(!key){btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');alert(lang==='id'?'Masukkan API key dulu!':'Please enter your API key first!');return;}
     result=await analyzeWithAI(query,key);
   } else {
-    result=findSong(query);
-    if(!result){
-      result=guessOffline(query);
-    }
-    // small delay for UX
+    result=findSong(query)||guessOffline(query);
     await new Promise(function(r){setTimeout(r,600);});
   }
-
-  btn.disabled=false;
-  btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+  btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
   if(result)renderResult(result,query);
-  else{
-    document.getElementById('aiResult').style.display='block';
-    document.getElementById('resultSongTitle').textContent=lang==='id'?'Lagu tidak ditemukan dalam database':'Song not found in database';
-    document.getElementById('resTempo').textContent='—';
-    document.getElementById('resKey').textContent='—';
-    document.getElementById('resChords').innerHTML='<span style="color:var(--muted);font-size:13px;">'+(lang==='id'?'Coba AI Mode untuk analisis yang lebih luas.':'Try AI Mode for broader analysis.')+'</span>';
-  }
 }
 
 function guessOffline(query){
-  // Heuristic guess based on common patterns
   var q=query.toLowerCase();
   var isMinor=q.includes('minor')||q.includes('sad')||q.includes('blues');
   var isFast=q.includes('rock')||q.includes('dance')||q.includes('party');
-  return {
-    title:query,tempo:isFast?'Allegro':'Andante',bpm:isFast?'~130':'~88',
+  return{title:query,tempo:isFast?'Allegro':'Andante',bpm:isFast?'~130':'~88',
     key:isMinor?'A Minor':'C Mayor',chords:isMinor?['Am','G','C','F']:['C','G','Am','F'],
     notes:['C4','D4','E4','G4','A4'],genre:'Unknown',
     desc:{id:'Tidak ditemukan di database lokal. Estimasi berdasarkan pola umum. Gunakan AI Mode untuk hasil lebih akurat.',
-          en:'Not found in local database. Estimated from common patterns. Use AI Mode for accurate results.'}
-  };
+          en:'Not found in local database. Estimated from common patterns. Use AI Mode for accurate results.'}};
 }
 
 async function analyzeWithAI(songTitle,apiKey){
-  var prompt='Analyze the song "'+songTitle+'". Respond ONLY with valid JSON (no markdown, no explanation) in this exact format:\n{"title":"","tempo":"","bpm":"","key":"","chords":["",""],"notes":["C4","D4"],"genre":"","desc_id":"","desc_en":""}';
+  var prompt='Analyze the song "'+songTitle+'". Respond ONLY with valid JSON in this exact format:\n{"title":"","tempo":"","bpm":"","key":"","chords":[""],"notes":["C4","D4"],"genre":"","desc_id":"","desc_en":""}';
   try{
     var resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,messages:[{role:'user',content:prompt}]})
     });
     if(!resp.ok){var e=await resp.json();throw new Error(e.error?.message||'API error');}
     var data=await resp.json();
     var text=data.content[0].text.trim();
-    // Extract JSON
-    var jsonMatch=text.match(/\{[\s\S]*\}/);
-    if(!jsonMatch)throw new Error('No JSON');
+    var jsonMatch=text.match(/\{[\s\S]*\}/);if(!jsonMatch)throw new Error('No JSON');
     var parsed=JSON.parse(jsonMatch[0]);
-    return {
-      title:parsed.title||songTitle,tempo:parsed.tempo||'Moderato',bpm:parsed.bpm||'~120',
+    return{title:parsed.title||songTitle,tempo:parsed.tempo||'Moderato',bpm:parsed.bpm||'~120',
       key:parsed.key||'C Mayor',chords:parsed.chords||['C','G','Am','F'],
       notes:parsed.notes||['C4','D4','E4','G4'],genre:parsed.genre||'',
-      desc:{id:parsed.desc_id||parsed.desc_en||'',en:parsed.desc_en||parsed.desc_id||''}
-    };
+      desc:{id:parsed.desc_id||'',en:parsed.desc_en||''}};
   }catch(err){
-    return {title:songTitle,tempo:'Moderato',bpm:'~120',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','D4','E4','G4'],genre:'',
-      desc:{id:'AI error: '+err.message+'. Menampilkan estimasi.',en:'AI error: '+err.message+'. Showing estimate.'}};
+    return{title:songTitle,tempo:'Moderato',bpm:'~120',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','D4','E4','G4'],genre:'',
+      desc:{id:'AI error: '+err.message,en:'AI error: '+err.message}};
   }
 }
 
@@ -1156,87 +1044,47 @@ function renderResult(res,query){
   document.getElementById('resultSongTitle').textContent='🎵 '+(res.title||query);
   document.getElementById('resTempo').textContent=res.tempo+(res.bpm?' ('+res.bpm+' bpm)':'');
   document.getElementById('resKey').textContent=res.key+(res.genre?' — '+res.genre:'');
-
-  // Chord pills
-  var chordEl=document.getElementById('resChords');
-  chordEl.innerHTML='';
+  var chordEl=document.getElementById('resChords');chordEl.innerHTML='';
   (res.chords||[]).forEach(function(ch){
     var pill=document.createElement('div');
     pill.style.cssText='background:var(--c1);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;';
     pill.textContent=ch;
-    pill.onclick=function(){
-      var fc=findChordFreqs(ch);
-      if(fc.length)fc.forEach(function(f,i){playTone(f,0.7,i*0.04);});
-    };
+    pill.onclick=function(){var fc=findChordFreqs(ch);if(fc.length)fc.forEach(function(f,i){playTone(f,0.7,i*0.04);});};
     chordEl.appendChild(pill);
   });
-
-  // Chord diagrams
-  var diagEl=document.getElementById('resChordDiagrams');
-  diagEl.innerHTML='';
+  var diagEl=document.getElementById('resChordDiagrams');diagEl.innerHTML='';
   (res.chords||[]).slice(0,4).forEach(function(ch){
-    var wrap=document.createElement('div');
-    wrap.style.textAlign='center';
-    var label=document.createElement('div');
-    label.style.cssText='font-size:13px;font-weight:900;margin-bottom:6px;color:var(--c1);';
-    label.textContent=ch;
+    var wrap=document.createElement('div');wrap.style.textAlign='center';
+    var label=document.createElement('div');label.style.cssText='font-size:13px;font-weight:900;margin-bottom:6px;color:var(--c1);';label.textContent=ch;
     wrap.appendChild(label);
-    // find in guitar chords
     var found=null;
-    ['major','minor','seventh'].forEach(function(type){
-      if(guitarChords[type][ch])found=guitarChords[type][ch];
-    });
-    if(found){
-      var diagDiv=document.createElement('div');
-      diagDiv.innerHTML=buildGuitarDiagram(found.frets,ch);
-      wrap.appendChild(diagDiv);
-    } else {
-      wrap.innerHTML+='<div style="font-size:11px;color:var(--muted);">'+ch+'</div>';
-    }
+    ['major','minor','seventh'].forEach(function(type){if(guitarChords[type][ch])found=guitarChords[type][ch];});
+    if(found){var dd=document.createElement('div');dd.innerHTML=buildGuitarDiagram(found.frets,found.frets?'#7C3AED':undefined);wrap.appendChild(dd);}
     diagEl.appendChild(wrap);
   });
-
-  // Staff notation
-  var staffEl=document.getElementById('resNotes');
-  staffEl.innerHTML='';
+  // Staff
+  var staffEl=document.getElementById('resNotes');staffEl.innerHTML='';
   var noteYmap={B5:8,A5:16,G5:24,F5:32,E5:38,D5:46,C5:52,B4:58,A4:66,G4:74,F4:80,E4:88,D4:96,C4:104};
-  var linesY=[38,52,66,80,94];
-  // draw lines
-  linesY.forEach(function(y){
-    var l=document.createElement('div');
-    l.style.cssText='position:absolute;left:30px;right:4px;top:'+y+'px;height:1.5px;background:#9CA3AF;';
-    staffEl.appendChild(l);
-  });
-  // clef
-  var clefEl=document.createElement('div');
-  clefEl.style.cssText='position:absolute;left:2px;top:8px;font-size:52px;line-height:1;color:#9CA3AF;';
-  clefEl.textContent='𝄞';
-  staffEl.appendChild(clefEl);
-  // notes
+  [38,52,66,80,94].forEach(function(y){var l=document.createElement('div');l.style.cssText='position:absolute;left:30px;right:4px;top:'+y+'px;height:1.5px;background:#9CA3AF;';staffEl.appendChild(l);});
+  var clefEl=document.createElement('div');clefEl.style.cssText='position:absolute;left:2px;top:8px;font-size:52px;line-height:1;color:#9CA3AF;';clefEl.textContent='𝄞';staffEl.appendChild(clefEl);
   var colors=['#7C3AED','#EC4899','#F59E0B','#10B981','#3B82F6','#8B5CF6','#EF4444','#06B6D4'];
   (res.notes||[]).forEach(function(note,i){
-    var y=noteYmap[note]||66;
-    var x=40+i*34;
+    var y=noteYmap[note]||66,x=44+i*32;
     var dot=document.createElement('div');
     dot.style.cssText='position:absolute;left:'+x+'px;top:'+y+'px;width:18px;height:14px;background:'+colors[i%colors.length]+';border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:7px;color:#fff;font-weight:800;';
-    dot.textContent=note.replace('4','').replace('5','');
+    dot.textContent=note.replace(/[45]/g,'');
     dot.onclick=function(){playTone(noteFreq(note),0.4,0);};
     staffEl.appendChild(dot);
-    // stem
-    var stem=document.createElement('div');
-    stem.style.cssText='position:absolute;left:'+(x+16)+'px;top:'+(y-22)+'px;width:1.5px;height:22px;background:'+colors[i%colors.length]+';';
+    var stem=document.createElement('div');stem.style.cssText='position:absolute;left:'+(x+16)+'px;top:'+(y-20)+'px;width:1.5px;height:20px;background:'+colors[i%colors.length]+';';
     staffEl.appendChild(stem);
   });
-
   document.getElementById('resDesc').textContent=res.desc[lang]||res.desc.id||'';
 }
 
-function findChordFreqs(chordName){
+function findChordFreqs(ch){
   var all=guitarChords;
-  for(var type in all){
-    if(all[type][chordName])return all[type][chordName].freqs||[];
-  }
-  return [];
+  for(var type in all){if(all[type][ch])return all[type][ch].freqs||[];}
+  return[];
 }
 
 // ═══════════════════════════════════════════
@@ -1254,7 +1102,7 @@ window.addEventListener('DOMContentLoaded',function(){
   buildStaff();
   renderScaleInfo();
   renderTempoGrid();
-  renderChordGrid();
+  renderChordDisplay();
   buildPlayground();
 });
 </script>
