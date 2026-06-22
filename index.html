@@ -375,7 +375,7 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
           <div id="resChords" class="flex-wrap" style="margin-bottom:10px;"></div>
         </div>
         <div class="result-section" id="resChordDiagramSection">
-          <div class="result-label" data-id="resChordDiagLabel">Diagram Chord (Guitar)</div>
+          <div class="result-label" data-id="resChordDiagLabel">Diagram Chord</div>
           <div id="resChordDiagrams" style="display:flex;flex-wrap:wrap;gap:14px;"></div>
         </div>
         <div class="result-section" id="resChordChartSection">
@@ -652,6 +652,11 @@ var guitarChords={
     'G': {frets:[3,2,0,0,0,3],desc:{id:'G Mayor — Sol-Si-Re, serbaguna',en:'G Major — G-B-D, versatile'},freqs:[392.00,493.88,587.33,783.99]},
     'A': {frets:[-1,0,2,2,2,0],desc:{id:'A Mayor — La-Do#-Mi, mudah dipelajari',en:'A Major — A-C#-E, easy to learn'},freqs:[440.00,554.37,659.25,880.00]},
     'B': {frets:[-1,2,4,4,4,2],desc:{id:'B Mayor — Si-Re#-Fa#, barre fret 2',en:'B Major — B-D#-F#, barre fret 2'},freqs:[493.88,587.33,739.99,987.77]},
+    'Bb':{frets:[-1,1,3,3,3,1],desc:{id:'Bb Mayor — Bb-D-F, barre fret 1 A',en:'Bb Major — Bb-D-F, barre fret 1 A'},freqs:[466.16,587.33,698.46,932.33]},
+    'Eb':{frets:[-1,-1,1,3,4,3],desc:{id:'Eb Mayor — Eb-G-Bb, posisi II',en:'Eb Major — Eb-G-Bb, pos II'},freqs:[311.13,392.00,466.16,622.25]},
+    'Ab':{frets:[4,6,6,5,4,4],desc:{id:'Ab Mayor — Ab-Do-Eb, barre fret 4',en:'Ab Major — Ab-C-Eb, barre fret 4'},freqs:[415.30,523.25,622.25,830.61]},
+    'F#':{frets:[2,4,4,3,2,2],desc:{id:'F# Mayor — F#-A#-C#, barre fret 2',en:'F# Major — F#-A#-C#, barre fret 2'},freqs:[369.99,466.16,554.37,739.99]},
+    'Db':{frets:[-1,4,6,6,6,4],desc:{id:'Db Mayor — Db-F-Ab, barre fret 4 A',en:'Db Major — Db-F-Ab, barre fret 4 A'},freqs:[277.18,349.23,415.30,554.37]},
   },
   minor:{
     'Am':{frets:[-1,0,2,2,1,0],desc:{id:'A Minor — La-Do-Mi, melankolis',en:'A Minor — A-C-E, melancholic'},freqs:[440.00,523.25,659.25,880.00]},
@@ -661,6 +666,12 @@ var guitarChords={
     'Em':{frets:[0,2,2,0,0,0],desc:{id:'E Minor — Mi-Sol-Si, gelap & kuat',en:'E Minor — E-G-B, dark & powerful'},freqs:[329.63,392.00,493.88,659.25]},
     'Fm':{frets:[1,3,3,1,1,1],desc:{id:'F Minor — Fa-Ab-Do, barre fret 1',en:'F Minor — F-Ab-C, barre fret 1'},freqs:[349.23,415.30,523.25,698.46]},
     'Gm':{frets:[3,5,5,3,3,3],desc:{id:'G Minor — Sol-Bb-Re, barre fret 3',en:'G Minor — G-Bb-D, barre fret 3'},freqs:[392.00,466.16,587.33,783.99]},
+    'C#m':{frets:[-1,4,6,6,5,4],desc:{id:'C#m — Do#-Mi-Sol#, barre fret 4',en:'C#m — C#-E-G#, barre fret 4'},freqs:[277.18,329.63,415.30,554.37]},
+    'F#m':{frets:[2,4,4,2,2,2],desc:{id:'F#m — Fa#-La-Do#, barre fret 2',en:'F#m — F#-A-C#, barre fret 2'},freqs:[369.99,440.00,554.37,739.99]},
+    'Bbm':{frets:[-1,1,3,3,2,1],desc:{id:'Bbm — Bb-Db-F, barre fret 1',en:'Bbm — Bb-Db-F, barre fret 1'},freqs:[466.16,554.37,698.46,932.33]},
+    'Abm':{frets:[4,6,6,4,4,4],desc:{id:'Abm — Ab-B-Eb, barre fret 4',en:'Abm — Ab-B-Eb, barre fret 4'},freqs:[415.30,493.88,622.25,830.61]},
+    'Ebm':{frets:[-1,6,8,8,7,6],desc:{id:'Ebm — Eb-Gb-Bb, barre fret 6',en:'Ebm — Eb-Gb-Bb, barre fret 6'},freqs:[311.13,369.99,466.16,622.25]},
+    'Dbm':{frets:[-1,4,6,6,5,4],desc:{id:'Dbm — Db-E-Ab, barre fret 4',en:'Dbm — Db-E-Ab, barre fret 4'},freqs:[277.18,329.63,415.30,554.37]},
   },
   seventh:{
     'C7':{frets:[-1,3,2,3,1,0],desc:{id:'C7 — Do-Mi-Sol-Bb, blues feeling',en:'C7 — C-E-G-Bb, bluesy feel'},freqs:[261.63,329.63,392.00,466.16]},
@@ -676,13 +687,18 @@ var guitarChords={
 // Bass frets = [E, A, D, G] 4 strings, same convention
 var bassChords={
   major:{
-    'C': {frets:[-1,3,5,-1],desc:{id:'Bass C Mayor — root C, 5th G (senar A-D)',en:'Bass C Major — root C, 5th G (A-D strings)'},freqs:[130.81,196.00,261.63]},
-    'D': {frets:[-1,-1,0,2],desc:{id:'Bass D Mayor — open D, 5th A (senar D-G)',en:'Bass D Major — open D, 5th A (D-G strings)'},freqs:[146.83,220.00,293.66]},
-    'E': {frets:[0,2,-1,-1],desc:{id:'Bass E Mayor — open E, 5th B (senar E-A)',en:'Bass E Major — open E, 5th B (E-A strings)'},freqs:[164.81,246.94,329.63]},
-    'F': {frets:[1,3,-1,-1],desc:{id:'Bass F Mayor — fret 1 E, 5th C (senar E-A)',en:'Bass F Major — fret 1 E str, 5th C (E-A strings)'},freqs:[174.61,261.63,349.23]},
-    'G': {frets:[3,5,-1,-1],desc:{id:'Bass G Mayor — fret 3 E, 5th D (senar E-A)',en:'Bass G Major — fret 3 E str, 5th D (E-A strings)'},freqs:[196.00,293.66,392.00]},
-    'A': {frets:[-1,0,2,-1],desc:{id:'Bass A Mayor — open A, 5th E (senar A-D)',en:'Bass A Major — open A, 5th E (A-D strings)'},freqs:[220.00,329.63,440.00]},
-    'B': {frets:[-1,2,4,-1],desc:{id:'Bass B Mayor — fret 2 A, 5th F# (senar A-D)',en:'Bass B Major — fret 2 A str, 5th F# (A-D strings)'},freqs:[246.94,369.99,493.88]},
+    'C': {frets:[-1,3,5,-1],desc:{id:'Bass C Mayor — root C, 5th G',en:'Bass C Major — root C, 5th G'},freqs:[130.81,196.00,261.63]},
+    'D': {frets:[-1,-1,0,2],desc:{id:'Bass D Mayor — open D, 5th A',en:'Bass D Major — open D, 5th A'},freqs:[146.83,220.00,293.66]},
+    'E': {frets:[0,2,-1,-1],desc:{id:'Bass E Mayor — open E, 5th B',en:'Bass E Major — open E, 5th B'},freqs:[164.81,246.94,329.63]},
+    'F': {frets:[1,3,-1,-1],desc:{id:'Bass F Mayor — fret 1 E, 5th C',en:'Bass F Major — fret 1 E, 5th C'},freqs:[174.61,261.63,349.23]},
+    'G': {frets:[3,5,-1,-1],desc:{id:'Bass G Mayor — fret 3 E, 5th D',en:'Bass G Major — fret 3 E, 5th D'},freqs:[196.00,293.66,392.00]},
+    'A': {frets:[-1,0,2,-1],desc:{id:'Bass A Mayor — open A, 5th E',en:'Bass A Major — open A, 5th E'},freqs:[220.00,329.63,440.00]},
+    'B': {frets:[-1,2,4,-1],desc:{id:'Bass B Mayor — fret 2 A, 5th F#',en:'Bass B Major — fret 2 A, 5th F#'},freqs:[246.94,369.99,493.88]},
+    'Bb':{frets:[-1,1,3,-1],desc:{id:'Bass Bb Mayor — fret 1 A, 5th F',en:'Bass Bb Major — fret 1 A, 5th F'},freqs:[233.08,349.23,466.16]},
+    'Eb':{frets:[-1,6,8,-1],desc:{id:'Bass Eb Mayor — fret 6 A, 5th Bb',en:'Bass Eb Major — fret 6 A, 5th Bb'},freqs:[311.13,466.16,622.25]},
+    'Ab':{frets:[4,6,-1,-1],desc:{id:'Bass Ab Mayor — fret 4 E, 5th Eb',en:'Bass Ab Major — fret 4 E, 5th Eb'},freqs:[207.65,311.13,415.30]},
+    'Db':{frets:[-1,-1,1,3],desc:{id:'Bass Db Mayor — fret 1 D, 5th Ab',en:'Bass Db Major — fret 1 D, 5th Ab'},freqs:[138.59,207.65,277.18]},
+    'F#':{frets:[2,4,-1,-1],desc:{id:'Bass F# Mayor — fret 2 E, 5th C#',en:'Bass F# Major — fret 2 E, 5th C#'},freqs:[185.00,277.18,369.99]},
   },
   minor:{
     'Am':{frets:[-1,0,2,-1],desc:{id:'Bass Am — root A, 5th E',en:'Bass Am — root A, 5th E'},freqs:[220.00,329.63,440.00]},
@@ -692,6 +708,12 @@ var bassChords={
     'Em':{frets:[0,2,-1,-1],desc:{id:'Bass Em — open E, 5th B',en:'Bass Em — open E, 5th B'},freqs:[164.81,246.94,329.63]},
     'Fm':{frets:[1,3,-1,-1],desc:{id:'Bass Fm — root F, 5th C',en:'Bass Fm — root F, 5th C'},freqs:[174.61,261.63,349.23]},
     'Gm':{frets:[3,5,-1,-1],desc:{id:'Bass Gm — root G, 5th D',en:'Bass Gm — root G, 5th D'},freqs:[196.00,293.66,392.00]},
+    'C#m':{frets:[-1,4,6,-1],desc:{id:'Bass C#m — fret 4 A, 5th G#',en:'Bass C#m — fret 4 A, 5th G#'},freqs:[138.59,207.65,277.18]},
+    'F#m':{frets:[2,4,-1,-1],desc:{id:'Bass F#m — fret 2 E, 5th C#',en:'Bass F#m — fret 2 E, 5th C#'},freqs:[185.00,277.18,369.99]},
+    'Bbm':{frets:[-1,1,3,-1],desc:{id:'Bass Bbm — fret 1 A, 5th F',en:'Bass Bbm — fret 1 A, 5th F'},freqs:[233.08,349.23,466.16]},
+    'Ebm':{frets:[-1,6,8,-1],desc:{id:'Bass Ebm — fret 6 A, 5th Bb',en:'Bass Ebm — fret 6 A, 5th Bb'},freqs:[311.13,466.16,622.25]},
+    'Abm':{frets:[4,6,-1,-1],desc:{id:'Bass Abm — fret 4 E, 5th Eb',en:'Bass Abm — fret 4 E, 5th Eb'},freqs:[207.65,311.13,415.30]},
+    'Dbm':{frets:[-1,4,6,-1],desc:{id:'Bass Dbm — fret 4 A',en:'Bass Dbm — fret 4 A'},freqs:[138.59,207.65,277.18]},
   },
   seventh:{
     'C7':{frets:[-1,3,-1,3],desc:{id:'Bass C7 — root C + 7th Bb (A:3, G:3)',en:'Bass C7 — root C + 7th Bb'},freqs:[130.81,196.00,233.08]},
@@ -707,22 +729,35 @@ var bassChords={
 // Keyboard: note names (C,D,E,F,G,A,B,C#,Eb,etc.) highlighted on piano
 var keyboardChords={
   major:{
-    'C': {notes:['C','E','G'],      desc:{id:'C Mayor — C E G',en:'C Major — C E G'},freqs:[261.63,329.63,392.00]},
-    'D': {notes:['D','F#','A'],     desc:{id:'D Mayor — D F# A',en:'D Major — D F# A'},freqs:[293.66,369.99,440.00]},
-    'E': {notes:['E','G#','B'],     desc:{id:'E Mayor — E G# B',en:'E Major — E G# B'},freqs:[329.63,415.30,493.88]},
-    'F': {notes:['F','A','C'],      desc:{id:'F Mayor — F A C',en:'F Major — F A C'},freqs:[349.23,440.00,523.25]},
-    'G': {notes:['G','B','D'],      desc:{id:'G Mayor — G B D',en:'G Major — G B D'},freqs:[392.00,493.88,587.33]},
-    'A': {notes:['A','C#','E'],     desc:{id:'A Mayor — A C# E',en:'A Major — A C# E'},freqs:[440.00,554.37,659.25]},
-    'B': {notes:['B','D#','F#'],    desc:{id:'B Mayor — B D# F#',en:'B Major — B D# F#'},freqs:[493.88,622.25,739.99]},
+    'C': {notes:['C','E','G'],       desc:{id:'C Mayor — C E G',en:'C Major — C E G'},freqs:[261.63,329.63,392.00]},
+    'D': {notes:['D','F#','A'],      desc:{id:'D Mayor — D F# A',en:'D Major — D F# A'},freqs:[293.66,369.99,440.00]},
+    'E': {notes:['E','G#','B'],      desc:{id:'E Mayor — E G# B',en:'E Major — E G# B'},freqs:[329.63,415.30,493.88]},
+    'F': {notes:['F','A','C'],       desc:{id:'F Mayor — F A C',en:'F Major — F A C'},freqs:[349.23,440.00,523.25]},
+    'G': {notes:['G','B','D'],       desc:{id:'G Mayor — G B D',en:'G Major — G B D'},freqs:[392.00,493.88,587.33]},
+    'A': {notes:['A','C#','E'],      desc:{id:'A Mayor — A C# E',en:'A Major — A C# E'},freqs:[440.00,554.37,659.25]},
+    'B': {notes:['B','D#','F#'],     desc:{id:'B Mayor — B D# F#',en:'B Major — B D# F#'},freqs:[493.88,622.25,739.99]},
+    'Bb':{notes:['Bb','D','F'],      desc:{id:'Bb Mayor — Bb D F',en:'Bb Major — Bb D F'},freqs:[466.16,587.33,698.46]},
+    'Eb':{notes:['Eb','G','Bb'],     desc:{id:'Eb Mayor — Eb G Bb',en:'Eb Major — Eb G Bb'},freqs:[311.13,392.00,466.16]},
+    'Ab':{notes:['Ab','C','Eb'],     desc:{id:'Ab Mayor — Ab C Eb',en:'Ab Major — Ab C Eb'},freqs:[415.30,523.25,622.25]},
+    'Db':{notes:['Db','F','Ab'],     desc:{id:'Db Mayor — Db F Ab',en:'Db Major — Db F Ab'},freqs:[277.18,349.23,415.30]},
+    'F#':{notes:['F#','A#','C#'],    desc:{id:'F# Mayor — F# A# C#',en:'F# Major — F# A# C#'},freqs:[369.99,466.16,554.37]},
+    'C#':{notes:['C#','F','G#'],     desc:{id:'C# Mayor — C# F G#',en:'C# Major — C# F G#'},freqs:[277.18,349.23,415.30]},
   },
   minor:{
-    'Am':{notes:['A','C','E'],      desc:{id:'A Minor — A C E',en:'A Minor — A C E'},freqs:[440.00,523.25,659.25]},
-    'Bm':{notes:['B','D','F#'],     desc:{id:'B Minor — B D F#',en:'B Minor — B D F#'},freqs:[493.88,587.33,739.99]},
-    'Cm':{notes:['C','Eb','G'],     desc:{id:'C Minor — C Eb G',en:'C Minor — C Eb G'},freqs:[261.63,311.13,392.00]},
-    'Dm':{notes:['D','F','A'],      desc:{id:'D Minor — D F A',en:'D Minor — D F A'},freqs:[293.66,349.23,440.00]},
-    'Em':{notes:['E','G','B'],      desc:{id:'E Minor — E G B',en:'E Minor — E G B'},freqs:[329.63,392.00,493.88]},
-    'Fm':{notes:['F','Ab','C'],     desc:{id:'F Minor — F Ab C',en:'F Minor — F Ab C'},freqs:[349.23,415.30,523.25]},
-    'Gm':{notes:['G','Bb','D'],     desc:{id:'G Minor — G Bb D',en:'G Minor — G Bb D'},freqs:[392.00,466.16,587.33]},
+    'Am':{notes:['A','C','E'],       desc:{id:'A Minor — A C E',en:'A Minor — A C E'},freqs:[440.00,523.25,659.25]},
+    'Bm':{notes:['B','D','F#'],      desc:{id:'B Minor — B D F#',en:'B Minor — B D F#'},freqs:[493.88,587.33,739.99]},
+    'Cm':{notes:['C','Eb','G'],      desc:{id:'C Minor — C Eb G',en:'C Minor — C Eb G'},freqs:[261.63,311.13,392.00]},
+    'Dm':{notes:['D','F','A'],       desc:{id:'D Minor — D F A',en:'D Minor — D F A'},freqs:[293.66,349.23,440.00]},
+    'Em':{notes:['E','G','B'],       desc:{id:'E Minor — E G B',en:'E Minor — E G B'},freqs:[329.63,392.00,493.88]},
+    'Fm':{notes:['F','Ab','C'],      desc:{id:'F Minor — F Ab C',en:'F Minor — F Ab C'},freqs:[349.23,415.30,523.25]},
+    'Gm':{notes:['G','Bb','D'],      desc:{id:'G Minor — G Bb D',en:'G Minor — G Bb D'},freqs:[392.00,466.16,587.33]},
+    'C#m':{notes:['C#','E','G#'],    desc:{id:'C#m — C# E G#',en:'C#m — C# E G#'},freqs:[277.18,329.63,415.30]},
+    'F#m':{notes:['F#','A','C#'],    desc:{id:'F#m — F# A C#',en:'F#m — F# A C#'},freqs:[369.99,440.00,554.37]},
+    'Bbm':{notes:['Bb','Db','F'],    desc:{id:'Bbm — Bb Db F',en:'Bbm — Bb Db F'},freqs:[466.16,554.37,698.46]},
+    'Ebm':{notes:['Eb','Gb','Bb'],   desc:{id:'Ebm — Eb Gb Bb',en:'Ebm — Eb Gb Bb'},freqs:[311.13,369.99,466.16]},
+    'Abm':{notes:['Ab','B','Eb'],    desc:{id:'Abm — Ab B Eb',en:'Abm — Ab B Eb'},freqs:[415.30,493.88,622.25]},
+    'Dbm':{notes:['Db','E','Ab'],    desc:{id:'Dbm — Db E Ab',en:'Dbm — Db E Ab'},freqs:[277.18,329.63,415.30]},
+    'F#m':{notes:['F#','A','C#'],    desc:{id:'F#m — F# A C#',en:'F#m — F# A C#'},freqs:[369.99,440.00,554.37]},
   },
   seventh:{
     'C7': {notes:['C','E','G','Bb'],  desc:{id:'C7 — C E G Bb',en:'C7 — C E G Bb'},freqs:[261.63,329.63,392.00,466.16]},
@@ -1344,49 +1379,270 @@ function clearStaff(){
 // ═══════════════════════════════════════════
 var songDB={
   'bengawan solo':{title:'Bengawan Solo',tempo:'Andante',bpm:'~90',key:'C Mayor',chords:['C','G','Am','F'],notes:['E4','D4','C4','E4','G4'],genre:'Keroncong',
-    lyric:['[C]Bengawan [G]Solo, [Am]riwayatmu [F]ini','[C]Sedari [G]dulu jadi [C]perhatian [G]insani','[Am]Mata air [F]dari Solo, [C]terkurung [G]gunung seribu','[Am]Air mengalir [F]sampai jauh, [C]akhirnya ke [G]laut'],
+    lyric:[
+      '— Bait 1 —',
+      '[C]Bengawan [G]Solo, [Am]riwayatmu [F]ini',
+      '[C]Sedari [G]dulu jadi [C]perhatian [G]insani',
+      '[Am]Mata air [F]dari Solo, [C]terkurung [G]gunung seribu',
+      '[Am]Air mengalir [F]sampai jauh, [C]akhirnya ke [G]laut',
+      '— Bait 2 —',
+      '[C]Di sana [G]banyak saya [Am]melihat [F]sepasang mata',
+      '[C]Lelap tidur [G]bersama, [C]di pinggir [G]kali',
+      '[Am]Masih teringat [F]olehku, [C]waktu dulu [G]bertemu',
+      '[Am]Di pinggir [F]Bengawan Solo, [C]di mana [G]hidup [C]baru',
+    ],
+    melody:{timeSig:'4/4',keySig:0,measures:[
+      {chord:'C',notes:[{p:'E4',d:'q',l:'Ben-'},{p:'D4',d:'q',l:'ga-'},{p:'C4',d:'h',l:'wan'}]},
+      {chord:'G',notes:[{p:'G4',d:'q',l:'So-'},{p:'A4',d:'q',l:'lo,'},{p:'G4',d:'h',l:''}]},
+      {chord:'Am',notes:[{p:'E4',d:'q',l:'ri-'},{p:'D4',d:'q',l:'wa-'},{p:'C4',d:'q',l:'yat-'},{p:'D4',d:'q',l:'mu'}]},
+      {chord:'F',notes:[{p:'E4',d:'q',l:'i-'},{p:'D4',d:'q',l:'ni'},{p:'C4',d:'h',l:''}]},
+      {chord:'C',notes:[{p:'E4',d:'q',l:'Se-'},{p:'D4',d:'q',l:'da-'},{p:'C4',d:'h',l:'ri'}]},
+      {chord:'G',notes:[{p:'G4',d:'q',l:'da-'},{p:'F4',d:'q',l:'hu-'},{p:'E4',d:'q',l:'lu'},{p:'D4',d:'q',l:''}]},
+      {chord:'C',notes:[{p:'C4',d:'q',l:'ja-'},{p:'D4',d:'q',l:'di'},{p:'E4',d:'q',l:'per-'},{p:'G4',d:'q',l:'ha-'}]},
+      {chord:'G',notes:[{p:'G4',d:'h',l:'ti-'},{p:'E4',d:'q',l:'an'},{p:'D4',d:'q',l:'in-'}]},
+      {chord:'Am',notes:[{p:'A4',d:'q',l:'sa-'},{p:'G4',d:'h',l:'ni'},{p:'R',d:'q',l:''}]},
+      {chord:'F',notes:[{p:'F4',d:'q',l:'Ma-'},{p:'E4',d:'q',l:'ta'},{p:'D4',d:'q',l:'a-'},{p:'C4',d:'q',l:'ir'}]},
+      {chord:'C',notes:[{p:'D4',d:'q',l:'da-'},{p:'E4',d:'q',l:'ri'},{p:'G4',d:'h',l:'So-'}]},
+      {chord:'G',notes:[{p:'A4',d:'q',l:'lo,'},{p:'G4',d:'h',l:''},{p:'R',d:'q',l:''}]},
+    ]},
     desc:{id:'Lagu keroncong klasik karya Gesang (1940). Kunci C Mayor.',en:'Classic keroncong by Gesang (1940). C Major key.'}},
   'indonesia raya':{title:'Indonesia Raya',tempo:'Moderato',bpm:'~112',key:'C Mayor',chords:['C','G7','F','Am'],notes:['G4','C4','E4','G4','C5'],genre:'National Anthem',
-    lyric:['[C]Indonesia tanah [G7]airku','[F]Tanah tumpah [C]darahku','[C]Di sanalah aku [G7]berdiri','[F]Jadi pandu [C]ibuku'],
+    lyric:[
+      '— Bait 1 —',
+      '[C]Indonesia [G7]tanah airku',
+      '[F]Tanah tumpah [C]darahku',
+      '[C]Di sanalah aku [G7]berdiri',
+      '[F]Jadi pandu [C]ibuku',
+      '[C]Indonesia [G7]kebangsaanku',
+      '[F]Bangsa dan [C]tanah airku',
+      '— Reff —',
+      '[Am]Marilah kita [F]berseru',
+      '[C]Indonesia [G7]bersatu',
+      '[C]Hiduplah [G7]tanahku, [F]hiduplah [C]negriku',
+      '[Am]Bangsaku [F]rakyatku [C]semuanya',
+      '[F]Bangunlah [C]jiwanya, [F]bangunlah [C]badannya',
+      '[F]Untuk [C]Indonesia [G7]Raya',
+    ],
     desc:{id:'Lagu kebangsaan Indonesia karya W.R. Supratman (1928).',en:'Indonesian national anthem by W.R. Supratman (1928).'}},
   'tanah airku':{title:'Tanah Airku',tempo:'Andante',bpm:'~80',key:'F Mayor',chords:['F','C7','Bb','F'],notes:['F4','G4','A4','B4','C5'],genre:'Patriotic',
-    lyric:['[F]Tanah airku tidak [C7]kulupakan','[Bb]Kan terkenang [F]selama hidupku','[F]Biarpun saya pergi [C7]jauh','[Bb]Tidak kan hilang dari [F]kalbu'],
+    lyric:[
+      '— Bait 1 —',
+      '[F]Tanah airku tidak [C7]kulupakan',
+      '[Bb]Kan terkenang [F]selama hidupku',
+      '[F]Biarpun saya pergi [C7]jauh',
+      '[Bb]Tidak kan hilang dari [F]kalbu',
+      '— Bait 2 —',
+      '[F]Tanah ku yang [C7]kucintai',
+      '[Bb]Engkau [F]kuhargai',
+      '[F]Walaupun banyak negri [C7]kujalani',
+      '[Bb]Yang masyhur permai [F]dikata orang',
+      '[C7]Tetapi kampung dan [F]rumahku',
+      '[Bb]Di sanalah [C7]ku merasa [F]senang',
+    ],
     desc:{id:'Lagu patriotik karya Ibu Sud.',en:'Patriotic song by Ibu Sud.'}},
   'bohemian rhapsody':{title:'Bohemian Rhapsody',tempo:'Moderato→Presto',bpm:'72→180',key:'Bb Mayor',chords:['Bb','Gm','Eb','F7'],notes:['B4','A4','G4','F4','Eb4'],genre:'Rock',
-    lyric:['[Bb]Is this the [Gm]real life?','[Eb]Is this just [Bb]fantasy?','[Eb]Caught in a [Bb]landslide,','[Gm]No escape from [Bb]reality'],
+    lyric:[
+      '— Intro / Ballad —',
+      '[Bb]Is this the [Gm]real life?',
+      '[Eb]Is this just [Bb]fantasy?',
+      '[Eb]Caught in a [Bb]landslide,',
+      '[Gm]No escape from [Bb]reality',
+      '[Gm]Open your [Bb]eyes,',
+      '[Gm]Look up to the [Bb]skies and [F7]see',
+      '— Bait —',
+      '[Bb]I\'m just a [Gm]poor boy, I need no [Eb]sympathy',
+      '[F7]Because it\'s [Bb]easy come, easy [Gm]go',
+      '[Eb]Little high, [F7]little [Bb]low',
+      '[Eb]Anyway the [Bb]wind blows, [Gm]doesn\'t really [Bb]matter to me',
+    ],
     desc:{id:'Masterpiece Queen (1975). Multi-tempo dari ballad ke hard rock.',en:'Queen masterpiece (1975). Multi-tempo from ballad to hard rock.'}},
   'yesterday':{title:'Yesterday',tempo:'Andante',bpm:'~96',key:'F Mayor',chords:['F','Em','A7','Dm'],notes:['F4','E4','D4','C4','B3'],genre:'Pop',
-    lyric:['[F]Yesterday, [Em]all my troubles seemed so [A7]far away','[Dm]Now it looks as though [Bb]they\'re here to [C]stay','[F]Oh [Em]I believe in [A7]yesterday'],
+    lyric:[
+      '— Bait 1 —',
+      '[F]Yesterday, [Em]all my troubles seemed so [A7]far away',
+      '[Dm]Now it looks as though [Bb]they\'re here to [C]stay',
+      '[F]Oh I [Em]believe in [A7]yesterday',
+      '— Bait 2 —',
+      '[F]Suddenly, [Em]I\'m not half the [A7]man I used to be',
+      '[Dm]There\'s a [Bb]shadow hanging [C]over [F]me',
+      '[F]Oh [Em]yesterday [A7]came suddenly',
+      '— Bridge —',
+      '[Dm]Why she [C]had to go [F]I don\'t [Bb]know, she wouldn\'t [F]say',
+      '[Dm]I said [C]something wrong, [F]now I [Bb]long for [C]yesterday',
+    ],
     desc:{id:'The Beatles (1965). Salah satu lagu paling sering di-cover.',en:'The Beatles (1965). One of the most covered songs of all time.'}},
   'let it be':{title:'Let It Be',tempo:'Andante',bpm:'~76',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','E4','G4','A4','G4'],genre:'Pop',
-    lyric:['[C]When I find myself in [G]times of trouble','[Am]Mother Mary [F]comes to me','[C]Speaking words of [G]wisdom, [Am]let it [F]be','[C]And in my [G]hour of [Am]darkness [F]'],
+    lyric:[
+      '— Bait 1 —',
+      '[C]When I find myself in [G]times of trouble',
+      '[Am]Mother Mary [F]comes to me',
+      '[C]Speaking words of [G]wisdom, [Am]let it [F]be',
+      '[C]And in my [G]hour of [Am]darkness',
+      '[F]She is standing [C]right in [G]front of me',
+      '[Am]Speaking words of [F]wisdom, [C]let it [G]be',
+      '— Reff —',
+      '[Am]Let it [G]be, let it [F]be, [C]let it be, let it [G]be',
+      '[Am]Whisper words of [F]wisdom, [C]let it [G]be',
+      '— Bait 2 —',
+      '[C]And when the [G]broken hearted people',
+      '[Am]Living in the [F]world agree',
+      '[C]There will be an [G]answer, [Am]let it [F]be',
+    ],
     desc:{id:'The Beatles (1970). Progresi I-V-vi-IV ikonik.',en:'The Beatles (1970). Iconic I-V-vi-IV progression.'}},
   'shape of you':{title:'Shape of You',tempo:'Moderato',bpm:'~96',key:'C# Minor',chords:['C#m','F#m','A','B'],notes:['C4','D4','E4','F4','G4'],genre:'Pop',
-    lyric:['[C#m]The [F#m]club isn\'t the best place to [A]find a lover','[B]So the [C#m]bar is where I [F#m]go','[C#m]Me and my [F#m]friends at the [A]table doing shots','[B]Talking about the [C#m]things we wanna do'],
+    lyric:[
+      '— Verse —',
+      '[C#m]The [F#m]club isn\'t the best place to [A]find a lover',
+      '[B]So the [C#m]bar is where I [F#m]go',
+      '[C#m]Me and my [F#m]friends at the [A]table doing shots',
+      '[B]Talking \'bout the [C#m]things we wanna do',
+      '[C#m]I got my [F#m]eyes on you, [A]you\'re everything I see',
+      '[B]I came to [C#m]dance with you, if you [F#m]don\'t mind',
+      '— Pre-Chorus —',
+      '[A]Come on now, [B]follow my lead',
+      '[C#m]I may be [F#m]crazy, don\'t mind [A]me',
+      '— Chorus —',
+      '[A]I\'m in love with the [B]shape of you',
+      '[C#m]We push and pull like a [F#m]magnet do',
+      '[A]Although my heart is [B]falling too',
+      '[C#m]I\'m in love with your [F#m]body',
+    ],
     desc:{id:'Ed Sheeran (2017). Groove pentatonik minor.',en:'Ed Sheeran (2017). Minor pentatonic groove.'}},
   'eye of the tiger':{title:'Eye of the Tiger',tempo:'Allegro',bpm:'~108',key:'C Minor',chords:['Cm','Ab','Bb','Cm'],notes:['C4','C4','C4','Eb4','C4'],genre:'Rock',
-    lyric:['[Cm]Risin\' up, back on the [Ab]street','[Bb]Did my time, took my [Cm]chances','[Cm]Went the distance, now I\'m [Ab]back on my feet','[Bb]Just a man and his will to [Cm]survive'],
+    lyric:[
+      '— Bait 1 —',
+      '[Cm]Risin\' up, back on the [Ab]street',
+      '[Bb]Did my time, took my [Cm]chances',
+      '[Cm]Went the distance, now I\'m [Ab]back on my feet',
+      '[Bb]Just a man and his will to [Cm]survive',
+      '— Bait 2 —',
+      '[Cm]So many times it [Ab]happens too fast',
+      '[Bb]You trade your passion for [Cm]glory',
+      '[Cm]Don\'t lose your grip on the [Ab]dreams of the past',
+      '[Bb]You must fight just to keep them [Cm]alive',
+      '— Reff —',
+      '[Ab]It\'s the eye of the tiger',
+      '[Bb]It\'s the thrill of the fight',
+      '[Cm]Rising up to the challenge of our rival',
+      '[Ab]And the last known survivor',
+      '[Bb]Stalks his prey in the night',
+      '[Cm]And he\'s watching us all',
+      '[Ab]With the eye... of the [Bb]tiger',
+    ],
     desc:{id:'Survivor (1982). Riff ikonik C minor.',en:'Survivor (1982). Iconic C minor riff.'}},
   'nothing else matters':{title:'Nothing Else Matters',tempo:'Andante',bpm:'~69',key:'E Minor',chords:['Em','Am','C','D'],notes:['E4','B3','G3','B3','E4'],genre:'Metal/Ballad',
-    lyric:['[Em]So close, no [Am]matter how [C]far','[D]Couldn\'t be much more from the [Em]heart','[Em]Forever trust in [Am]who we [C]are','[D]And nothing else [Em]matters'],
+    lyric:[
+      '— Bait 1 —',
+      '[Em]So close, no [Am]matter how [C]far',
+      '[D]Couldn\'t be much more from the [Em]heart',
+      '[Em]Forever trust in [Am]who we [C]are',
+      '[D]And nothing else [Em]matters',
+      '— Bait 2 —',
+      '[Em]Never opened myself [Am]this [C]way',
+      '[D]Life is ours, we live it our [Em]way',
+      '[Em]All these words I [Am]don\'t just [C]say',
+      '[D]And nothing else [Em]matters',
+      '— Bridge —',
+      '[Em]Trust I seek and I [Am]find in [C]you',
+      '[D]Every day for us something [Em]new',
+      '[Em]Open mind for a [Am]different [C]view',
+      '[D]And nothing else [Em]matters',
+    ],
     desc:{id:'Metallica (1991). Ballad fingerpicking emosional.',en:'Metallica (1991). Emotional fingerpicking ballad.'}},
   'stairway to heaven':{title:'Stairway to Heaven',tempo:'Andante→Allegro',bpm:'72→116',key:'A Minor',chords:['Am','C','D','F','G'],notes:['A3','C4','E4','G4','A4'],genre:'Rock',
-    lyric:['[Am]There\'s a lady who\'s [C]sure all that [D]glitters is [F]gold','[Am]And she\'s buying a [C]stairway to [G]heaven','[Am]When she gets there she [C]knows, if the [D]stores are all [F]closed','[Am]With a word she can [C]get what she [G]came for'],
+    lyric:[
+      '— Bait 1 —',
+      '[Am]There\'s a [C]lady who\'s [D]sure all that [F]glitters is [Am]gold',
+      '[C]And she\'s buying a [G]stairway to [Am]heaven',
+      '[Am]When she gets [C]there she [D]knows, if the [F]stores are all [Am]closed',
+      '[C]With a word she can [G]get what she [Am]came for',
+      '— Bait 2 —',
+      '[Am]There\'s a [C]sign on the [D]wall but she [F]wants to be [Am]sure',
+      '[C]\'Cause you know sometimes words have two [G]meanings',
+      '[Am]In a [C]tree by the [D]brook, there\'s a [F]songbird who [Am]sings',
+      '[C]Sometimes all of our [G]thoughts are mis-[Am]given',
+    ],
     desc:{id:'Led Zeppelin (1971). Dari lambat ke hard rock. A minor.',en:'Led Zeppelin (1971). From slow to hard rock. A minor.'}},
   'smoke on the water':{title:'Smoke on the Water',tempo:'Moderato',bpm:'~112',key:'G Minor',chords:['Gm','Bb','C','Gm'],notes:['G4','Bb4','C5','G4','Bb4'],genre:'Rock',
-    lyric:['[Gm]We all came out to [Bb]Montreux','[C]On the Lake Geneva [Gm]shoreline','[Gm]To make records with a [Bb]mobile','[C]We didn\'t have much [Gm]time'],
+    lyric:[
+      '— Bait 1 —',
+      '[Gm]We all came out to [Bb]Montreux',
+      '[C]On the Lake Geneva [Gm]shoreline',
+      '[Gm]To make records with a [Bb]mobile',
+      '[C]We didn\'t have much [Gm]time',
+      '— Bait 2 —',
+      '[Gm]Frank Zappa and the [Bb]Mothers',
+      '[C]Were at the best place [Gm]around',
+      '[Gm]But some stupid with a [Bb]flare gun',
+      '[C]Burned the place to the [Gm]ground',
+      '— Reff —',
+      '[Gm]Smoke on the [Bb]water, [C]a fire in the [Gm]sky',
+      '[Gm]Smoke on the [Bb]water',
+    ],
     desc:{id:'Deep Purple (1972). Riff gitar paling terkenal di dunia.',en:'Deep Purple (1972). World\'s most famous guitar riff.'}},
   'happy birthday':{title:'Happy Birthday',tempo:'Andante',bpm:'~90',key:'C Mayor',chords:['C','G','F'],notes:['C4','C4','D4','C4','F4'],genre:'Traditional',
-    lyric:['[C]Happy birthday [G]to you','[G]Happy birthday [C]to you','[C]Happy birthday dear [F]... (nama)','[C]Happy birthday [G]to [C]you'],
+    lyric:[
+      '— Ulang Tahun —',
+      '[C]Happy birthday [G]to you',
+      '[G]Happy birthday [C]to you',
+      '[C]Happy birthday dear [F]...',
+      '[C]Happy birthday [G]to [C]you',
+      '— Selamat Ulang Tahun —',
+      '[C]Selamat ulang [G]tahun',
+      '[G]Selamat ulang [C]tahun',
+      '[C]Selamat ulang [F]tahun',
+      '[C]Semoga [G]panjang [C]umur',
+    ],
     desc:{id:'Lagu tradisional. Birama 3/4.',en:'Traditional. 3/4 waltz time.'}},
   'riptide':{title:'Riptide',tempo:'Moderato',bpm:'~100',key:'C Mayor',chords:['Am','G','C'],notes:['A4','G4','E4','C4','D4'],genre:'Indie Pop',
-    lyric:['[Am]I was scared of dentists and the [G]dark','[C]I was scared of pretty girls and [Am]starting conversations','[G]Oh all my friends are turning [C]green','[Am]You\'re the magician\'s [G]assistant in their [C]dreams'],
+    lyric:[
+      '— Bait 1 —',
+      '[Am]I was scared of dentists and the [G]dark',
+      '[C]I was scared of pretty girls and [Am]starting conversations',
+      '[G]Oh all my friends are turning [C]green',
+      '[Am]You\'re the magician\'s [G]assistant in their [C]dreams',
+      '— Reff —',
+      '[Am]And they come unstuck',
+      '[Am]Lady, running \'round, running [G]\'round, running \'round',
+      '[C]Coming in waves',
+      '[Am]I wanna be your left hand [G]man',
+      '[C]I love you when you\'re singing that song and',
+      '[Am]I got a lump in my throat \'cause',
+      '[G]You\'re gonna sing the words [C]wrong',
+    ],
     desc:{id:'Vance Joy (2013). Progresi Am-G-C berulang.',en:'Vance Joy (2013). Repeating Am-G-C progression.'}},
   'amazing grace':{title:'Amazing Grace',tempo:'Andante',bpm:'~80',key:'G Mayor',chords:['G','C','G','D'],notes:['G4','C5','E5','C5','E5'],genre:'Hymn',
-    lyric:['[G]Amazing [C]grace, how [G]sweet the sound','[G]That saved a [D]wretch like [G]me','[G]I once was [C]lost, but [G]now am found','[G]Was blind, but [D]now I [G]see'],
+    lyric:[
+      '— Bait 1 —',
+      '[G]Amazing [C]grace, how [G]sweet the sound',
+      '[G]That saved a [D]wretch like [G]me',
+      '[G]I once was [C]lost, but [G]now am found',
+      '[G]Was blind, but [D]now I [G]see',
+      '— Bait 2 —',
+      '[G]\'Twas grace that [C]taught my [G]heart to fear',
+      '[G]And grace my [D]fears re-[G]lieved',
+      '[G]How precious [C]did that [G]grace appear',
+      '[G]The hour I [D]first be-[G]lieved',
+      '— Bait 3 —',
+      '[G]Through many [C]dangers, [G]toils and snares',
+      '[G]I have al-[D]ready [G]come',
+      '[G]\'Tis grace hath [C]brought me [G]safe thus far',
+      '[G]And grace will [D]lead me [G]home',
+    ],
     desc:{id:'Himne tradisional (1779). G Mayor pentatonik.',en:'Traditional hymn (1779). G major pentatonic.'}},
   'ampar ampar pisang':{title:'Ampar-Ampar Pisang',tempo:'Allegro',bpm:'~130',key:'C Mayor',chords:['C','F','G','C'],notes:['C4','D4','E4','F4','G4'],genre:'Folk',
-    lyric:['[C]Ampar-ampar [F]pisang','[C]Pisangku [G]belum [C]masak','[C]Masak sabigi [F]dihurung bari-bari','[G]Nang mana batis kutung [C]dikitip bari-bari'],
+    lyric:[
+      '— Bait 1 —',
+      '[C]Ampar-ampar [F]pisang',
+      '[C]Pisangku [G]belum [C]masak',
+      '[C]Masak sabigi [F]dihurung bari-bari',
+      '[G]Nang mana batis kutung [C]dikitip bari-bari',
+      '— Bait 2 —',
+      '[C]Manggalepak [F]manggalepok',
+      '[C]Patah kayu [G]bengkok [C]',
+      '[C]Bengkok dimakan [F]api, apinya canculuran',
+      '[G]Nang mana batis kutung [C]dikitip bari-bari',
+    ],
     desc:{id:'Lagu daerah Kalimantan Selatan.',en:'Traditional song from South Kalimantan.'}},
 };
 function findSong(query){
@@ -1400,6 +1656,7 @@ function findSong(query){
 
 var aiMode='offline';
 var outputMode='chord';
+var currentResult=null,currentQuery='';
 function setAIMode(mode){
   aiMode=mode;
   document.querySelectorAll('#panel3 .toggle-group .toggle-btn').forEach(function(b){
@@ -1412,6 +1669,11 @@ function setOutputMode(mode){
   outputMode=mode;
   document.getElementById('outChord').classList.toggle('active',mode==='chord');
   document.getElementById('outNotation').classList.toggle('active',mode==='notation');
+  // Re-render immediately if a result is already loaded
+  if(currentResult){
+    if(mode==='chord') renderResultChordLyric(currentResult,currentQuery);
+    else renderResultNotation(currentResult,currentQuery);
+  }
 }
 function buildSongDropdown(){
   var sel=document.getElementById('songDropdown');
@@ -1458,35 +1720,125 @@ function guessOffline(query){
           en:'Not found in database. Estimated from common patterns. Use AI Mode for accurate results.'}};
 }
 async function analyzeWithAI(songTitle,apiKey){
-  var prompt='Analyze the song "'+songTitle+'". Respond ONLY with valid JSON (no markdown):\n{"title":"","tempo":"","bpm":"","key":"","chords":[""],"notes":["C4","D4"],"genre":"","desc_id":"","desc_en":"","lyric_sample":"first 2 lines with chord markers like [C]word [G]word"}';
+  var prompt='Analyze the song "'+songTitle+'". Respond ONLY with valid JSON (no markdown):\n{"title":"","tempo":"","bpm":"","key":"","chords":[""],"notes":["C4","D4"],"genre":"","desc_id":"","desc_en":"","lyrics":["— Bait 1 —","[C]line with [G]chord markers","[Am]next line","— Reff —","[C]chorus line"],"melody":{"timeSig":"4/4","keySig":0,"measures":[{"chord":"C","notes":[{"p":"E4","d":"q","l":"syl-"},{"p":"D4","d":"q","l":"la-"},{"p":"C4","d":"h","l":"ble"}]}]}}\nRules: lyrics = full song (all verses + chorus), each line as [Chord]words. melody = first 8-12 measures with note pitch (p: C4-G5), duration (q=quarter,h=half,e=eighth,w=whole), lyric syllable (l). Include at least 2 verses + reff.';
   try{
     var resp=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1800,messages:[{role:'user',content:prompt}]})
     });
     if(!resp.ok){var e=await resp.json();throw new Error(e.error?.message||'API error');}
     var data=await resp.json();
     var text=data.content[0].text.trim();
     var jsonMatch=text.match(/\{[\s\S]*\}/);if(!jsonMatch)throw new Error('No JSON');
     var parsed=JSON.parse(jsonMatch[0]);
+    var lyricArr=parsed.lyrics||(parsed.lyric_sample?[parsed.lyric_sample]:[]);
     return{title:parsed.title||songTitle,tempo:parsed.tempo||'Moderato',bpm:parsed.bpm||'~120',
       key:parsed.key||'C Mayor',chords:parsed.chords||['C','G','Am','F'],
       notes:parsed.notes||['C4','D4','E4','G4'],genre:parsed.genre||'',
-      lyric_sample:parsed.lyric_sample||'',
+      lyric:lyricArr,melody:parsed.melody||null,
       desc:{id:parsed.desc_id||'',en:parsed.desc_en||''}};
   }catch(err){
-    return{title:songTitle,tempo:'Moderato',bpm:'~120',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','D4','E4','G4'],genre:'',
+    return{title:songTitle,tempo:'Moderato',bpm:'~120',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','D4','E4','G4'],genre:'',lyric:[],
       desc:{id:'AI error: '+err.message,en:'AI error: '+err.message}};
   }
 }
 
 function renderResult(res,query){
+  currentResult=res; currentQuery=query;
   document.getElementById('aiResult').style.display='block';
   if(outputMode==='chord'){
     renderResultChordLyric(res,query);
   } else {
     renderResultNotation(res,query);
+  }
+}
+
+// ─── Chord-above-lyric renderer ───
+function renderChordAboveLyric(line,chordColor,chordBg){
+  var html='';var regex=/\[([A-Za-z0-9#b\/]+)\]([^\[]*)/g;var match;var hasChord=false;
+  while((match=regex.exec(line))!==null){
+    hasChord=true;
+    var ch=match[1],txt=match[2]||'';
+    html+='<span style="display:inline-block;vertical-align:bottom;margin-right:2px;text-align:left;">'
+      +'<span style="display:block;font-size:11px;font-weight:900;color:'+chordColor+';background:'+chordBg+';border-radius:3px;padding:0 5px;min-height:15px;line-height:15px;margin-bottom:2px;">'+ch+'</span>'
+      +'<span style="display:block;font-size:13px;line-height:1.5;white-space:pre;">'+(txt||' ')+'</span>'
+      +'</span>';
+  }
+  if(!hasChord)html='<span style="font-size:13px;line-height:1.5;color:#6B7280;">'+line+'</span>';
+  return html;
+}
+
+// ─── Partitur (sheet music) renderer ───
+function buildPartiture(melody,el){
+  el.innerHTML='';
+  if(!melody||!melody.measures||!melody.measures.length){
+    el.innerHTML='<div style="font-size:12px;color:var(--muted);text-align:center;padding:20px;">Partitur tidak tersedia. Aktifkan AI Mode untuk partitur otomatis.</div>';
+    return;
+  }
+  var SVG_W=360,BARS=4,CLEF_W=28,TS_W=16;
+  var STAFF_TOP=22,SL=10,STAFF_H=SL*4;
+  var LYRIC_Y=STAFF_TOP+STAFF_H+14,ROW_H=LYRIC_Y+14;
+  var NY={G5:-5,F5:0,E5:5,D5:10,C5:15,B4:20,A4:25,G4:30,F4:35,E4:40,D4:45,C4:50,B3:55};
+  var MIDLINE=20;
+  var measures=melody.measures||[];
+  var totalRows=Math.ceil(measures.length/BARS);
+  for(var r=0;r<totalRows;r++){
+    var rowM=measures.slice(r*BARS,(r+1)*BARS);
+    var isFirst=(r===0);
+    var usedW=CLEF_W+(isFirst?TS_W:0);
+    var mW=Math.floor((SVG_W-usedW)/BARS);
+    var parts=[];
+    // Staff lines
+    for(var li=0;li<=4;li++){var ly=STAFF_TOP+li*SL;parts.push('<line x1="'+CLEF_W+'" y1="'+ly+'" x2="'+SVG_W+'" y2="'+ly+'" stroke="#9CA3AF" stroke-width="0.9"/>');}
+    // Treble clef
+    parts.push('<text x="1" y="'+(STAFF_TOP+44)+'" font-size="52" font-family="serif,Times New Roman" fill="#6B7280">𝄞</text>');
+    // Time sig
+    if(isFirst){var ts=(melody.timeSig||'4/4').split('/');var tsx=CLEF_W+TS_W/2;
+      parts.push('<text x="'+tsx+'" y="'+(STAFF_TOP+12)+'" text-anchor="middle" font-size="13" font-weight="900" fill="#374151">'+ts[0]+'</text>');
+      parts.push('<text x="'+tsx+'" y="'+(STAFF_TOP+26)+'" text-anchor="middle" font-size="13" font-weight="900" fill="#374151">'+ts[1]+'</text>');
+    }
+    // Measures
+    rowM.forEach(function(meas,mi){
+      var mx=usedW+mi*mW;
+      if(mi>0)parts.push('<line x1="'+mx+'" y1="'+STAFF_TOP+'" x2="'+mx+'" y2="'+(STAFF_TOP+STAFF_H)+'" stroke="#6B7280" stroke-width="0.8"/>');
+      if(meas.chord)parts.push('<text x="'+(mx+3)+'" y="'+(STAFF_TOP-5)+'" font-size="9.5" font-weight="900" fill="#7C3AED">'+meas.chord+'</text>');
+      var notes=meas.notes||[];
+      var noteSpacing=(mW-10)/Math.max(notes.length,1);
+      notes.forEach(function(note,ni){
+        var nx=mx+6+ni*noteSpacing;
+        if(note.p==='R'){
+          parts.push('<rect x="'+(nx+1)+'" y="'+(STAFF_TOP+MIDLINE-3)+'" width="9" height="5" rx="1" fill="#374151"/>');
+        }else{
+          var ry=NY[note.p]!==undefined?NY[note.p]:MIDLINE;
+          var ncy=STAFF_TOP+ry;
+          var d=note.d||'q';var filled=(d!=='h'&&d!=='w');
+          var stemUp=(ry>=MIDLINE);var STEM=22;var cx_=nx+5;
+          // Ledger line for C4 (ry=50) or D4 (ry=45)
+          if(ry>=45)parts.push('<line x1="'+(cx_-5)+'" y1="'+(STAFF_TOP+50)+'" x2="'+(cx_+10)+'" y2="'+(STAFF_TOP+50)+'" stroke="#9CA3AF" stroke-width="0.9"/>');
+          // Note head
+          parts.push('<ellipse cx="'+cx_+'" cy="'+ncy+'" rx="5" ry="3.5" transform="rotate(-12 '+cx_+' '+ncy+')" fill="'+(filled?'#374151':'none')+'" stroke="#374151" stroke-width="1.2"/>');
+          // Stem
+          if(d!=='w'){
+            if(stemUp)parts.push('<line x1="'+(cx_+4)+'" y1="'+ncy+'" x2="'+(cx_+4)+'" y2="'+(ncy-STEM)+'" stroke="#374151" stroke-width="1.2"/>');
+            else parts.push('<line x1="'+(cx_-4)+'" y1="'+ncy+'" x2="'+(cx_-4)+'" y2="'+(ncy+STEM)+'" stroke="#374151" stroke-width="1.2"/>');
+          }
+          // Eighth flag
+          if(d==='e'||d==='eighth'){
+            if(stemUp)parts.push('<path d="M'+(cx_+4)+','+(ncy-STEM)+' C'+(cx_+12)+','+(ncy-STEM+8)+' '+(cx_+8)+','+(ncy-STEM+16)+' '+(cx_+4)+','+(ncy-STEM+18)+'" fill="none" stroke="#374151" stroke-width="1.2" stroke-linecap="round"/>');
+            else parts.push('<path d="M'+(cx_-4)+','+(ncy+STEM)+' C'+(cx_+4)+','+(ncy+STEM-8)+' '+cx_+','+(ncy+STEM-16)+' '+(cx_-4)+','+(ncy+STEM-18)+'" fill="none" stroke="#374151" stroke-width="1.2" stroke-linecap="round"/>');
+          }
+        }
+        // Lyric
+        if(note.l)parts.push('<text x="'+(nx+5)+'" y="'+LYRIC_Y+'" text-anchor="middle" font-size="8" fill="#374151">'+note.l+'</text>');
+      });
+    });
+    // Final bar line
+    parts.push('<line x1="'+SVG_W+'" y1="'+STAFF_TOP+'" x2="'+SVG_W+'" y2="'+(STAFF_TOP+STAFF_H)+'" stroke="#6B7280" stroke-width="1.2"/>');
+    if(r===totalRows-1)parts.push('<line x1="'+(SVG_W-3)+'" y1="'+STAFF_TOP+'" x2="'+(SVG_W-3)+'" y2="'+(STAFF_TOP+STAFF_H)+'" stroke="#374151" stroke-width="2.5"/>');
+    var rowDiv=document.createElement('div');rowDiv.style.cssText='margin-bottom:4px;';
+    rowDiv.innerHTML='<svg viewBox="0 0 '+SVG_W+' '+ROW_H+'" width="100%" xmlns="http://www.w3.org/2000/svg">'+parts.join('')+'</svg>';
+    el.appendChild(rowDiv);
   }
 }
 
@@ -1509,16 +1861,39 @@ function renderResultChordLyric(res,query){
     chordEl.appendChild(pill);
   });
 
-  // Chord diagrams
+  // Chord diagrams — Guitar, Bass, Piano
   var diagEl=document.getElementById('resChordDiagrams');diagEl.innerHTML='';
-  (res.chords||[]).slice(0,4).forEach(function(ch,i){
-    var wrap=document.createElement('div');wrap.style.textAlign='center';
-    var label=document.createElement('div');label.style.cssText='font-size:13px;font-weight:900;margin-bottom:4px;color:'+colors[i%colors.length]+';';label.textContent=ch;
-    wrap.appendChild(label);
-    var found=null;
-    ['major','minor','seventh'].forEach(function(type){if(guitarChords[type]&&guitarChords[type][ch])found=guitarChords[type][ch];});
-    if(found){var dd=document.createElement('div');dd.innerHTML=buildGuitarDiagramSVG(found.frets,colors[i%colors.length]);wrap.appendChild(dd);}
-    diagEl.appendChild(wrap);
+  diagEl.style.cssText='display:block;';
+  var instrDefs=[
+    {label:'🎸 Gitar',data:guitarChords,useNotes:false},
+    {label:'🎵 Bass',data:bassChords,useNotes:false},
+    {label:'🎹 Piano',data:keyboardChords,useNotes:true},
+  ];
+  (res.chords||[]).slice(0,6).forEach(function(ch,i){
+    var color=colors[i%colors.length];
+    var card=document.createElement('div');
+    card.style.cssText='border:1.5px solid '+color+'44;border-radius:12px;padding:10px 8px;margin-bottom:10px;background:#fff;';
+    var nm=document.createElement('div');nm.style.cssText='font-size:16px;font-weight:900;color:'+color+';text-align:center;margin-bottom:8px;';nm.textContent=ch;
+    card.appendChild(nm);
+    var row=document.createElement('div');row.style.cssText='display:flex;gap:6px;justify-content:center;flex-wrap:wrap;';
+    instrDefs.forEach(function(inst){
+      var found=null;
+      ['major','minor','seventh'].forEach(function(type){if(inst.data[type]&&inst.data[type][ch])found=inst.data[type][ch];});
+      var col=document.createElement('div');col.style.cssText='text-align:center;min-width:80px;';
+      var lbl=document.createElement('div');lbl.style.cssText='font-size:9px;font-weight:800;color:'+color+';margin-bottom:4px;';lbl.textContent=inst.label;col.appendChild(lbl);
+      if(found){
+        var dw=document.createElement('div');dw.style.cssText='display:flex;justify-content:center;';
+        dw.innerHTML=inst.useNotes?buildKeyboardDiagram(found.notes,color):(inst.label.includes('Bass')?buildBassDiagramSVG(found.frets,color):buildGuitarDiagramSVG(found.frets,color));
+        col.appendChild(dw);
+        var pb=document.createElement('button');
+        pb.style.cssText='margin-top:4px;padding:2px 8px;border-radius:5px;border:none;background:'+color+'22;color:'+color+';font-size:9px;font-weight:700;cursor:pointer;';
+        pb.textContent='▶ Play';
+        pb.onclick=(function(fd,isKeys){return function(e){e.stopPropagation();var tp=isKeys?'sine':'triangle';if(fd.freqs)fd.freqs.forEach(function(f,j){playTone(f,0.7,j*0.04,tp);});};})(found,inst.useNotes);
+        col.appendChild(pb);
+      }else{var na=document.createElement('div');na.style.cssText='font-size:9px;color:#9CA3AF;padding:10px 0;';na.textContent='—';col.appendChild(na);}
+      row.appendChild(col);
+    });
+    card.appendChild(row);diagEl.appendChild(card);
   });
 
   // Chord chart (slash notation)
@@ -1536,16 +1911,21 @@ function renderResultChordLyric(res,query){
     chartEl.appendChild(barsDiv);
   }
 
-  // Lyrics (from res.lyric array or res.lyric_sample string)
+  // Lyrics — chord names displayed ABOVE lyric text
   var lyrics=res.lyric||(res.lyric_sample?[res.lyric_sample]:null);
   if(lyrics&&lyrics.length){
     var lyricWrap=document.createElement('div');
     lyricWrap.style.cssText='margin-top:14px;padding:14px;background:#F5F3FF;border-radius:10px;border:1px solid #DDD6FE;';
-    lyricWrap.innerHTML='<div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--c1);margin-bottom:10px;">🎤 Chord + Lirik</div>';
+    lyricWrap.innerHTML='<div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--c1);margin-bottom:12px;">🎤 Chord + Lirik</div>';
     lyrics.forEach(function(line){
       var lineEl=document.createElement('div');
-      lineEl.style.cssText='font-size:14px;line-height:2.0;margin-bottom:2px;font-family:monospace;color:var(--text);';
-      lineEl.innerHTML=line.replace(/\[([A-Za-z0-9#b/]+)\]/g,'<span style="font-size:11px;font-weight:900;color:var(--c1);background:#EDE9FE;border-radius:4px;padding:1px 5px;margin-right:2px;">$1</span>');
+      if(/^—/.test(line)){
+        lineEl.style.cssText='font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--c1);margin:12px 0 6px;opacity:0.7;';
+        lineEl.textContent=line;
+      } else {
+        lineEl.style.cssText='display:flex;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px;line-height:1;';
+        lineEl.innerHTML=renderChordAboveLyric(line,'var(--c1)','#EDE9FE');
+      }
       lyricWrap.appendChild(lineEl);
     });
     document.getElementById('resChordChart').appendChild(lyricWrap);
@@ -1557,7 +1937,6 @@ function renderResultChordLyric(res,query){
 function renderResultNotation(res,query){
   document.getElementById('resChordMode').style.display='none';
   document.getElementById('resNotationMode').style.display='block';
-  // Clear any previously injected lyric section
   document.querySelectorAll('.res-lyric-notation').forEach(function(el){el.remove();});
   document.getElementById('resultSongTitle2').textContent='🎵 '+(res.title||query);
   document.getElementById('resTempo2').textContent=res.tempo+(res.bpm?' ('+res.bpm+' bpm)':'');
@@ -1575,50 +1954,58 @@ function renderResultNotation(res,query){
     chordEl.appendChild(pill);
   });
 
-  // Staff with SVG notes — staff lines at y=20,34,48,62,76 (14px spacing)
-  var staffEl=document.getElementById('resNotes');staffEl.innerHTML='';
-  staffEl.style.height='120px';
-  // Corrected noteYmap: centers aligned to 14px-spaced staff lines
-  var noteYmap={'G5':13,'F5':20,'E5':27,'D5':34,'C5':41,'B4':48,'A4':55,'G4':62,'F4':69,'E4':76,'D4':83,'C4':90};
-  [20,34,48,62,76].forEach(function(y){
-    var l=document.createElement('div');l.style.cssText='position:absolute;left:36px;right:4px;top:'+y+'px;height:1.5px;background:#D1D5DB;';
-    staffEl.appendChild(l);
-  });
-  var clefEl=document.createElement('div');
-  clefEl.style.cssText='position:absolute;left:2px;top:-2px;font-size:48px;line-height:1;color:#9CA3AF;font-family:serif;';
-  clefEl.textContent='𝄞';staffEl.appendChild(clefEl);
-  (res.notes||[]).forEach(function(note,i){
-    var y=noteYmap[note]||48,x=48+i*30;
-    var stemUp=(y>=48); // middle line B4 at y=48
-    var nd=buildNoteSVG('quarter',colors[i%colors.length],stemUp,'none');
-    var wrapper=document.createElement('div');
-    wrapper.style.cssText='position:absolute;left:'+x+'px;top:'+(y-nd.headY)+'px;cursor:pointer;';
-    wrapper.innerHTML=nd.svg;
-    // Ledger line for C4 (y=90, below staff)
-    if(noteYmap[note]>=83){
-      var ledg=document.createElement('div');
-      ledg.style.cssText='position:absolute;left:-4px;right:-4px;top:'+(nd.headY-1)+'px;height:1.5px;background:#9CA3AF;z-index:-1;';
-      wrapper.appendChild(ledg);
-    }
-    wrapper.onclick=function(){playTone(noteFreq(note),0.4,0);};
-    staffEl.appendChild(wrapper);
-  });
+  // Partitur / staff section
+  var staffEl=document.getElementById('resNotes');
+  staffEl.style.cssText='height:auto;overflow:visible;background:#FAFAFA;border-radius:8px;border:1px solid var(--border);margin:12px 0;padding:8px;';
 
-  // Lyrics section
-  var lyrics=res.lyric||(res.lyric_sample?[res.lyric_sample]:null);
-  if(lyrics&&lyrics.length){
-    var lyricWrap=document.createElement('div');
-    lyricWrap.className='res-lyric-notation';
-    lyricWrap.style.cssText='margin-top:14px;padding:14px;background:#F0FDF4;border-radius:10px;border:1px solid #A7F3D0;';
-    lyricWrap.innerHTML='<div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#065F46;margin-bottom:10px;">🎤 Lirik + Chord</div>';
-    lyrics.forEach(function(line){
-      var lineEl=document.createElement('div');
-      lineEl.style.cssText='font-size:14px;line-height:2.0;margin-bottom:2px;font-family:monospace;color:var(--text);';
-      lineEl.innerHTML=line.replace(/\[([A-Za-z0-9#b/]+)\]/g,'<span style="font-size:11px;font-weight:900;color:#065F46;background:#D1FAE5;border-radius:4px;padding:1px 5px;margin-right:2px;">$1</span>');
-      lyricWrap.appendChild(lineEl);
+  if(res.melody){
+    // Full partitur from melody data
+    buildPartiture(res.melody,staffEl);
+  } else {
+    // Fallback: simple single staff showing res.notes array
+    staffEl.innerHTML='';
+    staffEl.style.position='relative';
+    staffEl.style.height='120px';
+    var noteYmap={'G5':13,'F5':20,'E5':27,'D5':34,'C5':41,'B4':48,'A4':55,'G4':62,'F4':69,'E4':76,'D4':83,'C4':90};
+    [20,34,48,62,76].forEach(function(y){
+      var l=document.createElement('div');l.style.cssText='position:absolute;left:36px;right:4px;top:'+y+'px;height:1.5px;background:#D1D5DB;';
+      staffEl.appendChild(l);
     });
-    // Insert lyrics after the staff section, before chord pills
-    staffEl.parentNode.insertAdjacentElement('afterend',lyricWrap);
+    var clefEl=document.createElement('div');
+    clefEl.style.cssText='position:absolute;left:2px;top:-2px;font-size:48px;line-height:1;color:#9CA3AF;font-family:serif;';
+    clefEl.textContent='𝄞';staffEl.appendChild(clefEl);
+    (res.notes||[]).forEach(function(note,i){
+      var y=noteYmap[note]||48,x=48+i*30;
+      var stemUp=(y>=48);
+      var nd=buildNoteSVG('quarter',colors[i%colors.length],stemUp,'none');
+      var wrapper=document.createElement('div');
+      wrapper.style.cssText='position:absolute;left:'+x+'px;top:'+(y-nd.headY)+'px;cursor:pointer;';
+      wrapper.innerHTML=nd.svg;
+      if((noteYmap[note]||0)>=83){var ledg=document.createElement('div');ledg.style.cssText='position:absolute;left:-4px;right:-4px;top:'+(nd.headY-1)+'px;height:1.5px;background:#9CA3AF;z-index:-1;';wrapper.appendChild(ledg);}
+      wrapper.onclick=function(){playTone(noteFreq(note),0.4,0);};
+      staffEl.appendChild(wrapper);
+    });
+
+    // Lyrics below staff (chord-above-lyric format)
+    var lyrics=res.lyric||(res.lyric_sample?[res.lyric_sample]:null);
+    if(lyrics&&lyrics.length){
+      var lyricWrap=document.createElement('div');
+      lyricWrap.className='res-lyric-notation';
+      lyricWrap.style.cssText='margin-top:14px;padding:14px;background:#F0FDF4;border-radius:10px;border:1px solid #A7F3D0;';
+      lyricWrap.innerHTML='<div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#065F46;margin-bottom:12px;">🎤 Lirik</div>';
+      lyrics.forEach(function(line){
+        var lineEl=document.createElement('div');
+        if(/^—/.test(line)){
+          lineEl.style.cssText='font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#065F46;margin:12px 0 6px;opacity:0.7;';
+          lineEl.textContent=line;
+        }else{
+          lineEl.style.cssText='display:flex;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px;';
+          lineEl.innerHTML=renderChordAboveLyric(line,'#065F46','#D1FAE5');
+        }
+        lyricWrap.appendChild(lineEl);
+      });
+      staffEl.parentNode.insertAdjacentElement('afterend',lyricWrap);
+    }
   }
 
   document.getElementById('resDesc2').textContent=(res.desc&&(res.desc[lang]||res.desc.id))||'';
