@@ -1938,11 +1938,13 @@ function getCleanApiKey(){
 }
 async function analyzeWithClaude(songTitle,apiKey){
   apiKey=(apiKey||'').replace(/[^\x20-\x7E]/g,'').trim();
-  var prompt='You are a music expert. For the song "'+songTitle+'", respond ONLY with valid JSON (no markdown, no extra text):\n'
+  // NOTE: use (Chord) not [Chord] in lyric — square brackets inside JSON strings
+  // can cause parse errors when Claude forgets to quote a line.
+  var prompt='You are a music expert. For the song "'+songTitle+'", respond ONLY with valid JSON (no markdown):\n'
     +'{"title":"","artist":"","tempo":"","bpm":"","key":"","chords":[""],"genre":"","desc_id":"","desc_en":"",'
     +'"sections":[{"name":"Verse 1","chords":["Em","G"]},{"name":"Chorus","chords":["C","D"]}],'
-    +'"lyric":["— Verse 1 —","[Em]line with [G]chord markers","[C]next line","— Chorus —","[D]chorus line"]}'
-    +'\nRules: lyric = real lyrics of the song with chord markers like [Chord] placed where chord changes occur. Include all verses and chorus. sections = chord list per section name.';
+    +'"lyric":["— Verse 1 —","(G)line with (Em)chord markers","(Am)next line","— Chorus —","(D)chorus line"]}'
+    +'\nRULES:\n- lyric: full song lyrics with chord markers in (Chord) format using PARENTHESES (not square brackets). Every lyric entry must be a quoted string.\n- sections: list unique chords per section.\n- Include all verses and chorus.';
   try{
     var resp=await fetchTimeout('https://api.anthropic.com/v1/messages',{
       method:'POST',
@@ -1953,15 +1955,24 @@ async function analyzeWithClaude(songTitle,apiKey){
         'anthropic-version':'2023-06-01',
         'anthropic-dangerous-direct-browser-access':'true'
       },
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1800,messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1800,messages:[{role:'user',content:prompt}]})
     },20000);
     if(!resp.ok){var e=await resp.json();throw new Error(e.error&&e.error.message?e.error.message:'HTTP '+resp.status);}
     var d=await resp.json();
     var text=d.content[0].text.trim();
     var jm=text.match(/\{[\s\S]*\}/);if(!jm)throw new Error('No JSON in response');
-    var p=JSON.parse(jm[0]);
+    var raw=jm[0];
+    // Safety: fix any bare [Chord]text that Claude forgot to quote in the JSON
+    raw=raw.replace(/,\s*\[([A-Za-z0-9#b\/m]+)\]([^"[\]{},\n]*)/g,function(m,ch,rest){
+      return ', "'+ch+rest.replace(/"/g,'\\"')+'"';
+    });
+    var p=JSON.parse(raw);
+    // Convert (Chord) → [Chord] format for renderChordAboveLyric
+    var lyricArr=(p.lyric||[]).map(function(line){
+      return line.replace(/\(([A-Za-z0-9#b\/m]+)\)/g,'[$1]');
+    });
     return{title:p.title||songTitle,artist:p.artist||'',tempo:p.tempo||'Moderato',bpm:p.bpm||'',
-      key:p.key||'',chords:p.chords||[],sections:p.sections||[],lyric:p.lyric||[],notes:[],genre:p.genre||'',
+      key:p.key||'',chords:p.chords||[],sections:p.sections||[],lyric:lyricArr,notes:[],genre:p.genre||'',
       desc:{id:p.desc_id||'(Estimasi AI)',en:p.desc_en||'(AI estimate)'}};
   }catch(err){
     var m=err.message||'';
