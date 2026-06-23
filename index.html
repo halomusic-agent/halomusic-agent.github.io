@@ -105,6 +105,11 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 /* LOADING */
 .spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes ldot{0%,80%,100%{transform:scale(0.3);opacity:0.3}40%{transform:scale(1);opacity:1}}
+.loading-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c1);animation:ldot 1.4s infinite ease-in-out;margin:0 4px;}
+.loading-dot:nth-child(1){animation-delay:-0.32s;}
+.loading-dot:nth-child(2){animation-delay:-0.16s;}
+.loading-dot:nth-child(3){animation-delay:0s;}
 
 /* MISC */
 .offline-note{background:#ECFDF5;border:1px solid #A7F3D0;border-radius:8px;padding:8px 12px;font-size:12px;color:#065F46;font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:12px;}
@@ -340,31 +345,26 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 <!-- TAB 4: AI ANALYZER                     -->
 <!-- ═══════════════════════════════════════ -->
 <div class="panel" id="panel3">
-  <div class="toggle-group">
-    <button class="toggle-btn active" onclick="setAIMode('offline')" data-id="btnOffline">📚 Offline</button>
-    <button class="toggle-btn" onclick="setAIMode('ai')" data-id="btnAI">🤖 AI Mode</button>
-  </div>
-  <div class="offline-note" id="offlineNotice">
-    ✅ <span data-id="offlineText">Mode Offline — hasil berdasarkan database lokal. Aktifkan AI Mode untuk analisis lebih akurat.</span>
-  </div>
-  <div id="apiKeySection" style="display:none;">
-    <input type="hidden" id="apiKeyInput"/>
-    <div style="background:#EEF2FF;border:1px solid #C4B5FD;border-radius:10px;padding:10px 14px;font-size:12px;color:var(--c1);font-weight:700;margin-bottom:12px;">
-      🔑 <span data-id="apiKeyLabel">API key belum disimpan.</span>
-      <button onclick="openSettings()" style="margin-left:8px;padding:3px 10px;border-radius:6px;border:none;background:var(--c1);color:#fff;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">⚙️ Buka Pengaturan</button>
-    </div>
-  </div>
+  <input type="hidden" id="apiKeyInput"/>
   <div class="card">
     <div class="card-title" data-id="aiInputLabel">🎵 Masukkan Judul Lagu</div>
-    <input type="text" class="music-input" id="songInput" placeholder="e.g. Bohemian Rhapsody, Bengawan Solo, Riptide..."/>
+    <input type="text" class="music-input" id="songInput" placeholder="e.g. Bohemian Rhapsody, Bengawan Solo, Perfect..." onkeydown="if(event.key==='Enter')analyzeSong()"/>
     <select class="song-dropdown" id="songDropdown" onchange="selectSongFromDropdown(this.value)">
-      <option value="">— Pilih lagu offline (A–Z) —</option>
+      <option value="">— Pilih dari database lagu —</option>
     </select>
     <button class="submit-btn" onclick="analyzeSong()" id="analyzeBtn">
-      <span data-id="btnAnalyze">🔍 Analisis Lagu</span>
+      🔍 Analisis Lagu
     </button>
   </div>
   <div id="aiResult" style="display:none;">
+    <!-- LOADING -->
+    <div id="aiLoading" style="display:none;">
+      <div class="card" style="text-align:center;padding:32px 20px;">
+        <div style="font-size:36px;margin-bottom:14px;">🎵</div>
+        <div id="aiLoadingMsg" style="font-weight:800;font-size:15px;color:var(--c1);margin-bottom:16px;line-height:1.5;">Mencari...</div>
+        <div><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>
+      </div>
+    </div>
     <!-- DISAMBIGUATION LIST -->
     <div id="disambigList" style="display:none;">
       <div class="card">
@@ -1644,18 +1644,18 @@ function findSong(query){
   return null;
 }
 
-var aiMode='offline';
 var currentResult=null,currentQuery='';
-function setAIMode(mode){
-  aiMode=mode;
-  document.querySelectorAll('#panel3 .toggle-group .toggle-btn').forEach(function(b){
-    b.classList.toggle('active',b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+mode+"'"));
-  });
-  document.getElementById('offlineNotice').style.display=mode==='offline'?'flex':'none';
-  // Only show API key reminder if key not yet saved
-  var hasKey=!!getCleanApiKey();
-  document.getElementById('apiKeySection').style.display=(mode==='ai'&&!hasKey)?'block':'none';
+
+// ─── Loading helpers ───
+function showLoading(msg){
+  document.getElementById('aiResult').style.display='block';
+  document.getElementById('aiLoading').style.display='block';
+  document.getElementById('disambigList').style.display='none';
+  document.getElementById('resChordMode').style.display='none';
+  document.getElementById('aiLoadingMsg').textContent=msg||'Memuat...';
 }
+function setLoadingMsg(msg){document.getElementById('aiLoadingMsg').textContent=msg;}
+function hideLoading(){document.getElementById('aiLoading').style.display='none';}
 function buildSongDropdown(){
   var sel=document.getElementById('songDropdown');
   var label=lang==='id'?'— Pilih lagu offline (A–Z) —':'— Pick offline song (A–Z) —';
@@ -1689,7 +1689,6 @@ function saveApiKey(){
   if(!k){document.getElementById('saveKeyMsg').style.color='#EF4444';document.getElementById('saveKeyMsg').textContent='⚠️ Key tidak boleh kosong.';return;}
   localStorage.setItem('hm_api_key',k);
   var mainInput=document.getElementById('apiKeyInput');if(mainInput)mainInput.value=k;
-  document.getElementById('apiKeySection').style.display='none'; // hide reminder banner
   document.getElementById('saveKeyMsg').style.color='var(--c4)';document.getElementById('saveKeyMsg').textContent='✅ Tersimpan!';
   setTimeout(closeSettings,1200);
 }
@@ -1814,53 +1813,73 @@ var disambigResults=[];
 async function analyzeSong(){
   var query=document.getElementById('songInput').value.trim();if(!query)return;
   var btn=document.getElementById('analyzeBtn');
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>'+(lang==='id'?'Mencari...':'Searching...');
-  document.getElementById('aiResult').style.display='none';
-  document.getElementById('disambigList').style.display='none';
-  document.getElementById('resChordMode').style.display='none';
+  btn.disabled=true;
 
   try{
-    if(aiMode==='offline'){
-      var res=findSong(query)||guessOffline(query);
-      await new Promise(function(r){setTimeout(r,400);});
-      btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
-      renderResult(res,query);
-    } else {
-      // AI mode: try Ultimate Guitar first, fallback to Claude
-      var key=getCleanApiKey();
-      var ugOk=false;
-      try{
-        var data=await ugSearch(query);
-        var results=(data.results||[]).filter(function(r){
-          return r.type==='Chords'||r.type==='Tab'||r.type==='Bass Tab'||r.type==='Guitar Pro';
-        }).slice(0,8);
-        btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
-        if(results.length===1){ugOk=true;await fetchAndRenderTab(results[0]);}
-        else if(results.length>1){ugOk=true;showDisambiguation(results,query);}
-        // if 0 results, fall through to Claude below
-      }catch(ugErr){
-        // UG failed — will try Claude below
+    // ── 1. Check local DB first (instant) ──
+    var offline=findSong(query);
+    if(offline){
+      showLoading('📚 Ditemukan di database...');
+      await new Promise(function(r){setTimeout(r,300);});
+      hideLoading();
+      renderResult(offline,query);
+      btn.disabled=false;return;
+    }
+
+    var key=getCleanApiKey();
+
+    // ── 2. Try Ultimate Guitar ──
+    showLoading('🎸 Mencari di Ultimate Guitar...');
+    var ugOk=false;
+    try{
+      var data=await ugSearch(query);
+      var results=(data.results||[]).filter(function(r){
+        return r.type==='Chords'||r.type==='Tab'||r.type==='Bass Tab'||r.type==='Guitar Pro';
+      }).slice(0,8);
+      if(results.length===1){
+        ugOk=true;
+        setLoadingMsg('⬇️ Memuat tab dari Ultimate Guitar...');
+        await fetchAndRenderTab(results[0]);
+        hideLoading();
+      } else if(results.length>1){
+        ugOk=true;
+        hideLoading();
+        showDisambiguation(results,query);
       }
-      if(!ugOk){
-        btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
-        if(key){
-          // UG failed, try Claude AI
-          var r=await analyzeWithClaude(query,key);
-          if(r){renderResult(r,query);}
-        } else {
-          document.getElementById('aiResult').style.display='block';
-          document.getElementById('resChordMode').style.display='block';
-          document.getElementById('resultSongTitle').textContent='🎵 '+query;
-          document.getElementById('resDesc').textContent=(lang==='id'?'UG tidak tersedia. Buka Pengaturan ⚙️ dan simpan API key untuk menggunakan AI.':'UG unavailable. Open Settings ⚙️ and save your API key to use AI.');
-        }
+    }catch(ugErr){}
+
+    // ── 3. Claude fallback ──
+    if(!ugOk){
+      if(!key){
+        hideLoading();
+        document.getElementById('aiResult').style.display='block';
+        document.getElementById('resChordMode').style.display='block';
+        document.getElementById('resultSongTitle').textContent='🎵 '+query;
+        document.getElementById('resArtist').style.display='none';
+        document.getElementById('resDesc').textContent='Lagu tidak ditemukan di database lokal & UG tidak tersedia. Buka Pengaturan ⚙️ dan simpan API key untuk analisis AI.';
+        btn.disabled=false;return;
+      }
+      // Disambiguate via Claude first
+      setLoadingMsg('🤖 Menghubungi Claude Sonnet...');
+      var options=await claudeDisambiguate(query,key);
+      if(options.length>1){
+        hideLoading();
+        showClaudeDisambig(options,key,query);
+      } else {
+        var songSpec=(options.length===1)?'"'+options[0].title+'" by '+options[0].artist:query;
+        setLoadingMsg('🎵 Membuat chord + lirik\n"'+(options.length===1?options[0].title:query)+'"...');
+        var r=await analyzeWithClaude(songSpec,key);
+        hideLoading();
+        if(r)renderResult(r,query);
       }
     }
   }catch(err){
-    btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+    hideLoading();
     document.getElementById('aiResult').style.display='block';
     document.getElementById('resChordMode').style.display='block';
-    document.getElementById('resultSongTitle').textContent='⚠️ Error: '+err.message;
+    document.getElementById('resultSongTitle').textContent='⚠️ '+err.message;
   }
+  btn.disabled=false;
 }
 
 function showDisambiguation(results,query){
@@ -1868,35 +1887,84 @@ function showDisambiguation(results,query){
   document.getElementById('aiResult').style.display='block';
   document.getElementById('disambigList').style.display='block';
   document.getElementById('resChordMode').style.display='none';
+  document.getElementById('aiLoading').style.display='none';
   var count=results.length;
-  document.getElementById('disambigTitle').textContent=(lang==='id'?'Ditemukan '+count+' lagu untuk "'+query+'" — pilih salah satu:':'Found '+count+' songs for "'+query+'" — choose one:');
-  var container=document.getElementById('disambigItems');
-  container.innerHTML='';
+  document.getElementById('disambigTitle').textContent='Ditemukan '+count+' lagu untuk "'+query+'" — pilih salah satu:';
+  var container=document.getElementById('disambigItems');container.innerHTML='';
   var colors=['#7C3AED','#EC4899','#F59E0B','#10B981','#3B82F6','#8B5CF6','#EF4444','#06B6D4'];
   results.forEach(function(tab,i){
     var typeTag=tab.type==='Chords'?'🎸 Chord':tab.type==='Bass Tab'?'🎵 Bass':'🎼 Tab';
     var stars=tab.rating?(tab.rating.toFixed(1)+' ⭐'):'';
     var color=colors[i%colors.length];
-    var btn2=document.createElement('button');
-    btn2.style.cssText='padding:12px 14px;border-radius:10px;border:1.5px solid '+color+'44;background:#fff;text-align:left;cursor:pointer;width:100%;transition:all 0.15s;font-family:inherit;';
-    btn2.onmouseenter=function(){btn2.style.borderColor=color;btn2.style.background=color+'0A';};
-    btn2.onmouseleave=function(){btn2.style.borderColor=color+'44';btn2.style.background='#fff';};
-    btn2.innerHTML='<div style="font-weight:800;font-size:14px;color:var(--text);">'+tab.song_name+'</div>'
+    var b=document.createElement('button');
+    b.style.cssText='padding:12px 14px;border-radius:10px;border:1.5px solid '+color+'44;background:#fff;text-align:left;cursor:pointer;width:100%;transition:all 0.15s;font-family:inherit;';
+    b.onmouseenter=function(){b.style.borderColor=color;b.style.background=color+'0A';};
+    b.onmouseleave=function(){b.style.borderColor=color+'44';b.style.background='#fff';};
+    b.innerHTML='<div style="font-weight:800;font-size:14px;color:var(--text);">'+tab.song_name+'</div>'
       +'<div style="font-size:12px;color:var(--muted);margin-top:3px;">'+tab.artist_name
       +' &nbsp;<span style="color:'+color+';font-weight:700;">'+typeTag+'</span>'
       +(stars?' &nbsp;•&nbsp; '+stars:'')+'</div>';
-    btn2.onclick=(function(t){return function(){pickDisambig(t);};})(tab);
-    container.appendChild(btn2);
+    b.onclick=(function(t){return function(){pickDisambig(t);};})(tab);
+    container.appendChild(b);
   });
 }
 
 async function pickDisambig(tab){
-  document.getElementById('disambigList').style.display='none';
-  var btn=document.getElementById('analyzeBtn');
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Loading...';
+  showLoading('⬇️ Memuat "'+tab.song_name+'" oleh '+tab.artist_name+'...');
+  document.getElementById('analyzeBtn').disabled=true;
   try{await fetchAndRenderTab(tab);}
-  catch(e){alert('Error: '+e.message);}
-  btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+  catch(e){document.getElementById('resultSongTitle').textContent='⚠️ '+e.message;}
+  hideLoading();
+  document.getElementById('analyzeBtn').disabled=false;
+}
+
+// ── Claude disambiguation ──
+async function claudeDisambiguate(query,apiKey){
+  apiKey=(apiKey||'').replace(/[^\x20-\x7E]/g,'').trim();
+  var prompt='List up to 5 well-known songs titled "'+query+'" by different artists. Respond ONLY with a JSON array (no markdown):\n[{"title":"Perfect","artist":"Ed Sheeran","year":"2017","genre":"Pop"},{"title":"Perfect","artist":"Simple Plan","year":"2003","genre":"Pop-Punk"}]\nIf only one well-known song has this exact title, return a single-item array. Be accurate — only include real songs.';
+  try{
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',mode:'cors',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:400,messages:[{role:'user',content:prompt}]})
+    });
+    var d=await resp.json();
+    var text=d.content[0].text.trim();
+    var jm=text.match(/\[[\s\S]*\]/);if(!jm)return[];
+    return JSON.parse(jm[0])||[];
+  }catch(e){return[];}
+}
+
+function showClaudeDisambig(options,key,query){
+  document.getElementById('aiResult').style.display='block';
+  document.getElementById('disambigList').style.display='block';
+  document.getElementById('resChordMode').style.display='none';
+  document.getElementById('disambigTitle').textContent='Ditemukan '+options.length+' lagu untuk "'+query+'" — pilih salah satu:';
+  var container=document.getElementById('disambigItems');container.innerHTML='';
+  var colors=['#7C3AED','#EC4899','#F59E0B','#10B981','#3B82F6'];
+  options.forEach(function(opt,i){
+    var color=colors[i%colors.length];
+    var b=document.createElement('button');
+    b.style.cssText='padding:12px 14px;border-radius:10px;border:1.5px solid '+color+'44;background:#fff;text-align:left;cursor:pointer;width:100%;transition:all 0.15s;font-family:inherit;';
+    b.onmouseenter=function(){b.style.borderColor=color;b.style.background=color+'0A';};
+    b.onmouseleave=function(){b.style.borderColor=color+'44';b.style.background='#fff';};
+    b.innerHTML='<div style="font-weight:800;font-size:14px;color:var(--text);">'+opt.title+'</div>'
+      +'<div style="font-size:12px;color:var(--muted);margin-top:3px;">'+opt.artist
+      +(opt.year?' &nbsp;•&nbsp; '+opt.year:'')
+      +(opt.genre?' &nbsp;•&nbsp; <span style="color:'+color+';font-weight:700;">'+opt.genre+'</span>':'')+'</div>';
+    b.onclick=(function(o){return function(){pickClaudeDisambig(o,key,query);};})(opt);
+    container.appendChild(b);
+  });
+}
+
+async function pickClaudeDisambig(option,key,query){
+  showLoading('🎵 Menganalisis "'+option.title+'" oleh '+option.artist+'...');
+  document.getElementById('analyzeBtn').disabled=true;
+  var songSpec='"'+option.title+'" by '+option.artist;
+  var r=await analyzeWithClaude(songSpec,key);
+  hideLoading();
+  if(r)renderResult(r,query);
+  document.getElementById('analyzeBtn').disabled=false;
 }
 
 async function fetchAndRenderTab(tabMeta){
