@@ -21,6 +21,8 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 .logo{font-size:22px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .lang-btn{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;color:var(--c1);}
 .lang-btn:hover{background:var(--c1);color:#fff;}
+.settings-btn{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:16px;cursor:pointer;line-height:1;}
+.settings-btn:hover{background:var(--c1);}
 
 /* TABS */
 .tabs{display:flex;overflow-x:auto;background:#fff;border-bottom:2px solid var(--border);scrollbar-width:none;position:sticky;top:57px;z-index:99;}
@@ -138,7 +140,10 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
 
 <div class="header">
   <div class="logo">🎵 HaloMusic</div>
-  <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+  <div style="display:flex;align-items:center;gap:6px;">
+    <button class="settings-btn" onclick="openSettings()" title="Pengaturan">⚙️</button>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+  </div>
 </div>
 
 <div class="tabs">
@@ -342,10 +347,12 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
   <div class="offline-note" id="offlineNotice">
     ✅ <span data-id="offlineText">Mode Offline — hasil berdasarkan database lokal. Aktifkan AI Mode untuk analisis lebih akurat.</span>
   </div>
-  <div class="api-key-wrap" id="apiKeySection" style="display:none;">
-    <div style="font-size:13px;font-weight:700;color:var(--c1);">🔑 <span data-id="apiKeyLabel">Masukkan Anthropic API Key</span></div>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-..."/>
-    <div style="font-size:11px;color:var(--muted);margin-top:6px;" data-id="apiKeyNote">Key disimpan di memori sesi ini saja, tidak dikirim ke server lain.</div>
+  <div id="apiKeySection" style="display:none;">
+    <input type="hidden" id="apiKeyInput"/>
+    <div style="background:#EEF2FF;border:1px solid #C4B5FD;border-radius:10px;padding:10px 14px;font-size:12px;color:var(--c1);font-weight:700;margin-bottom:12px;">
+      🔑 <span data-id="apiKeyLabel">API key belum disimpan.</span>
+      <button onclick="openSettings()" style="margin-left:8px;padding:3px 10px;border-radius:6px;border:none;background:var(--c1);color:#fff;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">⚙️ Buka Pengaturan</button>
+    </div>
   </div>
   <div class="card">
     <div class="card-title" data-id="aiInputLabel">🎵 Masukkan Judul Lagu</div>
@@ -353,19 +360,23 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
     <select class="song-dropdown" id="songDropdown" onchange="selectSongFromDropdown(this.value)">
       <option value="">— Pilih lagu offline (A–Z) —</option>
     </select>
-    <div class="output-toggle">
-      <button class="output-toggle-btn active" onclick="setOutputMode('chord')" id="outChord">🎸 Chord + Lirik</button>
-      <button class="output-toggle-btn" onclick="setOutputMode('notation')" id="outNotation">🎼 Not Balok + Melodi</button>
-    </div>
     <button class="submit-btn" onclick="analyzeSong()" id="analyzeBtn">
       <span data-id="btnAnalyze">🔍 Analisis Lagu</span>
     </button>
   </div>
   <div id="aiResult" style="display:none;">
-    <!-- CHORD + LYRIC MODE -->
-    <div id="resChordMode">
+    <!-- DISAMBIGUATION LIST -->
+    <div id="disambigList" style="display:none;">
+      <div class="card">
+        <div class="card-title" id="disambigTitle">Pilih lagu yang dimaksud:</div>
+        <div id="disambigItems" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+    <!-- CHORD MODE -->
+    <div id="resChordMode" style="display:none;">
       <div class="card">
         <div class="card-title" id="resultSongTitle"></div>
+        <div id="resArtist" style="font-size:13px;font-weight:700;color:var(--muted);margin-top:-8px;margin-bottom:12px;"></div>
         <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;">
           <div><div class="result-label" data-id="resTempoLabel">Tempo</div><div id="resTempo" style="font-size:20px;font-weight:900;color:var(--c1);"></div></div>
           <div><div class="result-label" data-id="resKeyLabel">Kunci / Key</div><div id="resKey" style="font-size:18px;font-weight:800;color:var(--c2);"></div></div>
@@ -376,37 +387,16 @@ html,body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:
         </div>
         <div class="result-section" id="resChordDiagramSection">
           <div class="result-label" data-id="resChordDiagLabel">Diagram Chord</div>
-          <div id="resChordDiagrams" style="display:flex;flex-wrap:wrap;gap:14px;"></div>
+          <div id="resChordDiagrams" style="display:block;"></div>
         </div>
         <div class="result-section" id="resChordChartSection">
-          <div class="result-label">Chord Chart</div>
+          <div class="result-label" id="resChordChartLabel">Chord + Lirik</div>
           <div id="resChordChart" style="margin-top:6px;"></div>
         </div>
+        <div id="resUGLink" style="display:none;margin-top:8px;margin-bottom:8px;"></div>
         <div class="result-section">
           <div class="result-label" data-id="resDescLabel">Keterangan</div>
           <div id="resDesc" class="result-box" style="font-size:13px;"></div>
-        </div>
-      </div>
-    </div>
-    <!-- NOT BALOK MODE -->
-    <div id="resNotationMode" style="display:none;">
-      <div class="card">
-        <div class="card-title" id="resultSongTitle2"></div>
-        <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;">
-          <div><div class="result-label">Tempo</div><div id="resTempo2" style="font-size:20px;font-weight:900;color:var(--c1);"></div></div>
-          <div><div class="result-label">Kunci / Key</div><div id="resKey2" style="font-size:18px;font-weight:800;color:var(--c2);"></div></div>
-        </div>
-        <div class="result-section">
-          <div class="result-label" data-id="resNotesLabel">Not Balok (Melodi)</div>
-          <div id="resNotes" class="notation-staff" style="height:120px;"></div>
-        </div>
-        <div class="result-section">
-          <div class="result-label">Chord Utama</div>
-          <div id="resChords2" class="flex-wrap" style="margin-bottom:10px;"></div>
-        </div>
-        <div class="result-section">
-          <div class="result-label">Keterangan</div>
-          <div id="resDesc2" class="result-box" style="font-size:13px;"></div>
         </div>
       </div>
     </div>
@@ -1655,7 +1645,6 @@ function findSong(query){
 }
 
 var aiMode='offline';
-var outputMode='chord';
 var currentResult=null,currentQuery='';
 function setAIMode(mode){
   aiMode=mode;
@@ -1663,17 +1652,9 @@ function setAIMode(mode){
     b.classList.toggle('active',b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+mode+"'"));
   });
   document.getElementById('offlineNotice').style.display=mode==='offline'?'flex':'none';
-  document.getElementById('apiKeySection').style.display=mode==='ai'?'block':'none';
-}
-function setOutputMode(mode){
-  outputMode=mode;
-  document.getElementById('outChord').classList.toggle('active',mode==='chord');
-  document.getElementById('outNotation').classList.toggle('active',mode==='notation');
-  // Re-render immediately if a result is already loaded
-  if(currentResult){
-    if(mode==='chord') renderResultChordLyric(currentResult,currentQuery);
-    else renderResultNotation(currentResult,currentQuery);
-  }
+  // Only show API key reminder if key not yet saved
+  var hasKey=!!getCleanApiKey();
+  document.getElementById('apiKeySection').style.display=(mode==='ai'&&!hasKey)?'block':'none';
 }
 function buildSongDropdown(){
   var sel=document.getElementById('songDropdown');
@@ -1692,23 +1673,254 @@ function selectSongFromDropdown(val){
   document.getElementById('songInput').value=val;
 }
 
+// ═══════════════════════════════════════════
+// SETTINGS + API KEY PERSISTENCE
+// ═══════════════════════════════════════════
+function openSettings(){
+  document.getElementById('settingsOverlay').style.display='flex';
+  var saved=localStorage.getItem('hm_api_key')||'';
+  document.getElementById('settingsApiKey').value=saved;
+  document.getElementById('saveKeyMsg').textContent=saved?'✅ API key tersimpan':'';
+}
+function closeSettings(){document.getElementById('settingsOverlay').style.display='none';}
+function saveApiKey(){
+  // Strip any non-printable-ASCII chars (copy-paste artifacts, BOM, etc.)
+  var k=document.getElementById('settingsApiKey').value.replace(/[^\x20-\x7E]/g,'').trim();
+  if(!k){document.getElementById('saveKeyMsg').style.color='#EF4444';document.getElementById('saveKeyMsg').textContent='⚠️ Key tidak boleh kosong.';return;}
+  localStorage.setItem('hm_api_key',k);
+  var mainInput=document.getElementById('apiKeyInput');if(mainInput)mainInput.value=k;
+  document.getElementById('apiKeySection').style.display='none'; // hide reminder banner
+  document.getElementById('saveKeyMsg').style.color='var(--c4)';document.getElementById('saveKeyMsg').textContent='✅ Tersimpan!';
+  setTimeout(closeSettings,1200);
+}
+function clearApiKey(){
+  localStorage.removeItem('hm_api_key');
+  document.getElementById('settingsApiKey').value='';
+  document.getElementById('saveKeyMsg').style.color='var(--muted)';document.getElementById('saveKeyMsg').textContent='🗑 API key dihapus.';
+}
+function loadSavedApiKey(){
+  var k=localStorage.getItem('hm_api_key');
+  if(k){
+    // Sanitize in case it was stored with invisible chars
+    var clean=k.replace(/[^\x20-\x7E]/g,'').trim();
+    if(clean!==k)localStorage.setItem('hm_api_key',clean); // re-save clean version
+    var el=document.getElementById('apiKeyInput');if(el)el.value=clean;
+  }
+}
+
+// ═══════════════════════════════════════════
+// ULTIMATE GUITAR FETCH (multi-proxy fallback)
+// ═══════════════════════════════════════════
+function fetchTimeout(url,opts,ms){
+  // Use Promise.race for timeout — avoids AbortSignal.timeout (not in all browsers)
+  var timer;
+  var timeout=new Promise(function(_,rej){timer=setTimeout(function(){rej(new Error('timeout'));},ms);});
+  return Promise.race([fetch(url,opts||{}).then(function(r){clearTimeout(timer);return r;}),timeout]);
+}
+
+async function ugFetchHTML(url){
+  // 1. corsproxy.io — returns raw HTML
+  try{
+    var r=await fetchTimeout('https://corsproxy.io/?url='+encodeURIComponent(url),{},9000);
+    if(r.ok){var t=await r.text();if(t&&t.length>1000&&t.includes('js-store'))return t;}
+  }catch(e){}
+  // 2. allorigins.win — returns {contents:"..."}
+  try{
+    var r2=await fetchTimeout('https://api.allorigins.win/get?url='+encodeURIComponent(url),{},12000);
+    if(r2.ok){var d=await r2.json();if(d.contents&&d.contents.length>1000)return d.contents;}
+  }catch(e){}
+  // 3. htmldriven (another public proxy)
+  try{
+    var r3=await fetchTimeout('https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(url),{},9000);
+    if(r3.ok){var t3=await r3.text();if(t3&&t3.length>1000)return t3;}
+  }catch(e){}
+  throw new Error('proxy_fail');
+}
+
+async function ugSearch(query){
+  var url='https://www.ultimate-guitar.com/search.php?search_type=title&value='+encodeURIComponent(query);
+  var html=await ugFetchHTML(url);
+  return parseUGStore(html);
+}
+
+async function ugFetchTab(tabUrl){
+  var html=await ugFetchHTML(tabUrl);
+  return parseUGStore(html);
+}
+
+function parseUGStore(html){
+  var m=html.match(/class="js-store"\s+data-content="([^"]+)"/);
+  if(!m){
+    // Try alternate attribute order
+    m=html.match(/data-content="([^"]+)"\s+class="js-store"/);
+  }
+  if(!m)throw new Error('js-store tidak ditemukan di halaman UG.');
+  var raw=m[1].replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+  return JSON.parse(raw).store.page.data;
+}
+
+function parseUGContent(content){
+  var sections=[];
+  var currentSection={name:'Intro',chords:[],lines:[]};
+  var lines=content.split('\n');
+  lines.forEach(function(line){
+    var trimmed=line.trim();
+    if(!trimmed||trimmed==='[tab]'||trimmed==='[/tab]')return;
+    // Section header: e.g. [Verse 1] or [Chorus] — standalone bracket with no [ch] inside
+    var sectionMatch=trimmed.match(/^\[([A-Za-z][^\]]*)\]$/)&&!trimmed.includes('[ch]');
+    if(sectionMatch){
+      if(currentSection.chords.length||currentSection.lines.length)
+        sections.push({name:currentSection.name,chords:currentSection.chords.slice(),lines:currentSection.lines.slice()});
+      currentSection={name:trimmed.replace(/^\[|\]$/g,''),chords:[],lines:[]};
+    } else if(trimmed.includes('[ch]')){
+      // Extract unique chords
+      var re=/\[ch\]([^\[]+)\[\/ch\]/g;var m;
+      while((m=re.exec(trimmed))!==null){
+        var c=m[1].trim();
+        if(c&&currentSection.chords.indexOf(c)<0)currentSection.chords.push(c);
+      }
+      // Convert [ch]Chord[/ch]lyric → [Chord]lyric for renderChordAboveLyric
+      var converted=trimmed.replace(/\[ch\]([^\[]+)\[\/ch\]/g,'[$1]');
+      currentSection.lines.push(converted);
+    } else {
+      // Plain lyric line (no chords on this line)
+      currentSection.lines.push(trimmed);
+    }
+  });
+  if(currentSection.chords.length||currentSection.lines.length)
+    sections.push({name:currentSection.name,chords:currentSection.chords.slice(),lines:currentSection.lines.slice()});
+
+  // Unique chords across all sections
+  var allChords=[];
+  sections.forEach(function(s){s.chords.forEach(function(c){if(allChords.indexOf(c)<0)allChords.push(c);});});
+
+  // Build lyric array: section header + lines
+  var lyric=[];
+  sections.forEach(function(s){
+    if(s.lines.length){
+      lyric.push('— '+s.name+' —');
+      s.lines.forEach(function(l){lyric.push(l);});
+    }
+  });
+
+  return{sections:sections,chords:allChords,lyric:lyric};
+}
+
+// ═══════════════════════════════════════════
+// ANALYZE FLOW
+// ═══════════════════════════════════════════
+var disambigResults=[];
+
 async function analyzeSong(){
   var query=document.getElementById('songInput').value.trim();if(!query)return;
   var btn=document.getElementById('analyzeBtn');
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>'+(lang==='id'?'Menganalisis...':'Analyzing...');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>'+(lang==='id'?'Mencari...':'Searching...');
   document.getElementById('aiResult').style.display='none';
-  var result=null;
-  if(aiMode==='ai'){
-    var key=document.getElementById('apiKeyInput').value.trim();
-    if(!key){btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');alert(lang==='id'?'Masukkan API key dulu!':'Please enter your API key first!');return;}
-    result=await analyzeWithAI(query,key);
-  } else {
-    result=findSong(query)||guessOffline(query);
-    await new Promise(function(r){setTimeout(r,600);});
+  document.getElementById('disambigList').style.display='none';
+  document.getElementById('resChordMode').style.display='none';
+
+  try{
+    if(aiMode==='offline'){
+      var res=findSong(query)||guessOffline(query);
+      await new Promise(function(r){setTimeout(r,400);});
+      btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+      renderResult(res,query);
+    } else {
+      // AI mode: try Ultimate Guitar first, fallback to Claude
+      var key=getCleanApiKey();
+      var ugOk=false;
+      try{
+        var data=await ugSearch(query);
+        var results=(data.results||[]).filter(function(r){
+          return r.type==='Chords'||r.type==='Tab'||r.type==='Bass Tab'||r.type==='Guitar Pro';
+        }).slice(0,8);
+        btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+        if(results.length===1){ugOk=true;await fetchAndRenderTab(results[0]);}
+        else if(results.length>1){ugOk=true;showDisambiguation(results,query);}
+        // if 0 results, fall through to Claude below
+      }catch(ugErr){
+        // UG failed — will try Claude below
+      }
+      if(!ugOk){
+        btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+        if(key){
+          // UG failed, try Claude AI
+          var r=await analyzeWithClaude(query,key);
+          if(r){renderResult(r,query);}
+        } else {
+          document.getElementById('aiResult').style.display='block';
+          document.getElementById('resChordMode').style.display='block';
+          document.getElementById('resultSongTitle').textContent='🎵 '+query;
+          document.getElementById('resDesc').textContent=(lang==='id'?'UG tidak tersedia. Buka Pengaturan ⚙️ dan simpan API key untuk menggunakan AI.':'UG unavailable. Open Settings ⚙️ and save your API key to use AI.');
+        }
+      }
+    }
+  }catch(err){
+    btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+    document.getElementById('aiResult').style.display='block';
+    document.getElementById('resChordMode').style.display='block';
+    document.getElementById('resultSongTitle').textContent='⚠️ Error: '+err.message;
   }
-  btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
-  if(result)renderResult(result,query);
 }
+
+function showDisambiguation(results,query){
+  disambigResults=results;
+  document.getElementById('aiResult').style.display='block';
+  document.getElementById('disambigList').style.display='block';
+  document.getElementById('resChordMode').style.display='none';
+  var count=results.length;
+  document.getElementById('disambigTitle').textContent=(lang==='id'?'Ditemukan '+count+' lagu untuk "'+query+'" — pilih salah satu:':'Found '+count+' songs for "'+query+'" — choose one:');
+  var container=document.getElementById('disambigItems');
+  container.innerHTML='';
+  var colors=['#7C3AED','#EC4899','#F59E0B','#10B981','#3B82F6','#8B5CF6','#EF4444','#06B6D4'];
+  results.forEach(function(tab,i){
+    var typeTag=tab.type==='Chords'?'🎸 Chord':tab.type==='Bass Tab'?'🎵 Bass':'🎼 Tab';
+    var stars=tab.rating?(tab.rating.toFixed(1)+' ⭐'):'';
+    var color=colors[i%colors.length];
+    var btn2=document.createElement('button');
+    btn2.style.cssText='padding:12px 14px;border-radius:10px;border:1.5px solid '+color+'44;background:#fff;text-align:left;cursor:pointer;width:100%;transition:all 0.15s;font-family:inherit;';
+    btn2.onmouseenter=function(){btn2.style.borderColor=color;btn2.style.background=color+'0A';};
+    btn2.onmouseleave=function(){btn2.style.borderColor=color+'44';btn2.style.background='#fff';};
+    btn2.innerHTML='<div style="font-weight:800;font-size:14px;color:var(--text);">'+tab.song_name+'</div>'
+      +'<div style="font-size:12px;color:var(--muted);margin-top:3px;">'+tab.artist_name
+      +' &nbsp;<span style="color:'+color+';font-weight:700;">'+typeTag+'</span>'
+      +(stars?' &nbsp;•&nbsp; '+stars:'')+'</div>';
+    btn2.onclick=(function(t){return function(){pickDisambig(t);};})(tab);
+    container.appendChild(btn2);
+  });
+}
+
+async function pickDisambig(tab){
+  document.getElementById('disambigList').style.display='none';
+  var btn=document.getElementById('analyzeBtn');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Loading...';
+  try{await fetchAndRenderTab(tab);}
+  catch(e){alert('Error: '+e.message);}
+  btn.disabled=false;btn.innerHTML='🔍 '+(lang==='id'?'Analisis Lagu':'Analyze Song');
+}
+
+async function fetchAndRenderTab(tabMeta){
+  var data=await ugFetchTab(tabMeta.tab_url);
+  var tabView=data.tab_view;
+  var rawContent=(tabView&&tabView.wiki_tab&&tabView.wiki_tab.content)||'';
+  var tabInfo=data.tab||tabMeta;
+  var parsed=parseUGContent(rawContent);
+  var res={
+    title:tabMeta.song_name||(tabInfo.song_name||''),
+    artist:tabMeta.artist_name||(tabInfo.artist_name||''),
+    tempo:(tabView&&tabView.meta&&tabView.meta.tempo)||'',
+    bpm:'',
+    key:(tabView&&tabView.meta&&tabView.meta.tonality)||'',
+    chords:parsed.chords,
+    sections:parsed.sections,
+    lyric:parsed.lyric,
+    notes:[],genre:'',
+    ugUrl:tabMeta.tab_url,
+    desc:{id:'Sumber: Ultimate Guitar',en:'Source: Ultimate Guitar'}
+  };
+  renderResult(res,res.title);
+}
+
 function guessOffline(query){
   var q=query.toLowerCase();
   var isMinor=q.includes('minor')||q.includes('sad');
@@ -1719,39 +1931,58 @@ function guessOffline(query){
     desc:{id:'Tidak ditemukan di database. Estimasi berdasarkan pola umum. Gunakan AI Mode untuk hasil lebih akurat.',
           en:'Not found in database. Estimated from common patterns. Use AI Mode for accurate results.'}};
 }
-async function analyzeWithAI(songTitle,apiKey){
-  var prompt='Analyze the song "'+songTitle+'". Respond ONLY with valid JSON (no markdown):\n{"title":"","tempo":"","bpm":"","key":"","chords":[""],"notes":["C4","D4"],"genre":"","desc_id":"","desc_en":"","lyrics":["— Bait 1 —","[C]line with [G]chord markers","[Am]next line","— Reff —","[C]chorus line"],"melody":{"timeSig":"4/4","keySig":0,"measures":[{"chord":"C","notes":[{"p":"E4","d":"q","l":"syl-"},{"p":"D4","d":"q","l":"la-"},{"p":"C4","d":"h","l":"ble"}]}]}}\nRules: lyrics = full song (all verses + chorus), each line as [Chord]words. melody = first 8-12 measures with note pitch (p: C4-G5), duration (q=quarter,h=half,e=eighth,w=whole), lyric syllable (l). Include at least 2 verses + reff.';
+
+function getCleanApiKey(){
+  var k=localStorage.getItem('hm_api_key')||document.getElementById('apiKeyInput').value||'';
+  return k.replace(/[^\x20-\x7E]/g,'').trim();
+}
+async function analyzeWithClaude(songTitle,apiKey){
+  apiKey=(apiKey||'').replace(/[^\x20-\x7E]/g,'').trim();
+  var prompt='You are a music expert. For the song "'+songTitle+'", respond ONLY with valid JSON (no markdown, no extra text):\n'
+    +'{"title":"","artist":"","tempo":"","bpm":"","key":"","chords":[""],"genre":"","desc_id":"","desc_en":"",'
+    +'"sections":[{"name":"Verse 1","chords":["Em","G"]},{"name":"Chorus","chords":["C","D"]}],'
+    +'"lyric":["— Verse 1 —","[Em]line with [G]chord markers","[C]next line","— Chorus —","[D]chorus line"]}'
+    +'\nRules: lyric = real lyrics of the song with chord markers like [Chord] placed where chord changes occur. Include all verses and chorus. sections = chord list per section name.';
   try{
-    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+    var resp=await fetchTimeout('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      mode:'cors',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
       body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1800,messages:[{role:'user',content:prompt}]})
-    });
-    if(!resp.ok){var e=await resp.json();throw new Error(e.error?.message||'API error');}
-    var data=await resp.json();
-    var text=data.content[0].text.trim();
-    var jsonMatch=text.match(/\{[\s\S]*\}/);if(!jsonMatch)throw new Error('No JSON');
-    var parsed=JSON.parse(jsonMatch[0]);
-    var lyricArr=parsed.lyrics||(parsed.lyric_sample?[parsed.lyric_sample]:[]);
-    return{title:parsed.title||songTitle,tempo:parsed.tempo||'Moderato',bpm:parsed.bpm||'~120',
-      key:parsed.key||'C Mayor',chords:parsed.chords||['C','G','Am','F'],
-      notes:parsed.notes||['C4','D4','E4','G4'],genre:parsed.genre||'',
-      lyric:lyricArr,melody:parsed.melody||null,
-      desc:{id:parsed.desc_id||'',en:parsed.desc_en||''}};
+    },20000);
+    if(!resp.ok){var e=await resp.json();throw new Error(e.error&&e.error.message?e.error.message:'HTTP '+resp.status);}
+    var d=await resp.json();
+    var text=d.content[0].text.trim();
+    var jm=text.match(/\{[\s\S]*\}/);if(!jm)throw new Error('No JSON in response');
+    var p=JSON.parse(jm[0]);
+    return{title:p.title||songTitle,artist:p.artist||'',tempo:p.tempo||'Moderato',bpm:p.bpm||'',
+      key:p.key||'',chords:p.chords||[],sections:p.sections||[],lyric:p.lyric||[],notes:[],genre:p.genre||'',
+      desc:{id:p.desc_id||'(Estimasi AI)',en:p.desc_en||'(AI estimate)'}};
   }catch(err){
-    return{title:songTitle,tempo:'Moderato',bpm:'~120',key:'C Mayor',chords:['C','G','Am','F'],notes:['C4','D4','E4','G4'],genre:'',lyric:[],
-      desc:{id:'AI error: '+err.message,en:'AI error: '+err.message}};
+    var m=err.message||'';
+    var hint=id='';
+    if(m.includes('fetch')||m.includes('network')||m.includes('CORS')||m.includes('Failed')){
+      hint='Gagal konek ke API Anthropic. Kemungkinan CORS dari file lokal. Coba buka file via HTTP server (python -m http.server) lalu buka http://localhost:8000';
+    } else if(m.includes('401')||m.includes('authentication')){
+      hint='API key tidak valid. Buka Pengaturan ⚙️ dan masukkan ulang key yang benar.';
+    } else {
+      hint='Error: '+m;
+    }
+    return{title:songTitle,artist:'',tempo:'',bpm:'',key:'',chords:[],sections:[],lyric:[],notes:[],genre:'',
+      desc:{id:hint,en:hint}};
   }
 }
 
 function renderResult(res,query){
   currentResult=res; currentQuery=query;
   document.getElementById('aiResult').style.display='block';
-  if(outputMode==='chord'){
-    renderResultChordLyric(res,query);
-  } else {
-    renderResultNotation(res,query);
-  }
+  document.getElementById('disambigList').style.display='none';
+  renderResultChordLyric(res,query);
 }
 
 // ─── Chord-above-lyric renderer ───
@@ -1769,83 +2000,13 @@ function renderChordAboveLyric(line,chordColor,chordBg){
   return html;
 }
 
-// ─── Partitur (sheet music) renderer ───
-function buildPartiture(melody,el){
-  el.innerHTML='';
-  if(!melody||!melody.measures||!melody.measures.length){
-    el.innerHTML='<div style="font-size:12px;color:var(--muted);text-align:center;padding:20px;">Partitur tidak tersedia. Aktifkan AI Mode untuk partitur otomatis.</div>';
-    return;
-  }
-  var SVG_W=360,BARS=4,CLEF_W=28,TS_W=16;
-  var STAFF_TOP=22,SL=10,STAFF_H=SL*4;
-  var LYRIC_Y=STAFF_TOP+STAFF_H+14,ROW_H=LYRIC_Y+14;
-  var NY={G5:-5,F5:0,E5:5,D5:10,C5:15,B4:20,A4:25,G4:30,F4:35,E4:40,D4:45,C4:50,B3:55};
-  var MIDLINE=20;
-  var measures=melody.measures||[];
-  var totalRows=Math.ceil(measures.length/BARS);
-  for(var r=0;r<totalRows;r++){
-    var rowM=measures.slice(r*BARS,(r+1)*BARS);
-    var isFirst=(r===0);
-    var usedW=CLEF_W+(isFirst?TS_W:0);
-    var mW=Math.floor((SVG_W-usedW)/BARS);
-    var parts=[];
-    // Staff lines
-    for(var li=0;li<=4;li++){var ly=STAFF_TOP+li*SL;parts.push('<line x1="'+CLEF_W+'" y1="'+ly+'" x2="'+SVG_W+'" y2="'+ly+'" stroke="#9CA3AF" stroke-width="0.9"/>');}
-    // Treble clef
-    parts.push('<text x="1" y="'+(STAFF_TOP+44)+'" font-size="52" font-family="serif,Times New Roman" fill="#6B7280">𝄞</text>');
-    // Time sig
-    if(isFirst){var ts=(melody.timeSig||'4/4').split('/');var tsx=CLEF_W+TS_W/2;
-      parts.push('<text x="'+tsx+'" y="'+(STAFF_TOP+12)+'" text-anchor="middle" font-size="13" font-weight="900" fill="#374151">'+ts[0]+'</text>');
-      parts.push('<text x="'+tsx+'" y="'+(STAFF_TOP+26)+'" text-anchor="middle" font-size="13" font-weight="900" fill="#374151">'+ts[1]+'</text>');
-    }
-    // Measures
-    rowM.forEach(function(meas,mi){
-      var mx=usedW+mi*mW;
-      if(mi>0)parts.push('<line x1="'+mx+'" y1="'+STAFF_TOP+'" x2="'+mx+'" y2="'+(STAFF_TOP+STAFF_H)+'" stroke="#6B7280" stroke-width="0.8"/>');
-      if(meas.chord)parts.push('<text x="'+(mx+3)+'" y="'+(STAFF_TOP-5)+'" font-size="9.5" font-weight="900" fill="#7C3AED">'+meas.chord+'</text>');
-      var notes=meas.notes||[];
-      var noteSpacing=(mW-10)/Math.max(notes.length,1);
-      notes.forEach(function(note,ni){
-        var nx=mx+6+ni*noteSpacing;
-        if(note.p==='R'){
-          parts.push('<rect x="'+(nx+1)+'" y="'+(STAFF_TOP+MIDLINE-3)+'" width="9" height="5" rx="1" fill="#374151"/>');
-        }else{
-          var ry=NY[note.p]!==undefined?NY[note.p]:MIDLINE;
-          var ncy=STAFF_TOP+ry;
-          var d=note.d||'q';var filled=(d!=='h'&&d!=='w');
-          var stemUp=(ry>=MIDLINE);var STEM=22;var cx_=nx+5;
-          // Ledger line for C4 (ry=50) or D4 (ry=45)
-          if(ry>=45)parts.push('<line x1="'+(cx_-5)+'" y1="'+(STAFF_TOP+50)+'" x2="'+(cx_+10)+'" y2="'+(STAFF_TOP+50)+'" stroke="#9CA3AF" stroke-width="0.9"/>');
-          // Note head
-          parts.push('<ellipse cx="'+cx_+'" cy="'+ncy+'" rx="5" ry="3.5" transform="rotate(-12 '+cx_+' '+ncy+')" fill="'+(filled?'#374151':'none')+'" stroke="#374151" stroke-width="1.2"/>');
-          // Stem
-          if(d!=='w'){
-            if(stemUp)parts.push('<line x1="'+(cx_+4)+'" y1="'+ncy+'" x2="'+(cx_+4)+'" y2="'+(ncy-STEM)+'" stroke="#374151" stroke-width="1.2"/>');
-            else parts.push('<line x1="'+(cx_-4)+'" y1="'+ncy+'" x2="'+(cx_-4)+'" y2="'+(ncy+STEM)+'" stroke="#374151" stroke-width="1.2"/>');
-          }
-          // Eighth flag
-          if(d==='e'||d==='eighth'){
-            if(stemUp)parts.push('<path d="M'+(cx_+4)+','+(ncy-STEM)+' C'+(cx_+12)+','+(ncy-STEM+8)+' '+(cx_+8)+','+(ncy-STEM+16)+' '+(cx_+4)+','+(ncy-STEM+18)+'" fill="none" stroke="#374151" stroke-width="1.2" stroke-linecap="round"/>');
-            else parts.push('<path d="M'+(cx_-4)+','+(ncy+STEM)+' C'+(cx_+4)+','+(ncy+STEM-8)+' '+cx_+','+(ncy+STEM-16)+' '+(cx_-4)+','+(ncy+STEM-18)+'" fill="none" stroke="#374151" stroke-width="1.2" stroke-linecap="round"/>');
-          }
-        }
-        // Lyric
-        if(note.l)parts.push('<text x="'+(nx+5)+'" y="'+LYRIC_Y+'" text-anchor="middle" font-size="8" fill="#374151">'+note.l+'</text>');
-      });
-    });
-    // Final bar line
-    parts.push('<line x1="'+SVG_W+'" y1="'+STAFF_TOP+'" x2="'+SVG_W+'" y2="'+(STAFF_TOP+STAFF_H)+'" stroke="#6B7280" stroke-width="1.2"/>');
-    if(r===totalRows-1)parts.push('<line x1="'+(SVG_W-3)+'" y1="'+STAFF_TOP+'" x2="'+(SVG_W-3)+'" y2="'+(STAFF_TOP+STAFF_H)+'" stroke="#374151" stroke-width="2.5"/>');
-    var rowDiv=document.createElement('div');rowDiv.style.cssText='margin-bottom:4px;';
-    rowDiv.innerHTML='<svg viewBox="0 0 '+SVG_W+' '+ROW_H+'" width="100%" xmlns="http://www.w3.org/2000/svg">'+parts.join('')+'</svg>';
-    el.appendChild(rowDiv);
-  }
-}
 
 function renderResultChordLyric(res,query){
   document.getElementById('resChordMode').style.display='block';
-  document.getElementById('resNotationMode').style.display='none';
   document.getElementById('resultSongTitle').textContent='🎵 '+(res.title||query);
+  var artistEl=document.getElementById('resArtist');
+  artistEl.textContent=res.artist?('👤 '+res.artist):'';
+  artistEl.style.display=res.artist?'block':'none';
   document.getElementById('resTempo').textContent=res.tempo+(res.bpm?' ('+res.bpm+' bpm)':'');
   document.getElementById('resKey').textContent=res.key+(res.genre?' — '+res.genre:'');
 
@@ -1857,13 +2018,12 @@ function renderResultChordLyric(res,query){
     var pill=document.createElement('div');
     pill.style.cssText='background:'+colors[i%colors.length]+';color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;';
     pill.textContent=ch;
-    pill.onclick=function(){var fc=findChordFreqs(ch);fc.forEach(function(f,j){playTone(f,0.7,j*0.04);});};
+    pill.onclick=(function(c){return function(){var fc=findChordFreqs(c);fc.forEach(function(f,j){playTone(f,0.7,j*0.04);});};})(ch);
     chordEl.appendChild(pill);
   });
 
   // Chord diagrams — Guitar, Bass, Piano
   var diagEl=document.getElementById('resChordDiagrams');diagEl.innerHTML='';
-  diagEl.style.cssText='display:block;';
   var instrDefs=[
     {label:'🎸 Gitar',data:guitarChords,useNotes:false},
     {label:'🎵 Bass',data:bassChords,useNotes:false},
@@ -1896,27 +2056,47 @@ function renderResultChordLyric(res,query){
     card.appendChild(row);diagEl.appendChild(card);
   });
 
-  // Chord chart (slash notation)
+  // Chord per section (UG / AI sections, or offline chord list)
+  var lyrics=res.lyric||(res.lyric_sample?[res.lyric_sample]:null);
+  document.getElementById('resChordChartLabel').textContent=(lyrics&&lyrics.length)?'🎤 Chord + Lirik':'Chord per Bagian';
   var chartEl=document.getElementById('resChordChart');chartEl.innerHTML='';
-  var chords=res.chords||[];
-  if(chords.length){
+  var sections=res.sections;
+  if(sections&&sections.length){
+    sections.forEach(function(sec,si){
+      if(!sec.chords||!sec.chords.length)return;
+      var row=document.createElement('div');
+      row.style.cssText='background:#F5F3FF;border-radius:8px;padding:8px 12px;margin-bottom:6px;';
+      row.innerHTML='<span style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--c1);display:block;margin-bottom:5px;">'+sec.name+'</span>'
+        +'<div style="display:flex;flex-wrap:wrap;gap:5px;">'
+        +sec.chords.map(function(c,i){return '<span style="background:'+colors[i%colors.length]+';color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:800;">'+c+'</span>';}).join('')
+        +'</div>';
+      chartEl.appendChild(row);
+    });
+  } else if(res.chords&&res.chords.length){
+    // Offline DB: show chord chart rows
     var barsDiv=document.createElement('div');barsDiv.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;';
-    chords.forEach(function(ch,i){
-      var row=document.createElement('div');row.className='chord-chart-row';
-      row.innerHTML='<span style="font-size:15px;font-weight:900;color:'+colors[i%colors.length]+'">'+ch+'</span>'
-        +'<span class="chord-chart-slash">/ / /</span>'
-        +'<span style="color:#D1D5DB;font-size:10px;margin-left:auto;">bar '+(i+1)+'</span>';
-      barsDiv.appendChild(row);
+    (res.chords).forEach(function(ch,i){
+      var r=document.createElement('div');r.className='chord-chart-row';
+      r.innerHTML='<span style="font-size:15px;font-weight:900;color:'+colors[i%colors.length]+'">'+ch+'</span>'
+        +'<span class="chord-chart-slash">/ / /</span>';
+      barsDiv.appendChild(r);
     });
     chartEl.appendChild(barsDiv);
   }
 
-  // Lyrics — chord names displayed ABOVE lyric text
-  var lyrics=res.lyric||(res.lyric_sample?[res.lyric_sample]:null);
+  // UG link
+  var ugLinkEl=document.getElementById('resUGLink');
+  if(res.ugUrl){
+    ugLinkEl.style.display='block';
+    ugLinkEl.innerHTML='<a href="'+res.ugUrl+'" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:linear-gradient(135deg,#FF6B35,#FF8C42);color:#fff;border-radius:10px;text-decoration:none;font-weight:800;font-size:13px;">🎸 Lihat tab lengkap di Ultimate Guitar ↗</a>';
+  } else {
+    ugLinkEl.style.display='none';
+  }
+
+  // Full chord + lyric display (UG, Claude AI, or offline DB)
   if(lyrics&&lyrics.length){
     var lyricWrap=document.createElement('div');
-    lyricWrap.style.cssText='margin-top:14px;padding:14px;background:#F5F3FF;border-radius:10px;border:1px solid #DDD6FE;';
-    lyricWrap.innerHTML='<div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--c1);margin-bottom:12px;">🎤 Chord + Lirik</div>';
+    lyricWrap.style.cssText='margin-top:8px;padding:14px;background:#F5F3FF;border-radius:10px;border:1px solid #DDD6FE;';
     lyrics.forEach(function(line){
       var lineEl=document.createElement('div');
       if(/^—/.test(line)){
@@ -1928,87 +2108,10 @@ function renderResultChordLyric(res,query){
       }
       lyricWrap.appendChild(lineEl);
     });
-    document.getElementById('resChordChart').appendChild(lyricWrap);
+    chartEl.appendChild(lyricWrap);
   }
 
   document.getElementById('resDesc').textContent=(res.desc&&(res.desc[lang]||res.desc.id))||'';
-}
-
-function renderResultNotation(res,query){
-  document.getElementById('resChordMode').style.display='none';
-  document.getElementById('resNotationMode').style.display='block';
-  document.querySelectorAll('.res-lyric-notation').forEach(function(el){el.remove();});
-  document.getElementById('resultSongTitle2').textContent='🎵 '+(res.title||query);
-  document.getElementById('resTempo2').textContent=res.tempo+(res.bpm?' ('+res.bpm+' bpm)':'');
-  document.getElementById('resKey2').textContent=res.key+(res.genre?' — '+res.genre:'');
-
-  var colors=['#7C3AED','#EC4899','#F59E0B','#10B981','#3B82F6','#8B5CF6','#EF4444','#06B6D4'];
-
-  // Chord pills
-  var chordEl=document.getElementById('resChords2');chordEl.innerHTML='';
-  (res.chords||[]).forEach(function(ch,i){
-    var pill=document.createElement('div');
-    pill.style.cssText='background:'+colors[i%colors.length]+';color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;';
-    pill.textContent=ch;
-    pill.onclick=function(){var fc=findChordFreqs(ch);fc.forEach(function(f,j){playTone(f,0.7,j*0.04);});};
-    chordEl.appendChild(pill);
-  });
-
-  // Partitur / staff section
-  var staffEl=document.getElementById('resNotes');
-  staffEl.style.cssText='height:auto;overflow:visible;background:#FAFAFA;border-radius:8px;border:1px solid var(--border);margin:12px 0;padding:8px;';
-
-  if(res.melody){
-    // Full partitur from melody data
-    buildPartiture(res.melody,staffEl);
-  } else {
-    // Fallback: simple single staff showing res.notes array
-    staffEl.innerHTML='';
-    staffEl.style.position='relative';
-    staffEl.style.height='120px';
-    var noteYmap={'G5':13,'F5':20,'E5':27,'D5':34,'C5':41,'B4':48,'A4':55,'G4':62,'F4':69,'E4':76,'D4':83,'C4':90};
-    [20,34,48,62,76].forEach(function(y){
-      var l=document.createElement('div');l.style.cssText='position:absolute;left:36px;right:4px;top:'+y+'px;height:1.5px;background:#D1D5DB;';
-      staffEl.appendChild(l);
-    });
-    var clefEl=document.createElement('div');
-    clefEl.style.cssText='position:absolute;left:2px;top:-2px;font-size:48px;line-height:1;color:#9CA3AF;font-family:serif;';
-    clefEl.textContent='𝄞';staffEl.appendChild(clefEl);
-    (res.notes||[]).forEach(function(note,i){
-      var y=noteYmap[note]||48,x=48+i*30;
-      var stemUp=(y>=48);
-      var nd=buildNoteSVG('quarter',colors[i%colors.length],stemUp,'none');
-      var wrapper=document.createElement('div');
-      wrapper.style.cssText='position:absolute;left:'+x+'px;top:'+(y-nd.headY)+'px;cursor:pointer;';
-      wrapper.innerHTML=nd.svg;
-      if((noteYmap[note]||0)>=83){var ledg=document.createElement('div');ledg.style.cssText='position:absolute;left:-4px;right:-4px;top:'+(nd.headY-1)+'px;height:1.5px;background:#9CA3AF;z-index:-1;';wrapper.appendChild(ledg);}
-      wrapper.onclick=function(){playTone(noteFreq(note),0.4,0);};
-      staffEl.appendChild(wrapper);
-    });
-
-    // Lyrics below staff (chord-above-lyric format)
-    var lyrics=res.lyric||(res.lyric_sample?[res.lyric_sample]:null);
-    if(lyrics&&lyrics.length){
-      var lyricWrap=document.createElement('div');
-      lyricWrap.className='res-lyric-notation';
-      lyricWrap.style.cssText='margin-top:14px;padding:14px;background:#F0FDF4;border-radius:10px;border:1px solid #A7F3D0;';
-      lyricWrap.innerHTML='<div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#065F46;margin-bottom:12px;">🎤 Lirik</div>';
-      lyrics.forEach(function(line){
-        var lineEl=document.createElement('div');
-        if(/^—/.test(line)){
-          lineEl.style.cssText='font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#065F46;margin:12px 0 6px;opacity:0.7;';
-          lineEl.textContent=line;
-        }else{
-          lineEl.style.cssText='display:flex;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px;';
-          lineEl.innerHTML=renderChordAboveLyric(line,'#065F46','#D1FAE5');
-        }
-        lyricWrap.appendChild(lineEl);
-      });
-      staffEl.parentNode.insertAdjacentElement('afterend',lyricWrap);
-    }
-  }
-
-  document.getElementById('resDesc2').textContent=(res.desc&&(res.desc[lang]||res.desc.id))||'';
 }
 function findChordFreqs(ch){
   for(var type in guitarChords){if(guitarChords[type][ch])return guitarChords[type][ch].freqs||[];}
@@ -2033,7 +2136,21 @@ window.addEventListener('DOMContentLoaded',function(){
   renderChordDisplay();
   buildPlayground();
   buildSongDropdown();
+  loadSavedApiKey();
 });
 </script>
+
+<!-- SETTINGS MODAL -->
+<div id="settingsOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:center;justify-content:center;" onclick="closeSettings()">
+  <div style="background:#fff;border-radius:16px;padding:24px;width:90%;max-width:400px;margin:auto;box-shadow:0 8px 32px rgba(0,0,0,0.18);" onclick="event.stopPropagation()">
+    <div style="font-size:16px;font-weight:900;color:var(--text);margin-bottom:16px;">⚙️ Pengaturan / Settings</div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;">🔑 Anthropic API Key</div>
+    <input type="password" id="settingsApiKey" placeholder="sk-ant-..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:monospace;box-sizing:border-box;margin-bottom:6px;outline:none;" onfocus="this.style.borderColor='var(--c1)'" onblur="this.style.borderColor='var(--border)'"/>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:14px;">Key disimpan di perangkat ini. Diperlukan untuk AI Mode. Key tidak dikirim ke server lain.</div>
+    <button onclick="saveApiKey()" style="width:100%;padding:11px;border-radius:8px;border:none;background:var(--c1);color:#fff;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:8px;font-family:inherit;">💾 Simpan API Key</button>
+    <button onclick="clearApiKey()" style="width:100%;padding:9px;border-radius:8px;border:1.5px solid var(--border);background:transparent;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit;">🗑 Hapus API Key</button>
+    <div id="saveKeyMsg" style="font-size:11px;margin-top:10px;text-align:center;min-height:16px;"></div>
+  </div>
+</div>
 </body>
 </html>
